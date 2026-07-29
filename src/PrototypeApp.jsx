@@ -454,7 +454,11 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
 
 function App() {
   const [loaded, setLoaded] = useState(false)
-  const [activeProject, setActiveProject] = useState(null)
+  const findProjectFromHash = () => {
+    const slug = window.location.hash.replace("#case-", "")
+    return slug ? projects.find(project => project.slug === slug) || null : null
+  }
+  const [activeProject, setActiveProject] = useState(() => findProjectFromHash())
   const ticker = useMemo(() => [...tickerWords, ...tickerWords], [])
 
   useScrollReveal(loaded)
@@ -471,10 +475,27 @@ function App() {
     return () => document.body.classList.remove("is-loading")
   }, [loaded])
 
+  useEffect(() => {
+    const syncProjectFromUrl = () => setActiveProject(findProjectFromHash())
+
+    window.addEventListener("hashchange", syncProjectFromUrl)
+    window.addEventListener("popstate", syncProjectFromUrl)
+    return () => {
+      window.removeEventListener("hashchange", syncProjectFromUrl)
+      window.removeEventListener("popstate", syncProjectFromUrl)
+    }
+  }, [])
+
+  const openProject = project => {
+    setLoaded(true)
+    setActiveProject(project)
+    window.history.pushState(null, "", `#case-${project.slug}`)
+  }
+
   const goHome = () => {
     setLoaded(true)
     setActiveProject(null)
-    window.history.replaceState(null, "", "/")
+    window.history.pushState(null, "", window.location.pathname || "/")
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         window.scrollTo({ top: 0, behavior: "auto" })
@@ -484,7 +505,7 @@ function App() {
   }
 
   if (activeProject) {
-    return <CaseStudyPage project={activeProject} onBack={goHome} onSelectProject={setActiveProject} />
+    return <CaseStudyPage project={activeProject} onBack={goHome} onSelectProject={openProject} />
   }
 
   return (
@@ -552,7 +573,7 @@ function App() {
           </div>
           <div className="work-list">
             {projects.map(project => (
-              <button className="work-item" data-reveal key={project.id} type="button" onClick={() => setActiveProject(project)} aria-label={`${project.title} project preview`}>
+              <button className="work-item" data-reveal key={project.id} type="button" onClick={() => openProject(project)} aria-label={`${project.title} project preview`}>
                 <div className="work-visual">
                   <div className="work-card-inner">
                     <div className="work-card-face work-front"><span className="visual-label">image preview</span></div>
