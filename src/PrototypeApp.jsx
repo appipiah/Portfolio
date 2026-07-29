@@ -197,6 +197,8 @@ function useCursorInteractions(active) {
     if (reduceMotion) return undefined
 
     const cursor = document.querySelector(".cursor-aura")
+    if (!cursor) return undefined
+
     const xTo = gsap.quickTo(cursor, "x", { duration: 0.35, ease: "power3" })
     const yTo = gsap.quickTo(cursor, "y", { duration: 0.35, ease: "power3" })
 
@@ -347,7 +349,7 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
 
       const observer = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(section)
+          if (entry.isIntersecting) setActiveSection(section.title)
         },
         { rootMargin: "-34% 0px -52% 0px", threshold: 0.01 },
       )
@@ -457,7 +459,7 @@ function App() {
 
   useScrollReveal(loaded)
   useGsapScrollTransitions(loaded)
-  useCursorInteractions(loaded)
+  useCursorInteractions(loaded && !activeProject)
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLoaded(true), 1900)
@@ -472,7 +474,7 @@ function App() {
   const goHome = () => {
     setLoaded(true)
     setActiveProject(null)
-    window.history.replaceState(null, "", window.location.pathname)
+    window.history.replaceState(null, "", "/")
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         window.scrollTo({ top: 0, behavior: "auto" })
