@@ -94,14 +94,15 @@ const projects = [
     id: "01",
     slug: "excelmind",
     title: "ExcelMind",
+    year: "2025-2026",
     description: "Designing a unified B2B platform for school administration and learning.",
-    company: "THELIX HOLDINGS",
+    eyebrow: "PRODUCT DESIGN · EDTECH · B2B SAAS",
     meta: excelMindMeta,
     sections: excelMindSections,
   },
-  { id: "02", slug: "project-two", title: "heading", description: "coming soon" },
-  { id: "03", slug: "project-three", title: "heading", description: "coming soon" },
-  { id: "04", slug: "project-four", title: "heading", description: "coming soon" },
+  { id: "02", slug: "project-two", title: "heading", year: "2026", description: "coming soon" },
+  { id: "03", slug: "project-three", title: "heading", year: "2026", description: "coming soon" },
+  { id: "04", slug: "project-four", title: "heading", year: "2026", description: "coming soon" },
 ]
 
 const caseStudySections = [
@@ -121,6 +122,30 @@ const tools = [
   { name: "Lovable", logo: "heart" },
   { name: "Antigravity", logo: "orbit" },
 ]
+
+function jumpToPortfolioTarget(target = "") {
+  const root = document.documentElement
+  root.style.scrollBehavior = "auto"
+
+  const targetElement = target ? document.querySelector(target) : null
+  if (targetElement) {
+    targetElement.scrollIntoView({ behavior: "auto", block: "start" })
+  } else {
+    window.scrollTo(0, 0)
+    root.scrollTop = 0
+    document.body.scrollTop = 0
+  }
+
+  window.setTimeout(() => {
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "auto", block: "start" })
+    } else {
+      window.scrollTo(0, 0)
+      root.scrollTop = 0
+      document.body.scrollTop = 0
+    }
+  }, 450)
+}
 
 function useScrollReveal(active) {
   useEffect(() => {
@@ -327,6 +352,51 @@ function ToolLogo({ type }) {
   )
 }
 
+function LinkedInIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M5.34 8.84H2.45v12.1h2.89V8.84ZM5.63 5.09c0-.92-.73-1.62-1.71-1.62s-1.72.7-1.72 1.62.73 1.64 1.68 1.64h.02c1 0 1.73-.71 1.73-1.64Zm16.17 8.91c0-3.7-1.98-5.42-4.62-5.42-2.13 0-3.08 1.17-3.62 1.99V8.84h-2.88c.04 1.13 0 12.1 0 12.1h2.88v-6.76c0-.36.03-.72.13-.98.29-.72.94-1.47 2.04-1.47 1.44 0 2.02 1.1 2.02 2.71v6.5h2.89L21.8 14Z" />
+    </svg>
+  )
+}
+
+function PortfolioNav({ onNavigateHome }) {
+  const navigateHome = (target = "") => {
+    if (onNavigateHome) {
+      onNavigateHome(target)
+      return
+    }
+
+    if (target) {
+      window.history.replaceState(null, "", target)
+      jumpToPortfolioTarget(target)
+      return
+    }
+
+    window.history.replaceState(null, "", "/")
+    jumpToPortfolioTarget()
+  }
+
+  return (
+    <nav>
+      <div className="wrap">
+        <div className="brand">
+          Bodede Dolapo <span className="nick">(Appipiah)</span>
+        </div>
+        <ul>
+          <li><button className="nav-link" type="button" onClick={() => navigateHome()}>Home</button></li>
+          <li><button className="nav-link" type="button" onClick={() => navigateHome("#work")}>Work</button></li>
+          <li><a href="https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/edit?usp=sharing" target="_blank" rel="noreferrer">Resume</a></li>
+          <li><span className="nav-disabled" aria-disabled="true">Playground (coming soon)</span></li>
+        </ul>
+        <a className="icon-btn linkedin-btn" href="https://www.linkedin.com/in/bodededolapo/" aria-label="LinkedIn">
+          <LinkedInIcon />
+        </a>
+      </div>
+    </nav>
+  )
+}
+
 function CaseStudyPage({ project, onBack, onSelectProject }) {
   const pageSections = project.sections || caseStudySections.map(section => ({
     title: section,
@@ -363,25 +433,15 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
 
   return (
     <main className="case-page">
-      <nav className="case-topbar">
-        <div className="wrap">
-          <button className="case-back" type="button" onClick={onBack}>Back to home</button>
-          <span>{project.title}</span>
-        </div>
-      </nav>
+      <PortfolioNav onNavigateHome={onBack} />
 
       <header className="case-hero">
-        <div className="wrap">
-          <span className="eyebrow">{project.company || "Case study placeholder"}</span>
-          <h1 className="display">{project.title}.</h1>
+        <div className="wrap case-hero-inner">
+          <span className="eyebrow">{project.eyebrow || "Case study placeholder"}</span>
+          <h1>{project.title}.</h1>
           <p>{project.description || "Placeholder case study intro. Add the company, role, scope, timeline, team, and product context here."}</p>
-        </div>
-      </header>
-
-      <div className="case-body">
-        <div className="case-layout wrap">
           {project.meta && (
-            <section className="case-glance" aria-labelledby={`${project.slug}-at-a-glance`}>
+            <section className="case-glance case-hero-glance" aria-labelledby={`${project.slug}-at-a-glance`}>
               <h2 id={`${project.slug}-at-a-glance`}>At a Glance</h2>
               <dl>
                 {project.meta.map(([label, value]) => (
@@ -393,7 +453,11 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
               </dl>
             </section>
           )}
+        </div>
+      </header>
 
+      <div className="case-body">
+        <div className="case-layout wrap">
           {pageSections.map((section, index) => (
             <section className="case-section" id={sectionId(section)} key={section.title}>
               <div className="case-section-copy">
@@ -471,6 +535,16 @@ function App() {
   }, [])
 
   useEffect(() => {
+    if (!("scrollRestoration" in window.history)) return undefined
+
+    const previous = window.history.scrollRestoration
+    window.history.scrollRestoration = "manual"
+    return () => {
+      window.history.scrollRestoration = previous
+    }
+  }, [])
+
+  useEffect(() => {
     document.body.classList.toggle("is-loading", !loaded)
     return () => document.body.classList.remove("is-loading")
   }, [loaded])
@@ -492,13 +566,16 @@ function App() {
     window.history.pushState(null, "", `#case-${project.slug}`)
   }
 
-  const goHome = () => {
+  const goHome = (target = "") => {
     setLoaded(true)
+    jumpToPortfolioTarget()
     setActiveProject(null)
-    window.history.pushState(null, "", window.location.pathname || "/")
+    window.history.pushState(null, "", target || "/")
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, behavior: "auto" })
+        jumpToPortfolioTarget(target)
+        window.setTimeout(() => jumpToPortfolioTarget(target), 120)
+        window.setTimeout(() => jumpToPortfolioTarget(target), 900)
         ScrollTrigger.refresh()
       })
     })
@@ -518,23 +595,7 @@ function App() {
         <div className="sign">Product Designer</div>
       </div>
 
-      <nav>
-        <div className="wrap">
-          <div className="brand">
-            Bodede Dolapo <span className="nick">(Appipiah)</span>
-          </div>
-          <ul>
-            <li><a href="#work">Work</a></li>
-            <li><a href="#resume">Resume</a></li>
-            <li><a href="#playground">Playground <span>coming soon</span></a></li>
-          </ul>
-          <a className="icon-btn linkedin-btn" href="https://www.linkedin.com/in/bodededolapo/" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5.34 8.84H2.45v12.1h2.89V8.84ZM5.63 5.09c0-.92-.73-1.62-1.71-1.62s-1.72.7-1.72 1.62.73 1.64 1.68 1.64h.02c1 0 1.73-.71 1.73-1.64Zm16.17 8.91c0-3.7-1.98-5.42-4.62-5.42-2.13 0-3.08 1.17-3.62 1.99V8.84h-2.88c.04 1.13 0 12.1 0 12.1h2.88v-6.76c0-.36.03-.72.13-.98.29-.72.94-1.47 2.04-1.47 1.44 0 2.02 1.1 2.02 2.71v6.5h2.89L21.8 14Z" />
-            </svg>
-          </a>
-        </div>
-      </nav>
+      <PortfolioNav />
 
       <div className="ticker">
         <div className="ticker-track">
@@ -557,8 +618,17 @@ function App() {
           <div className="hero-scroll-art" data-cursor-depth="10">
             <div className="scroll-paper">
               <h6>About me</h6>
-              <p>About me placeholder text goes here later. Add a sharp, human story about how you think, what you value, and why teams should trust you with ambiguous product problems.</p>
+              <p>I’m Appipiah, a product designer who enjoys turning complex systems into experiences that feel clear, useful, and human.</p>
+              <p>My work spans B2B and consumer products, from education and healthcare platforms to experimental AI-powered tools. I’m especially drawn to products with many moving parts—the kind that require thoughtful structure, strong systems thinking, and a healthy amount of curiosity.</p>
+              <p>I care about the details, but I never design in isolation. I ask questions, challenge assumptions, and work closely with teams to understand what people actually need. My goal is simple: absorb the complexity behind the scenes and create something people can use with confidence.</p>
             </div>
+            <svg className="portrait-arrow" viewBox="0 0 180 120" aria-hidden="true">
+              <path d="M18 18c40 30 72 34 102 20 27-13 44 2 36 29-7 25-32 33-55 28" />
+              <path d="m107 80-8 16 18 1" />
+            </svg>
+            <figure className="portrait-polaroid" data-cursor-depth="5">
+              <img src="/assets/appipiah-portrait.jpg" alt="Portrait of Appipiah" />
+            </figure>
           </div>
         </div>
       </header>
@@ -601,10 +671,14 @@ function App() {
                   </div>
                 </div>
                 <div className="work-meta">
-                  <h3>{project.title}</h3>
+                  <div className="work-title-row">
+                    <h3>{project.title}</h3>
+                    <span>{project.year}</span>
+                  </div>
                   <div className="work-desc">
                     <p>{project.description}</p>
                   </div>
+                  <span className="work-cta">View case study</span>
                 </div>
               </button>
             ))}
