@@ -282,15 +282,15 @@ function ContactForm() {
   return (
     <form className="contact-form paper-card" onSubmit={submitForm}>
       <label>
-        <span>yourName</span>
+        <span>Name</span>
         <input name="name" value={form.name} onChange={updateField} placeholder="your name" required />
       </label>
       <label>
-        <span>yourEmail</span>
+        <span>Email</span>
         <input name="email" type="email" value={form.email} onChange={updateField} placeholder="your email" required />
       </label>
       <label className="full">
-        <span>yourMessage</span>
+        <span>Message</span>
         <textarea name="message" value={form.message} onChange={updateField} placeholder="lets hear it." required />
       </label>
       <button className="btn btn-dark full" type="submit">Send message</button>
@@ -437,7 +437,7 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
 
       <header className="case-hero">
         <div className="wrap case-hero-inner">
-          <span className="eyebrow">{project.eyebrow || "Case study placeholder"}</span>
+          <span className="eyebrow">Case study</span>
           <h1>{project.title}.</h1>
           <p>{project.description || "Placeholder case study intro. Add the company, role, scope, timeline, team, and product context here."}</p>
           {project.meta && (
@@ -461,8 +461,10 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
           {pageSections.map((section, index) => (
             <section className="case-section" id={sectionId(section)} key={section.title}>
               <div className="case-section-copy">
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <h2>{section.title}.</h2>
+                <div className="case-section-title">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <h2>{section.title}.</h2>
+                </div>
                 {section.body?.map(paragraph => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -609,7 +611,7 @@ function App() {
         <div className="wrap hero-grid">
           <div className="hero-copy">
             <span className="eyebrow hero-eyebrow">
-              B2B, B2C, you name it. I do it all.
+              Designing what’s next.
             </span>
             <h1 className="display">
               <span className="line"><span>Designing products for humans, building with AI.</span></span>
@@ -618,9 +620,7 @@ function App() {
           <div className="hero-scroll-art" data-cursor-depth="10">
             <div className="scroll-paper">
               <h6>About me</h6>
-              <p>I’m Appipiah, a product designer who enjoys turning complex systems into experiences that feel clear, useful, and human.</p>
-              <p>My work spans B2B and consumer products, from education and healthcare platforms to experimental AI-powered tools. I’m especially drawn to products with many moving parts—the kind that require thoughtful structure, strong systems thinking, and a healthy amount of curiosity.</p>
-              <p>I care about the details, but I never design in isolation. I ask questions, challenge assumptions, and work closely with teams to understand what people actually need. My goal is simple: absorb the complexity behind the scenes and create something people can use with confidence.</p>
+              <p>I’m Appipiah, a product designer who turns complex systems into clear, human experiences. I’m endlessly curious about how things work—and I love using design, systems thinking, and AI to build products people genuinely enjoy using.</p>
             </div>
             <svg className="portrait-arrow" viewBox="0 0 180 120" aria-hidden="true">
               <path d="M18 18c40 30 72 34 102 20 27-13 44 2 36 29-7 25-32 33-55 28" />
@@ -671,10 +671,7 @@ function App() {
                   </div>
                 </div>
                 <div className="work-meta">
-                  <div className="work-title-row">
-                    <h3>{project.title}</h3>
-                    <span>{project.year}</span>
-                  </div>
+                  <h3>{project.title}</h3>
                   <div className="work-desc">
                     <p>{project.description}</p>
                   </div>
