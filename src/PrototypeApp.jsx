@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { Lock } from "lucide-react"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -18,8 +19,15 @@ const givMeta = [
   ["Product", "B2B SaaS"],
   ["Platform", "Web and mobile"],
   ["Users", "Agency administrators, schedulers, caregivers"],
-  ["Tools", "Figma · Figma Make · Claude · Confluence"],
+  ["Tools", "Figma (Design and Make), GPT, Claude, Confluence"],
   ["Timeline", "[Add dates]"],
+]
+
+const givHoverMeta = [
+  ["Industry", "Healthcare"],
+  ["Product", "B2B SaaS"],
+  ["Last worked on", "July, 2026"],
+  ["Tools", "Figma (Design and Make), GPT, Claude, Confluence"],
 ]
 
 const givSections = [
@@ -139,6 +147,27 @@ const excelMindMeta = [
   ["Tools", "Figma"],
 ]
 
+const excelMindHoverMeta = [
+  ["Industry", "EdTech"],
+  ["Product", "B2B SaaS"],
+  ["Last worked on", "Feb 2025"],
+  ["Tools", "Figma"],
+]
+
+const placeholderHoverMeta = [
+  ["Industry", "Coming soon"],
+  ["Product", "Coming soon"],
+  ["Last worked on", "Coming soon"],
+  ["Tools", "Coming soon"],
+]
+
+const apexHoverMeta = [
+  ["Industry", "Motorsport"],
+  ["Product", "B2C + Internal tools"],
+  ["Last worked on", "August 2026 (ONGOING)"],
+  ["Tools", "Figma · Claude · Codex · GitHub"],
+]
+
 const excelMindSections = [
   {
     title: "Vision",
@@ -214,9 +243,10 @@ const projects = [
     slug: "giv",
     title: "Giv",
     year: "[Add dates]",
-    description: "Designing interconnected scheduling and workforce experiences for agencies supporting people with intellectual and developmental disabilities.",
+    description: "Designing scheduling and care operations for agencies supporting people with intellectual and developmental disabilities.",
     eyebrow: "PRODUCT DESIGN · HEALTHCARE · B2B SAAS",
     meta: givMeta,
+    hoverMeta: givHoverMeta,
     sections: givSections,
   },
   {
@@ -225,12 +255,22 @@ const projects = [
     title: "ExcelMind",
     year: "2025-2026",
     description: "Designing a unified B2B platform for school administration and learning.",
+    thumbnail: "/assets/excelmind-thumbnail.png",
     eyebrow: "PRODUCT DESIGN · EDTECH · B2B SAAS",
     meta: excelMindMeta,
+    hoverMeta: excelMindHoverMeta,
     sections: excelMindSections,
   },
-  { id: "03", slug: "project-three", title: "heading", year: "2026", description: "coming soon" },
-  { id: "04", slug: "project-four", title: "heading", year: "2026", description: "coming soon" },
+  {
+    id: "03",
+    slug: "apex-velociti",
+    title: "Apex Velociti",
+    year: "2026",
+    description: "Designing the digital platform behind a professional karting circuit.",
+    hoverMeta: apexHoverMeta,
+    locked: true,
+  },
+  { id: "04", slug: "project-four", title: "heading", year: "2026", description: "coming soon", hoverMeta: placeholderHoverMeta },
 ]
 
 const caseStudySections = [
@@ -242,14 +282,16 @@ const caseStudySections = [
   "Outcome",
 ]
 
-const tools = [
-  { name: "Figma", logo: "figma" },
-  { name: "Claude", logo: "spark" },
-  { name: "Framer", logo: "framer" },
-  { name: "GPT", logo: "gpt" },
-  { name: "Lovable", logo: "heart" },
-  { name: "Antigravity", logo: "orbit" },
+const designStack = [
+  ["Research", ["GPT", "Claude", "Gemini"]],
+  ["Design", ["Figma", "Figma Make"]],
+  ["Prototype", ["Claude", "Codex", "Antigravity"]],
+  ["Deploy", ["GitHub", "Vercel"]],
+  ["Collaborate", ["Notion", "Confluence", "Jira"]],
 ]
+
+const resumePreviewUrl = "https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/edit?usp=sharing"
+const resumeDownloadUrl = "https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/export?format=pdf"
 
 function jumpToPortfolioTarget(target = "") {
   const root = document.documentElement
@@ -411,15 +453,15 @@ function ContactForm() {
     <form className="contact-form paper-card" onSubmit={submitForm}>
       <label>
         <span>Name</span>
-        <input name="name" value={form.name} onChange={updateField} placeholder="your name" required />
+        <input name="name" value={form.name} onChange={updateField} placeholder="Your name" required />
       </label>
       <label>
         <span>Email</span>
-        <input name="email" type="email" value={form.email} onChange={updateField} placeholder="your email" required />
+        <input name="email" type="email" value={form.email} onChange={updateField} placeholder="Your email" required />
       </label>
       <label className="full">
         <span>Message</span>
-        <textarea name="message" value={form.message} onChange={updateField} placeholder="lets hear it." required />
+        <textarea name="message" value={form.message} onChange={updateField} placeholder="Tell me about your project" required />
       </label>
       <button className="btn btn-dark full" type="submit">Send message</button>
     </form>
@@ -749,8 +791,14 @@ function App() {
           </div>
           <div className="hero-scroll-art" data-cursor-depth="10">
             <div className="scroll-paper">
-              <h6>About me</h6>
-              <p>I’m Appipiah, a product designer who turns complex systems into clear, human experiences. I’m endlessly curious about how things work—and I love using design, systems thinking, and AI to build products people genuinely enjoy using.</p>
+              <h6>A Little About Me</h6>
+              <p>
+                Over the past three years, I've helped startups design and ship products in fast-moving environments where clarity, speed, and ownership matter.
+                <br />
+                I enjoy simplifying complex workflows, building scalable systems, and making sense of unfamiliar domains to create products that have a meaningful impact on the people using them.
+                <br />
+                The more ambitious the problem, the more excited I get.
+              </p>
             </div>
             <svg className="portrait-arrow" viewBox="0 0 180 120" aria-hidden="true">
               <path d="M18 18c40 30 72 34 102 20 27-13 44 2 36 29-7 25-32 33-55 28" />
@@ -767,22 +815,43 @@ function App() {
         <div className="wrap">
           <div className="section-head" data-reveal>
             <div>
-              <span className="eyebrow">Not so boring parts</span>
+              <span className="eyebrow">The not so boring parts</span>
               <h2 className="display">Selected works.</h2>
             </div>
           </div>
           <div className="work-list">
             {projects.map(project => (
-              <button className="work-item" data-reveal key={project.id} type="button" onClick={() => openProject(project)} aria-label={`${project.title} project preview`}>
+              <button
+                className={`work-item ${project.locked ? "is-locked" : ""}`}
+                data-reveal
+                key={project.id}
+                type="button"
+                onClick={() => {
+                  if (!project.locked) openProject(project)
+                }}
+                aria-disabled={project.locked ? "true" : "false"}
+                aria-label={`${project.title} project preview`}
+              >
                 <div className="work-visual">
                   <div className="work-card-inner">
-                    <div className="work-card-face work-front"><span className="visual-label">image preview</span></div>
+                    <div className="work-card-face work-front">
+                      {project.thumbnail ? (
+                        <img
+                          className="work-thumbnail"
+                          src={project.thumbnail}
+                          alt={`${project.title} thumbnail`}
+                          style={{ objectPosition: project.thumbnailPosition || "50% 50%" }}
+                        />
+                      ) : (
+                        <span className="visual-label">image preview</span>
+                      )}
+                    </div>
                     <div className="work-card-face work-back">
-                      {project.meta ? (
+                      {project.hoverMeta ? (
                         <div className="work-glance">
                           <span>AT A GLANCE</span>
                           <dl>
-                            {project.meta.filter(([label]) => label.toLowerCase() !== "role").map(([label, value]) => (
+                            {project.hoverMeta.map(([label, value]) => (
                               <div key={label}>
                                 <dt>{label}</dt>
                                 <dd>{value}</dd>
@@ -805,7 +874,10 @@ function App() {
                   <div className="work-desc">
                     <p>{project.description}</p>
                   </div>
-                  <span className="work-cta">View case study</span>
+                  <span className="work-cta">
+                    {project.locked && <Lock aria-hidden="true" />}
+                    {project.locked ? "Coming soon" : "View case study"}
+                  </span>
                 </div>
               </button>
             ))}
@@ -817,16 +889,20 @@ function App() {
         <div className="wrap">
           <div className="section-head" data-reveal>
             <div>
-              <span className="eyebrow">Stack</span>
-              <h2 className="display">Tools I actually use.</h2>
+              <span className="eyebrow">My co-pilots.</span>
+              <h2 className="display">Design Stack.</h2>
             </div>
           </div>
           <div className="toolkit-cloud" id="tools" data-reveal>
-            {tools.map(tool => (
-              <span className="chip" key={tool.name}>
-                <ToolLogo type={tool.logo} />
-                {tool.name}
-              </span>
+            {designStack.map(([category, stack]) => (
+              <article className="chip stack-card" key={category}>
+                <h3>{category}</h3>
+                <ul>
+                  {stack.map(tool => (
+                    <li key={tool}>{tool}</li>
+                  ))}
+                </ul>
+              </article>
             ))}
           </div>
         </div>
@@ -837,8 +913,9 @@ function App() {
           <div>
             <span className="eyebrow">Get In Touch</span>
             <h2 className="display">Got a cool project, reach out.</h2>
-            <div className="cta-ctas">
-              <a className="about-link resume-link" href="https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/edit?usp=sharing" target="_blank" rel="noreferrer">Download resume</a>
+            <div className="cta-ctas resume-actions">
+              <a className="about-link resume-link" href={resumePreviewUrl} target="_blank" rel="noreferrer">Preview resume</a>
+              <a className="resume-download" href={resumeDownloadUrl} target="_blank" rel="noreferrer">Download PDF</a>
             </div>
           </div>
           <ContactForm />
