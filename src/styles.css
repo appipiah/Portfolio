@@ -132,7 +132,7 @@ button {
 .display {
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 900;
-  line-height: 0.98;
+  line-height: 1.08;
   letter-spacing: 0;
   text-shadow: none;
 }
@@ -434,11 +434,13 @@ nav a:hover,
   max-width: 620px;
   margin: 22px 0 26px;
   font-size: clamp(28px, 4.48vw, 59px);
+  padding-bottom: 0.08em;
 }
 
 .hero h1 .line {
   display: block;
-  overflow: hidden;
+  overflow: visible;
+  padding-bottom: 0.03em;
 }
 
 .hero h1 .line span {
@@ -1180,15 +1182,16 @@ nav a:hover,
 .work-glance dt {
   color: rgba(255, 255, 255, 0.68);
   font-size: 11px;
-  font-weight: 850;
+  font-weight: 650;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .work-glance dd {
-  color: var(--cream);
-  font-size: 15px;
-  font-weight: 900;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.25;
 }
 
 .visual-label {

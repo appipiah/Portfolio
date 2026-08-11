@@ -12,6 +12,125 @@ const tickerWords = [
   "CAFFEINATED",
 ]
 
+const givMeta = [
+  ["Role", "Product Designer"],
+  ["Industry", "Healthcare"],
+  ["Product", "B2B SaaS"],
+  ["Platform", "Web and mobile"],
+  ["Users", "Agency administrators, schedulers, caregivers"],
+  ["Tools", "Figma · Figma Make · Claude · Confluence"],
+  ["Timeline", "[Add dates]"],
+]
+
+const givSections = [
+  {
+    title: "Overview",
+    body: [
+      "Giv is a B2B SaaS platform for agencies that support people with intellectual and developmental disabilities (IDD) across the United States. It brings scheduling, caregiver documentation, client care planning, compliance and payroll into a single system.",
+      "The platform is unusually interconnected. A shift is never just a calendar entry. It carries service authorisations and budgets, caregiver certifications and work-hour limits, client care plans, charting requirements, reimbursement, and the payroll record to name a few. A decision made in one module resolves somewhere else entirely, often several screens away and on a different device. Designing here meant designing the system, not the screen.",
+      "Designing at Giv meant constantly thinking beyond the immediate feature and considering what else would change because of it.",
+    ],
+    images: ["{image}"],
+  },
+  {
+    title: "The Challenge",
+    body: [
+      "I joined Giv while the company was actively onboarding agencies and responding quickly to customer feedback. That created a real tension: customers needed improvements quickly, but continuously adding features without considering the larger product could make an already robust platform harder to use.",
+      "Priorities also changed often. I could be deep into one scheduling problem and suddenly need to switch to a customer-reported issue elsewhere in the product. Because documentation around older workflows was limited, changing context often meant first reconstructing why something had been designed or built a certain way, usually through conversations with whoever still held that knowledge.",
+      "There were also limits on how directly I could participate in usability testing, because of HIPAA restrictions. Customer-facing teams handled much of that interaction on site, so part of my job was interpreting the feedback they brought back and identifying the actual product problem behind the request.",
+      "A further constraint was that platforms in this space are paid and closed, so there were no reference implementations to study. Established patterns had to be reasoned toward rather than looked up.",
+      "All of this made judgement a major part of the work: knowing when to ship quickly, when to push back, when a customer request exposed a wider UX issue, and when solving exactly what had been asked for would only create another problem somewhere else.",
+    ],
+    images: ["{image}"],
+  },
+  {
+    title: "My Role",
+    body: [
+      "I primarily owned design for Scheduling, one of the platform's core operational areas. Scheduling covered how administrators planned and managed services for clients and caregivers, while the mobile experience supported caregivers through the shifts themselves.",
+      "Over time, my team also took ownership of product improvements and customer-raised issues across different areas of the platform. That expanded my work beyond Scheduling and meant regularly navigating unfamiliar workflows, reconstructing missing context and collaborating with different Product and Engineering teams.",
+      "Across Giv, I worked on:",
+      "Shift Creation, Mobile Shift Experience, Calendar Enhancements, Overtime, Drop Shift Requests, Time Change Requests, Create Past Shift, Paid Time Off — Schedule Impact, Transportation, Goal Frequency, Group Management, AI Product Guide",
+    ],
+  },
+  {
+    title: "My Approach",
+    body: [
+      "Reading feedback as a symptom, not a specification",
+      "Customer feedback arrives as a solution. Someone tells you what they want built; underneath it is a need they have already tried to solve on your behalf. My method was to trace each request back to the underlying need, then examine the entire journey rather than only the screen where the complaint surfaced.",
+      "For example, a customer reported not receiving a notification about a task. The obvious fix was to add the notification. Instead, I walked the entire journey and asked whether the information they needed should already have been available somewhere earlier in the workflow. It had been overlooked. Solving that upstream removed the need for another notification altogether, rather than adding another alert to a product that already had plenty.",
+      "My questions almost always started in the same place: Why is this needed? What happens today? What is the user actually trying to accomplish? What already depends on this experience? What would change if we introduced it?",
+      "That approach consistently produced fewer, better-placed changes—which mattered a great deal in a team where every customer comment was a candidate feature.",
+      "Systems Thinking",
+      "Before opening Figma, I mapped what a feature actually touched: which entities it depended on, which rules it inherited, and what would break downstream.",
+      "Shift creation is the clearest example — a single modal has to respect service budgets, client availability, caregiver availability, caregiver work-hour limits, certification and eligibility requirements, agency-level settings, and recurrence, while remaining a form a scheduler can complete in under a minute. Treating that as a domain model rather than a set of form fields is what kept the interface from collapsing into a wall of validation errors.",
+      "It also meant I could tell, early, when a requested feature would put two rules in direct conflict — which is a much cheaper conversation to have before implementation than after.",
+      "The interface could be simple. The thinking behind it rarely was.",
+      "Speed didn't mean accepting every scope",
+      "Because Giv was onboarding customers quickly, there was natural pressure to respond to feedback just as quickly. Part of my role became finding the balance between shipping what customers needed and protecting the product from unnecessary complexity.",
+      "I pushed back when requests felt too broad, questioned scope when a smaller change could solve the same problem, and worked with the team to distinguish between experiences that needed to ship fast and experiences that deserved more investment upfront. This mattered most in Scheduling, where adding one more rule or control could easily make an already sophisticated workflow harder to understand.",
+      "Extending the design system",
+      "Scheduling exposed interactions that the published design system couldn't fully support. I contributed new interaction patterns for areas like modal layouts, drag-and-drop, and input behaviour, helping modernise legacy experiences while keeping new work consistent.",
+      "Because Scheduling touched so many parts of the platform, it became a proving ground for these decisions. When an existing pattern worked, I reused it. When it didn't, I focused on defining patterns that could scale across future features rather than solving only the problem in front of me. As I encountered recurring inconsistencies between designs and implementation, I also raised them during product discussions, advocating for clearer design-system rules and a more consistent product experience.",
+      "AI became part of how we collaborated",
+      "AI wasn't simply a personal productivity tool at Giv. It became a central part of collaboration between Design and Engineering.",
+      "Once we had aligned on a direction, I used Figma Make to explore the experience more deeply and turn ideas into working prototypes that made interactions, states and behaviours easier to discuss. Instead of conversations staying abstract, we could explore a solution, see how it behaved, and discuss technical feasibility with something tangible in front of us. That shortened the distance from idea to exploration to alignment to implementation.",
+      "I also used Claude independently to think through unfamiliar workflows, break features down into their constituent flows and screens, and explore alternatives faster than I could have on my own.",
+      "The goal was never to let AI decide what to build. It was to help us explore agreed ideas faster and make better decisions before development began.",
+      "Documentation as a design deliverable",
+      "Frequent context switching exposed another problem: product knowledge often lived with individual team members. PRDs explained what needed to be built, but they didn't explain the history of an existing experience, the logic behind earlier decisions, or the relationships between different parts of the product.",
+      "When I moved between product areas, I sometimes had to reconstruct that context through conversations with several teams before I could confidently change anything.",
+      "So I started producing structured handoff documentation for the work I designed — capturing flows, validation logic, display rules for each state, edge cases, open questions and known limitations.",
+      "It began as self-defence against losing context and became something the wider team relied on — a place engineers could check behaviour without having to find the person who designed it.",
+    ],
+    images: ["{image}", "{image}"],
+  },
+  {
+    title: "Product Highlights",
+    body: [
+      "Note: Some product areas and screens have been omitted or simplified to respect client confidentiality. The examples below represent selected work across the platform.",
+    ],
+    modules: [
+      ["AI Product Guide", "To improve onboarding, I proposed and prototyped an in-product AI assistant that answered feature-specific questions using existing product knowledge. Rather than pitching the idea, I built a working proof of concept using one of my existing feature prototypes as context, validating the concept end-to-end before requesting engineering investment.", "{image}"],
+      ["Scheduling", "Scheduling was the operational core of Giv, connecting caregivers, clients, compliance, payroll, and agency operations. I worked across the scheduling ecosystem, designing workflows that balanced complex business rules while remaining efficient for administrators managing hundreds of shifts.", "{image}"],
+      ["Shift Creation", "Creating a shift required balancing scheduling conflicts, budgets, work-hour limits, recurring schedules, overlapping shifts, and multiple shift types within a single workflow. I used progressive disclosure and conditional rendering so complexity only appeared when it was relevant, surfacing conflicts at the point of decision instead of at submission.", "{image}"],
+      ["Staff-Only Shifts", "I designed a dedicated workflow for staff-only shifts, introducing eligibility validation, inline resolution, and a visual language that distinguished the shift type across desktop and mobile without disrupting the existing status system.", "{image}"],
+      ["Open Shifts & Overtime", "To reduce unexpected payroll costs, I designed the claiming experience to surface overtime implications before caregivers accepted additional shifts. The feature also introduced a consistent visual treatment for open shifts across the scheduling experience.", "{image}"],
+      ["Calendar & Visual Scheduler", "I redesigned the scheduling calendar with richer previews, filtering, and a clearer information hierarchy, allowing administrators to understand more about a shift without opening it while keeping dense schedules easy to scan.", "{image}"],
+      ["Shift Status System", "I established a scalable visual language where shift type and status were communicated independently, extending consistently across desktop calendars, mobile calendars, and upcoming shift cards.", "{image}"],
+      ["Caregiver Experience", "The caregiver experience supported the full lifecycle of a shift. My work focused on reducing cognitive load while ensuring operational and compliance requirements remained visible when they mattered.", "{image}"],
+      ["Mobile Shift Experience", "I designed dedicated layouts for scheduled, active, paused, completed, and missed shifts so caregivers always saw the information and actions most relevant to their current context.", "{image}"],
+      ["Transportation & Mileage", "I designed both the agency configuration experience and the caregiver submission flow, supporting multiple reimbursement models while keeping request status clear throughout the process.", "{image}"],
+      ["Goals, Frequency & Required Charting", "I connected client goals to funded services, introduced configurable frequencies, preserved historical reporting, and ensured required documentation was completed before caregivers could finish a shift.", "{image}"],
+      ["Administrative Workflows", "Many administrative workflows directly affected staffing, payroll, and compliance. My focus was making these processes easier to manage while preserving operational integrity.", "{image}"],
+      ["Drop Shift Requests", "I designed the complete workflow for caregivers requesting to drop a shift and administrators reviewing, approving, rejecting, or reassigning those shifts without creating downstream scheduling conflicts.", "{image}"],
+      ["Time Change Requests", "I designed an end-to-end correction workflow for completed shifts, including approvals, edits, conflict handling, and audit history to maintain payroll accuracy and compliance.", "{image}"],
+      ["Paid Time Off — Schedule Impact", "Instead of approving leave based only on duration, administrators could immediately see affected shifts and resolve staffing gaps before confirming the request.", "{image}"],
+      ["Backdated Shift Creation", "I integrated backdated shifts into the existing scheduling workflow, allowing agencies to accurately record previously completed work while routing submissions through an approval process.", "{image}"],
+      ["Groups & Feature Settings", "I designed agency-level configuration tools that made operational settings easier to understand by connecting each decision to its downstream impact across the platform.", "{image}"],
+    ],
+  },
+  {
+    title: "Outcomes",
+    body: [
+      "A shift creation flow that handled the platform's full rule set — conflicts, budgets, overlap, work-hour limits, recurrence and multiple shift types — after being a long-standing challenge for the company.",
+      "A consistent visual language for shifts, where type and status are encoded independently and read the same way across the desktop calendar, the mobile calendar and the mobile homepage.",
+      "Complete request workflows — drop shift, time change, past shift and time-off impact — each with its approval path, conflict handling and audit trail.",
+      "A validated concept and working pilot for an in-product AI guide, addressing a known onboarding bottleneck absorbed by the support team.",
+      "Design handoff documentation adopted as a shared reference, reducing the product's dependence on undocumented, individually held context.",
+      "A faster design-to-engineering loop, through prototypes built in Figma Make that let the team evaluate agreed directions concretely before committing to implementation.",
+    ],
+  },
+  {
+    title: "Reflection",
+    body: [
+      "Giv pushed me in ways that went beyond the product itself. Working asynchronously across time zones reinforced the importance of clear communication, thoughtful documentation, and creating enough context for work to move forward without constant handoffs.",
+      "It also refined my approach to product decisions. User feedback is essential, but good product design requires judgement—the ability to distinguish between what users ask for and what actually moves the product forward.",
+      "Working with AI throughout the project strengthened another belief: AI-assisted design is the future. As these tools become commonplace, the real differentiator won't be AI itself, but the quality of the thinking behind it.",
+      "Finally, designing for the IDD healthcare space gave the work a different meaning. Knowing that the product supported agencies caring for people with intellectual and developmental disabilities made every design decision feel more consequential, and reinforced my interest in building products that improve people's lives in tangible ways.",
+    ],
+  },
+]
+
 const excelMindMeta = [
   ["Role", "Product Designer"],
   ["Market", "EdTech"],
@@ -92,6 +211,16 @@ const excelMindSections = [
 const projects = [
   {
     id: "01",
+    slug: "giv",
+    title: "Giv",
+    year: "[Add dates]",
+    description: "Designing interconnected scheduling and workforce experiences for agencies supporting people with intellectual and developmental disabilities.",
+    eyebrow: "PRODUCT DESIGN · HEALTHCARE · B2B SAAS",
+    meta: givMeta,
+    sections: givSections,
+  },
+  {
+    id: "02",
     slug: "excelmind",
     title: "ExcelMind",
     year: "2025-2026",
@@ -100,7 +229,6 @@ const projects = [
     meta: excelMindMeta,
     sections: excelMindSections,
   },
-  { id: "02", slug: "project-two", title: "heading", year: "2026", description: "coming soon" },
   { id: "03", slug: "project-three", title: "heading", year: "2026", description: "coming soon" },
   { id: "04", slug: "project-four", title: "heading", year: "2026", description: "coming soon" },
 ]
@@ -474,7 +602,9 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
                   {section.modules.map(([title, copy, placeholder]) => (
                     <article className="platform-module" key={title}>
                       <h3>{title}</h3>
-                      <p>{copy}</p>
+                      {copy.split("\n\n").map(paragraph => (
+                        <p key={paragraph}>{paragraph}</p>
+                      ))}
                       <div className="case-image">{placeholder}</div>
                     </article>
                   ))}
@@ -652,7 +782,7 @@ function App() {
                         <div className="work-glance">
                           <span>AT A GLANCE</span>
                           <dl>
-                            {project.meta.map(([label, value]) => (
+                            {project.meta.filter(([label]) => label.toLowerCase() !== "role").map(([label, value]) => (
                               <div key={label}>
                                 <dt>{label}</dt>
                                 <dd>{value}</dd>
