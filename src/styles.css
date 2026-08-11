@@ -31,6 +31,12 @@ html {
   scroll-behavior: smooth;
 }
 
+.section,
+.cta,
+.case-section {
+  scroll-margin-top: calc(var(--navbar-height) + 24px);
+}
+
 html,
 body,
 #root {
