@@ -722,9 +722,14 @@ function App() {
   const [activeProject, setActiveProject] = useState(() => findProjectFromHash())
   const ticker = useMemo(() => [...tickerWords, ...tickerWords], [])
 
-  useScrollReveal(loaded)
-  useGsapScrollTransitions(loaded)
-  useCursorInteractions(loaded && !activeProject)
+  // Leaving a case study remounts the whole home page, so these have to re-run
+  // against the new nodes. Keyed on `loaded` alone they would keep observing the
+  // discarded elements and the returning home page would stay blank.
+  const showingHome = loaded && !activeProject
+
+  useScrollReveal(showingHome)
+  useGsapScrollTransitions(showingHome)
+  useCursorInteractions(showingHome)
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLoaded(true), 1900)
