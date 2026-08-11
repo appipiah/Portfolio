@@ -1503,51 +1503,32 @@ nav a:hover,
 }
 
 .cta h2 {
-  max-width: 520px;
-  margin: 18px 0 30px;
+  max-width: 760px;
+  margin: 18px 0 0;
   font-size: clamp(28px, 3.2vw, 44px);
   color: var(--ink);
   text-shadow: none;
 }
 
-.contact-grid {
+.contact-shell {
   position: relative;
   z-index: 1;
-  min-height: 580px;
   display: grid;
-  grid-template-columns: minmax(0, 0.74fr) minmax(420px, 0.9fr);
-  gap: 42px;
-  align-items: center;
+  gap: 34px;
   text-align: left;
 }
 
-.contact-grid > div:first-child {
+.contact-head {
   display: grid;
   justify-items: start;
 }
 
-.cta-ctas {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
-}
-
-.resume-actions {
-  gap: 18px;
-}
-
-.resume-link {
-  background: var(--ink);
-  color: var(--cream);
-  box-shadow: 10px 8px 0 -2px var(--pink);
-}
-
-.resume-link:hover {
-  background: var(--ink);
-  color: var(--cream);
-  box-shadow: 6px 5px 0 -2px var(--pink);
+.contact-story {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(92px, 0.22fr) minmax(300px, 0.72fr);
+  gap: clamp(22px, 4vw, 46px);
+  align-items: start;
 }
 
 .resume-download {
@@ -1564,6 +1545,124 @@ nav a:hover,
 }
 
 .resume-download:hover {
+  color: var(--pink-hot);
+  text-decoration-color: var(--pink-hot);
+}
+
+.resume-bridge {
+  align-self: start;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding-top: 34px;
+  color: var(--ink);
+  transform: rotate(-2deg);
+}
+
+.resume-bridge span {
+  max-width: 130px;
+  color: var(--ink);
+  font-family: "Comic Sans MS", "Bradley Hand", cursive;
+  font-size: 17px;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.resume-bridge svg {
+  width: min(150px, 100%);
+  overflow: visible;
+}
+
+.resume-bridge path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.resume-preview {
+  position: relative;
+  min-height: 0;
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  padding: 0;
+  transform: rotate(0.8deg);
+  transition: transform 0.22s ease;
+}
+
+.resume-preview::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: min(310px, 64vw);
+  z-index: -1;
+  width: min(360px, 96%);
+  height: 72px;
+  border-radius: 999px;
+  background:
+    radial-gradient(ellipse at 25% 58%, rgba(255, 255, 255, 0.96) 0 32%, transparent 60%),
+    radial-gradient(ellipse at 54% 48%, rgba(255, 199, 220, 0.78) 0 34%, transparent 66%),
+    radial-gradient(ellipse at 76% 58%, rgba(255, 255, 255, 0.92) 0 30%, transparent 62%);
+  filter: blur(13px);
+  opacity: 0.78;
+  transform: translate(-50%, -50%);
+}
+
+.resume-preview:hover {
+  transform: translateY(-4px) rotate(0.8deg);
+}
+
+.resume-page-preview {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: min(260px, 78%);
+  aspect-ratio: 1 / 1.414;
+  border: 3px solid var(--ink);
+  background: var(--cream);
+  box-shadow: 8px 10px 0 rgba(7, 7, 7, 0.88);
+  clip-path: var(--chip-edge-soft);
+  cursor: pointer;
+  transition: box-shadow 0.22s ease, transform 0.22s ease;
+}
+
+.resume-page-preview:hover {
+  box-shadow: 10px 14px 0 rgba(7, 7, 7, 0.88);
+  transform: translateY(-2px);
+}
+
+.resume-page-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: top center;
+  background: var(--cream);
+}
+
+.resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.resume-open {
+  position: relative;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 950;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+}
+
+.resume-open:hover {
   color: var(--pink-hot);
   text-decoration-color: var(--pink-hot);
 }
@@ -2285,7 +2384,7 @@ footer .fine {
     grid-template-columns: 1fr;
   }
 
-  .cta-ctas,
+  .resume-actions,
   .btn {
     width: 100%;
   }
@@ -2298,9 +2397,29 @@ footer .fine {
     display: none;
   }
 
-  .contact-grid,
+  .contact-story,
   .contact-form {
     grid-template-columns: 1fr;
+  }
+
+  .resume-bridge {
+    justify-items: start;
+    padding-top: 0;
+    transform: rotate(-1deg);
+  }
+
+  .resume-bridge span {
+    max-width: none;
+    text-align: left;
+  }
+
+  .resume-bridge svg {
+    width: 132px;
+    transform: rotate(24deg);
+  }
+
+  .resume-preview {
+    transform: rotate(0);
   }
 
   .toolkit-cloud {

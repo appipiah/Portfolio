@@ -293,6 +293,23 @@ const designStack = [
 const resumePreviewUrl = "https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/edit?usp=sharing"
 const resumeDownloadUrl = "https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/export?format=pdf"
 
+const CASE_HASH_PREFIX = "#case-"
+
+// The hash carries two different things: the case study route ("#case-giv") and
+// in-page section anchors within a case study ("#giv-my-role"). Both have to
+// resolve to the same project, otherwise following a section link reads as
+// "no project" and drops the reader back on the home page.
+function findProjectFromHash() {
+  const hash = window.location.hash
+
+  if (hash.startsWith(CASE_HASH_PREFIX)) {
+    const slug = hash.slice(CASE_HASH_PREFIX.length)
+    return projects.find(project => project.slug === slug) || null
+  }
+
+  return projects.find(project => hash.startsWith(`#${project.slug}-`)) || null
+}
+
 function jumpToPortfolioTarget(target = "") {
   const root = document.documentElement
   root.style.scrollBehavior = "auto"
@@ -577,6 +594,16 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
   const sectionId = section => `${project.slug}-${section.title.toLowerCase().replaceAll(" ", "-").replaceAll("&", "and").replaceAll("(", "").replaceAll(")", "")}`
 
   useEffect(() => {
+    // Opening a case study starts at the top, but a link straight to one of its
+    // sections should land on that section instead of being scrolled away.
+    const deepLinked = pageSections.find(section => window.location.hash === `#${sectionId(section)}`)
+
+    if (deepLinked) {
+      setActiveSection(deepLinked.title)
+      document.getElementById(sectionId(deepLinked))?.scrollIntoView({ behavior: "auto", block: "start" })
+      return
+    }
+
     window.scrollTo({ top: 0, behavior: "smooth" })
     setActiveSection(pageSections[0].title)
   }, [project])
@@ -692,10 +719,6 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
 
 function App() {
   const [loaded, setLoaded] = useState(false)
-  const findProjectFromHash = () => {
-    const slug = window.location.hash.replace("#case-", "")
-    return slug ? projects.find(project => project.slug === slug) || null : null
-  }
   const [activeProject, setActiveProject] = useState(() => findProjectFromHash())
   const ticker = useMemo(() => [...tickerWords, ...tickerWords], [])
 
@@ -909,16 +932,30 @@ function App() {
       </section>
 
       <section className="cta" id="contact" data-section>
-        <div className="wrap contact-grid" data-reveal>
-          <div>
+        <div className="wrap contact-shell" data-reveal>
+          <div className="contact-head">
             <span className="eyebrow">Get In Touch</span>
-            <h2 className="display">Got a cool project, reach out.</h2>
-            <div className="cta-ctas resume-actions">
-              <a className="about-link resume-link" href={resumePreviewUrl} target="_blank" rel="noreferrer">Preview resume</a>
-              <a className="resume-download" href={resumeDownloadUrl} target="_blank" rel="noreferrer">Download PDF</a>
-            </div>
+            <h2 className="display">Got a cool project? Tell me about it.</h2>
           </div>
-          <ContactForm />
+          <div className="contact-story">
+            <ContactForm />
+            <div className="resume-bridge" aria-hidden="true">
+              <span>Need to know more first?</span>
+              <svg viewBox="0 0 180 92">
+                <path d="M12 48c32-30 72-42 112-18 20 12 28 29 22 42" />
+                <path d="m132 62 15 12 5-19" />
+              </svg>
+            </div>
+            <aside className="resume-preview" aria-label="Resume preview">
+              <a className="resume-page-preview" href={resumePreviewUrl} target="_blank" rel="noreferrer" aria-label="Open full resume">
+                <img src="/assets/resume-preview-page-1.png" alt="First page preview of Bodede Dolapo's resume" />
+              </a>
+              <div className="resume-actions">
+                <a className="resume-open" href={resumePreviewUrl} target="_blank" rel="noreferrer">Open Resume →</a>
+                <a className="resume-download" href={resumeDownloadUrl} target="_blank" rel="noreferrer">Download PDF</a>
+              </div>
+            </aside>
+          </div>
         </div>
       </section>
 
