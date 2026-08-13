@@ -13,14 +13,18 @@ const tickerWords = [
   "CAFFEINATED",
 ]
 
+const heroAboutCopy = "Over the past three years, I've helped startups design and ship products in fast-moving environments where clarity, speed, and ownership matter. I enjoy simplifying complex workflows, building scalable systems, and making sense of unfamiliar domains to create products that have a meaningful impact on the people using them. The more ambitious the problem, the more excited I get."
+
+const savedAboutNote = {
+  heading: "A Little About Me",
+  body: heroAboutCopy,
+}
+
 const givMeta = [
-  ["Role", "Product Designer"],
   ["Industry", "Healthcare"],
   ["Product", "B2B SaaS"],
-  ["Platform", "Web and mobile"],
-  ["Users", "Agency administrators, schedulers, caregivers"],
+  ["Last worked on", "July, 2026"],
   ["Tools", "Figma (Design and Make), GPT, Claude, Confluence"],
-  ["Timeline", "[Add dates]"],
 ]
 
 const givHoverMeta = [
@@ -61,7 +65,7 @@ const givSections = [
     ],
   },
   {
-    title: "My Approach",
+    title: "My Process",
     body: [
       "Reading feedback as a symptom, not a specification",
       "Customer feedback arrives as a solution. Someone tells you what they want built; underneath it is a need they have already tried to solve on your behalf. My method was to trace each request back to the underlying need, then examine the entire journey rather than only the screen where the complaint surfaced.",
@@ -139,11 +143,20 @@ const givSections = [
   },
 ]
 
+const givProcessHeadings = new Set([
+  "Reading feedback as a symptom, not a specification",
+  "Systems Thinking",
+  "Speed didn't mean accepting every scope",
+  "Extending the design system",
+  "AI became part of how we collaborated",
+  "Documentation as a design deliverable",
+])
+
 const excelMindMeta = [
   ["Role", "Product Designer"],
   ["Market", "EdTech"],
   ["Product", "B2B SaaS"],
-  ["Timeline", "2025-2026"],
+  ["Last worked on", "Feb 2025"],
   ["Tools", "Figma"],
 ]
 
@@ -283,12 +296,28 @@ const caseStudySections = [
 ]
 
 const designStack = [
-  ["Research", ["GPT", "Claude", "Gemini"]],
+  ["Research", ["ChatGPT", "Claude", "Gemini"]],
   ["Design", ["Figma", "Figma Make"]],
   ["Prototype", ["Claude", "Codex", "Antigravity"]],
   ["Deploy", ["GitHub", "Vercel"]],
   ["Collaborate", ["Notion", "Confluence", "Jira"]],
 ]
+
+// Tools without an entry keep the diamond bullet instead of borrowing a
+// parent brand's mark. Antigravity has no icon available.
+const toolLogos = {
+  ChatGPT: "chatgpt",
+  Codex: "chatgpt",
+  Claude: "claude",
+  Gemini: "googlegemini",
+  Figma: "figma",
+  "Figma Make": "figma",
+  GitHub: "github",
+  Vercel: "vercel",
+  Notion: "notion",
+  Confluence: "confluence",
+  Jira: "jira",
+}
 
 const resumePreviewUrl = "https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/edit?usp=sharing"
 const resumeDownloadUrl = "https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/export?format=pdf"
@@ -547,8 +576,24 @@ function LinkedInIcon() {
   )
 }
 
+function HamburgerIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="3" y="6" width="18" height="2" rx="1" />
+      <rect x="3" y="11" width="18" height="2" rx="1" />
+      <rect x="3" y="16" width="18" height="2" rx="1" />
+    </svg>
+  )
+}
+
 function PortfolioNav({ onNavigateHome }) {
+  const [menuOpen, setMenuOpen] = useState(false)
+  const navRef = useRef(null)
+  const toggleRef = useRef(null)
+
   const navigateHome = (target = "") => {
+    setMenuOpen(false)
+
     if (onNavigateHome) {
       onNavigateHome(target)
       return
@@ -564,21 +609,56 @@ function PortfolioNav({ onNavigateHome }) {
     jumpToPortfolioTarget()
   }
 
+  useEffect(() => {
+    if (!menuOpen) return undefined
+
+    const closeOnEscape = event => {
+      if (event.key !== "Escape") return
+      setMenuOpen(false)
+      toggleRef.current?.focus()
+    }
+
+    const closeOnOutsideClick = event => {
+      if (navRef.current?.contains(event.target)) return
+      setMenuOpen(false)
+    }
+
+    document.addEventListener("keydown", closeOnEscape)
+    document.addEventListener("pointerdown", closeOnOutsideClick)
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape)
+      document.removeEventListener("pointerdown", closeOnOutsideClick)
+    }
+  }, [menuOpen])
+
   return (
-    <nav>
+    <nav className={menuOpen ? "nav-menu-open" : ""} ref={navRef}>
       <div className="wrap">
         <div className="brand">
           Bodede Dolapo <span className="nick">(Appipiah)</span>
         </div>
-        <ul>
+        <ul id="nav-menu">
           <li><button className="nav-link" type="button" onClick={() => navigateHome()}>Home</button></li>
           <li><button className="nav-link" type="button" onClick={() => navigateHome("#work")}>Work</button></li>
-          <li><a href="https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/edit?usp=sharing" target="_blank" rel="noreferrer">Resume</a></li>
+          <li><a href="https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/edit?usp=sharing" target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>Resume</a></li>
           <li><span className="nav-disabled" aria-disabled="true">Playground (coming soon)</span></li>
         </ul>
-        <a className="icon-btn linkedin-btn" href="https://www.linkedin.com/in/bodededolapo/" aria-label="LinkedIn">
-          <LinkedInIcon />
-        </a>
+        <div className="nav-actions">
+          <a className="icon-btn linkedin-btn" href="https://www.linkedin.com/in/bodededolapo/" aria-label="LinkedIn">
+            <LinkedInIcon />
+          </a>
+          <button
+            className="icon-btn nav-toggle"
+            type="button"
+            ref={toggleRef}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="nav-menu"
+            onClick={() => setMenuOpen(open => !open)}
+          >
+            <HamburgerIcon />
+          </button>
+        </div>
       </div>
     </nav>
   )
@@ -638,8 +718,7 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
           <h1>{project.title}.</h1>
           <p>{project.description || "Placeholder case study intro. Add the company, role, scope, timeline, team, and product context here."}</p>
           {project.meta && (
-            <section className="case-glance case-hero-glance" aria-labelledby={`${project.slug}-at-a-glance`}>
-              <h2 id={`${project.slug}-at-a-glance`}>At a Glance</h2>
+            <section className="case-glance case-hero-glance" aria-label={`${project.title} metadata`}>
               <dl>
                 {project.meta.map(([label, value]) => (
                   <div key={label}>
@@ -660,17 +739,21 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
               <div className="case-section-copy">
                 <div className="case-section-title">
                   <span>{String(index + 1).padStart(2, "0")}</span>
-                  <h2>{section.title}.</h2>
+                  <h4>{section.title}.</h4>
                 </div>
                 {section.body?.map(paragraph => (
-                  <p key={paragraph}>{paragraph}</p>
+                  section.title === "My Process" && givProcessHeadings.has(paragraph) ? (
+                    <h5 className="case-body-subheading" key={paragraph}>{paragraph}</h5>
+                  ) : (
+                    <p key={paragraph}>{paragraph}</p>
+                  )
                 ))}
               </div>
               {section.modules ? (
                 <div className="platform-modules">
                   {section.modules.map(([title, copy, placeholder]) => (
                     <article className="platform-module" key={title}>
-                      <h3>{title}</h3>
+                      <h5>{title}</h5>
                       {copy.split("\n\n").map(paragraph => (
                         <p key={paragraph}>{paragraph}</p>
                       ))}
@@ -697,9 +780,21 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
             <div className="more-work-list">
               {projects.filter(item => item.id !== project.id).map(item => (
                 <button className="more-work-card" key={item.id} type="button" onClick={() => onSelectProject(item)}>
-                  <span>{item.id}</span>
-                  <strong>{item.title}</strong>
-                  <small>{item.description}</small>
+                  <div className="more-work-thumb">
+                    {item.thumbnail ? (
+                      <img
+                        src={item.thumbnail}
+                        alt={`${item.title} thumbnail`}
+                        style={{ objectPosition: item.thumbnailPosition || "50% 50%" }}
+                      />
+                    ) : (
+                      <span>{item.id}</span>
+                    )}
+                  </div>
+                  <div className="more-work-meta">
+                    <strong>{item.title}</strong>
+                    <small>{item.description}</small>
+                  </div>
                 </button>
               ))}
             </div>
@@ -810,29 +905,16 @@ function App() {
       <header className={`hero ${loaded ? "hero-ready" : ""}`} id="heroSection" data-section>
         <div className="wrap hero-grid">
           <div className="hero-copy">
-            <span className="eyebrow hero-eyebrow">
-              Designing what’s next.
-            </span>
-            <h1 className="display">
-              <span className="line"><span>Designing products for humans, building with AI.</span></span>
-            </h1>
+            <h3 className="display hero-title">
+              <span className="line"><span>I don't just design products. I help teams figure them out.</span></span>
+            </h3>
+            <p className="hero-body">{heroAboutCopy}</p>
           </div>
-          <div className="hero-scroll-art" data-cursor-depth="10">
-            <div className="scroll-paper">
-              <h6>A Little About Me</h6>
-              <p>
-                Over the past three years, I've helped startups design and ship products in fast-moving environments where clarity, speed, and ownership matter.
-                <br />
-                I enjoy simplifying complex workflows, building scalable systems, and making sense of unfamiliar domains to create products that have a meaningful impact on the people using them.
-                <br />
-                The more ambitious the problem, the more excited I get.
-              </p>
-            </div>
-            <svg className="portrait-arrow" viewBox="0 0 180 120" aria-hidden="true">
-              <path d="M18 18c40 30 72 34 102 20 27-13 44 2 36 29-7 25-32 33-55 28" />
-              <path d="m107 80-8 16 18 1" />
-            </svg>
-            <figure className="portrait-polaroid" data-cursor-depth="5">
+          <div className="hero-portrait-wrap" data-cursor-depth="10" aria-label={savedAboutNote.heading}>
+            <span className="eyebrow hero-eyebrow">
+              DESIGNING WHAT'S NEXT
+            </span>
+            <figure className="portrait-polaroid hero-polaroid" data-cursor-depth="5">
               <img src="/assets/appipiah-portrait.jpg" alt="Portrait of Appipiah" />
             </figure>
           </div>
@@ -917,7 +999,7 @@ function App() {
         <div className="wrap">
           <div className="section-head" data-reveal>
             <div>
-              <span className="eyebrow">My co-pilots.</span>
+              <span className="eyebrow">My co-pilots</span>
               <h2 className="display">Design Stack.</h2>
             </div>
           </div>
@@ -927,7 +1009,12 @@ function App() {
                 <h3>{category}</h3>
                 <ul>
                   {stack.map(tool => (
-                    <li key={tool}>{tool}</li>
+                    <li className={toolLogos[tool] ? "has-logo" : ""} key={tool}>
+                      {toolLogos[tool] ? (
+                        <img className="tool-logo" src={`/assets/logos/${toolLogos[tool]}.svg`} alt="" aria-hidden="true" width="18" height="18" loading="lazy" />
+                      ) : null}
+                      {tool}
+                    </li>
                   ))}
                 </ul>
               </article>
