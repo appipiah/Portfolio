@@ -53,7 +53,25 @@ const givSections = [
       "A further constraint was that platforms in this space are paid and closed, so there were no reference implementations to study. Established patterns had to be reasoned toward rather than looked up.",
       "All of this made judgement a major part of the work: knowing when to ship quickly, when to push back, when a customer request exposed a wider UX issue, and when solving exactly what had been asked for would only create another problem somewhere else.",
     ],
-    images: ["{image}"],
+    images: [
+      {
+        type: "horizontal-scroll",
+        items: [
+          {
+            src: "/assets/giv-challenge-descoped-screens.png",
+            alt: "Descoped audit log screens",
+          },
+          {
+            src: "/assets/giv-challenge-recurring-shifts-spec.png",
+            alt: "Recurring shift specification document",
+          },
+          {
+            src: "/assets/giv-challenge-youtube-demo.png",
+            alt: "YouTube demo research reference",
+          },
+        ],
+      },
+    ],
   },
   {
     title: "My Role",
@@ -771,22 +789,36 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
               ) : (
                 <div className="case-image-stack">
                   {(section.images || ["image placeholder"]).map((media, imageIndex) => (
-                    <div className="case-image" key={`${section.title}-${imageIndex}`}>
-                      {typeof media === "object" && media.type === "image" ? (
-                        <img src={media.src} alt={media.alt} />
-                      ) : typeof media === "object" && media.type === "video" ? (
-                        <video
-                          src={media.src}
-                          aria-label={media.label}
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                        />
-                      ) : (
-                        media
-                      )}
-                    </div>
+                    typeof media === "object" && media.type === "horizontal-scroll" ? (
+                      <div className="case-horizontal-scroll" aria-label="Challenge research artifacts" key={`${section.title}-${imageIndex}`}>
+                        <div className="case-horizontal-track">
+                          {[...media.items, ...media.items].map((item, itemIndex) => (
+                            <img
+                              src={item.src}
+                              alt={item.alt}
+                              key={`${item.src}-${itemIndex}`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="case-image" key={`${section.title}-${imageIndex}`}>
+                        {typeof media === "object" && media.type === "image" ? (
+                          <img src={media.src} alt={media.alt} />
+                        ) : typeof media === "object" && media.type === "video" ? (
+                          <video
+                            src={media.src}
+                            aria-label={media.label}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                          />
+                        ) : (
+                          media
+                        )}
+                      </div>
+                    )
                   ))}
                 </div>
               )}
