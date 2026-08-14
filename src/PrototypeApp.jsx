@@ -42,7 +42,7 @@ const givSections = [
       "The platform is unusually interconnected. A shift is never just a calendar entry. It carries service authorisations and budgets, caregiver certifications and work-hour limits, client care plans, charting requirements, reimbursement, and the payroll record to name a few. A decision made in one module resolves somewhere else entirely, often several screens away and on a different device. Designing here meant designing the system, not the screen.",
       "Designing at Giv meant constantly thinking beyond the immediate feature and considering what else would change because of it.",
     ],
-    images: ["{image}"],
+    images: [{ type: "video", src: "/assets/giv-overview.mp4", label: "Giv overview motion showcase" }],
   },
   {
     title: "The Challenge",
@@ -744,6 +744,8 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
                 {section.body?.map(paragraph => (
                   section.title === "My Process" && givProcessHeadings.has(paragraph) ? (
                     <h5 className="case-body-subheading" key={paragraph}>{paragraph}</h5>
+                  ) : paragraph.startsWith("Note:") ? (
+                    <p className="case-note" key={paragraph}>{paragraph}</p>
                   ) : (
                     <p key={paragraph}>{paragraph}</p>
                   )
@@ -763,8 +765,21 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
                 </div>
               ) : (
                 <div className="case-image-stack">
-                  {(section.images || ["image placeholder"]).map((placeholder, imageIndex) => (
-                    <div className="case-image" key={`${section.title}-${imageIndex}`}>{placeholder}</div>
+                  {(section.images || ["image placeholder"]).map((media, imageIndex) => (
+                    <div className="case-image" key={`${section.title}-${imageIndex}`}>
+                      {typeof media === "object" && media.type === "video" ? (
+                        <video
+                          src={media.src}
+                          aria-label={media.label}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                        />
+                      ) : (
+                        media
+                      )}
+                    </div>
                   ))}
                 </div>
               )}
