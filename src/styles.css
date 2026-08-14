@@ -2248,6 +2248,16 @@ nav a:hover,
   border-bottom: 0;
 }
 
+.platform-module .module-lede {
+  color: var(--ink);
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.45;
+}
+
+.module-lead {
+  font-weight: 640;
+}
+
 .platform-module h6 {
   width: 70%;
   justify-self: center;
