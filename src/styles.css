@@ -2138,6 +2138,7 @@ nav a:hover,
 }
 
 .case-image {
+  position: relative;
   min-height: 480px;
   display: grid;
   place-items: center;
@@ -2222,6 +2223,20 @@ nav a:hover,
   justify-self: start;
 }
 
+.platform-group {
+  width: 70%;
+  justify-self: center;
+  margin: 30px 0 4px;
+  font-family: var(--font-sans);
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 620;
+  line-height: 1.1;
+}
+
+.platform-group:first-child {
+  margin-top: 0;
+}
+
 .platform-module {
   display: grid;
   gap: 14px;
@@ -2233,7 +2248,7 @@ nav a:hover,
   border-bottom: 0;
 }
 
-.platform-module h5 {
+.platform-module h6 {
   width: 70%;
   justify-self: center;
   padding: 0;
@@ -2680,8 +2695,9 @@ footer .fine {
   }
 
   .case-section-copy,
-  .platform-module h5,
-  .platform-module p {
+  .platform-module h6,
+  .platform-module p,
+  .platform-group {
     width: 100%;
   }
 

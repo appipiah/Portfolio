@@ -115,7 +115,6 @@ const givSections = [
       "So I started producing structured handoff documentation for the work I designed — capturing flows, validation logic, display rules for each state, edge cases, open questions and known limitations.",
       "It began as self-defence against losing context and became something the wider team relied on — a place engineers could check behaviour without having to find the person who designed it.",
     ],
-    images: ["{image}", "{image}"],
   },
   {
     title: "Product Highlights",
@@ -123,18 +122,18 @@ const givSections = [
       "Note: Some product areas and screens have been omitted or simplified to respect client confidentiality. The examples below represent selected work across the platform.",
     ],
     modules: [
-      ["AI Product Guide", "To improve onboarding, I proposed and prototyped an in-product AI assistant that answered feature-specific questions using existing product knowledge. Rather than pitching the idea, I built a working proof of concept using one of my existing feature prototypes as context, validating the concept end-to-end before requesting engineering investment.", "{image}"],
-      ["Scheduling", "Scheduling was the operational core of Giv, connecting caregivers, clients, compliance, payroll, and agency operations. I worked across the scheduling ecosystem, designing workflows that balanced complex business rules while remaining efficient for administrators managing hundreds of shifts.", "{image}"],
+      ["AI Product Guide", "To improve onboarding, I designed and built an in-product AI assistant that answered feature-specific questions from existing product knowledge. I built it with the Claude API, passing the feature's codebase in as context so its answers reflected how the product actually behaved. I then pitched it as a working proof of concept rather than a proposal, validating the idea end-to-end before asking for engineering investment.", "{image}"],
+      ["Scheduling"],
       ["Shift Creation", "Creating a shift required balancing scheduling conflicts, budgets, work-hour limits, recurring schedules, overlapping shifts, and multiple shift types within a single workflow. I used progressive disclosure and conditional rendering so complexity only appeared when it was relevant, surfacing conflicts at the point of decision instead of at submission.", "{image}"],
       ["Staff-Only Shifts", "I designed a dedicated workflow for staff-only shifts, introducing eligibility validation, inline resolution, and a visual language that distinguished the shift type across desktop and mobile without disrupting the existing status system.", "{image}"],
       ["Open Shifts & Overtime", "To reduce unexpected payroll costs, I designed the claiming experience to surface overtime implications before caregivers accepted additional shifts. The feature also introduced a consistent visual treatment for open shifts across the scheduling experience.", "{image}"],
       ["Calendar & Visual Scheduler", "I redesigned the scheduling calendar with richer previews, filtering, and a clearer information hierarchy, allowing administrators to understand more about a shift without opening it while keeping dense schedules easy to scan.", "{image}"],
       ["Shift Status System", "I established a scalable visual language where shift type and status were communicated independently, extending consistently across desktop calendars, mobile calendars, and upcoming shift cards.", "{image}"],
-      ["Caregiver Experience", "The caregiver experience supported the full lifecycle of a shift. My work focused on reducing cognitive load while ensuring operational and compliance requirements remained visible when they mattered.", "{image}"],
+      ["Caregiver Experience"],
       ["Mobile Shift Experience", "I designed dedicated layouts for scheduled, active, paused, completed, and missed shifts so caregivers always saw the information and actions most relevant to their current context.", "{image}"],
       ["Transportation & Mileage", "I designed both the agency configuration experience and the caregiver submission flow, supporting multiple reimbursement models while keeping request status clear throughout the process.", "{image}"],
       ["Goals, Frequency & Required Charting", "I connected client goals to funded services, introduced configurable frequencies, preserved historical reporting, and ensured required documentation was completed before caregivers could finish a shift.", "{image}"],
-      ["Administrative Workflows", "Many administrative workflows directly affected staffing, payroll, and compliance. My focus was making these processes easier to manage while preserving operational integrity.", "{image}"],
+      ["Administrative Workflows"],
       ["Drop Shift Requests", "I designed the complete workflow for caregivers requesting to drop a shift and administrators reviewing, approving, rejecting, or reassigning those shifts without creating downstream scheduling conflicts.", "{image}"],
       ["Time Change Requests", "I designed an end-to-end correction workflow for completed shifts, including approvals, edits, conflict handling, and audit history to maintain payroll accuracy and compliance.", "{image}"],
       ["Paid Time Off — Schedule Impact", "Instead of approving leave based only on duration, administrators could immediately see affected shifts and resolve staffing gaps before confirming the request.", "{image}"],
@@ -780,13 +779,17 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
               {section.modules ? (
                 <div className="platform-modules">
                   {section.modules.map(([title, copy, placeholder]) => (
-                    <article className="platform-module" key={title}>
-                      <h5>{title}</h5>
-                      {copy.split("\n\n").map(paragraph => (
-                        <p key={paragraph}>{paragraph}</p>
-                      ))}
-                      <div className="case-image">{placeholder}</div>
-                    </article>
+                    copy ? (
+                      <article className="platform-module" key={title}>
+                        <h6>{title}</h6>
+                        {copy.split("\n\n").map(paragraph => (
+                          <p key={paragraph}>{paragraph}</p>
+                        ))}
+                        <div className="case-image">{placeholder}</div>
+                      </article>
+                    ) : (
+                      <h5 className="platform-group" key={title}>{title}</h5>
+                    )
                   ))}
                 </div>
               ) : (
@@ -807,7 +810,7 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
                         </div>
                       </div>
                     ) : (
-                      <div className="case-image" key={`${section.title}-${imageIndex}`}>
+                      <div className={`case-image ${typeof media === "object" && media.className ? media.className : ""}`} key={`${section.title}-${imageIndex}`}>
                         {typeof media === "object" && media.type === "image" ? (
                           <img src={media.src} alt={media.alt} />
                         ) : typeof media === "object" && media.type === "video" ? (
