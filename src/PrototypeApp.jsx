@@ -42,7 +42,7 @@ const givSections = [
       "The platform is unusually interconnected. A shift is never just a calendar entry. It carries service authorisations and budgets, caregiver certifications and work-hour limits, client care plans, charting requirements, reimbursement, and the payroll record to name a few. A decision made in one module resolves somewhere else entirely, often several screens away and on a different device. Designing here meant designing the system, not the screen.",
       "Designing at Giv meant constantly thinking beyond the immediate feature and considering what else would change because of it.",
     ],
-    images: [{ type: "video", src: "/assets/giv-overview.mp4", label: "Giv overview motion showcase" }],
+    images: ["{image}"],
   },
   {
     title: "The Challenge",
@@ -257,6 +257,10 @@ const projects = [
     title: "Giv",
     year: "[Add dates]",
     description: "Designing scheduling and care operations for agencies supporting people with intellectual and developmental disabilities.",
+    thumbnail: "/assets/giv-overview.mp4",
+    thumbnailType: "video",
+    thumbnailPosition: "50% 42%",
+    thumbnailScale: 1.18,
     eyebrow: "PRODUCT DESIGN · HEALTHCARE · B2B SAAS",
     meta: givMeta,
     hoverMeta: givHoverMeta,
@@ -268,7 +272,8 @@ const projects = [
     title: "ExcelMind",
     year: "2025-2026",
     description: "Designing a unified B2B platform for school administration and learning.",
-    thumbnail: "/assets/excelmind-thumbnail.png",
+    thumbnail: "/assets/excelmind-thumbnail.mp4",
+    thumbnailType: "video",
     eyebrow: "PRODUCT DESIGN · EDTECH · B2B SAAS",
     meta: excelMindMeta,
     hoverMeta: excelMindHoverMeta,
@@ -796,7 +801,20 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
               {projects.filter(item => item.id !== project.id).map(item => (
                 <button className="more-work-card" key={item.id} type="button" onClick={() => onSelectProject(item)}>
                   <div className="more-work-thumb">
-                    {item.thumbnail ? (
+                    {item.thumbnail && item.thumbnailType === "video" ? (
+                      <video
+                        src={item.thumbnail}
+                        aria-label={`${item.title} thumbnail`}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        style={{
+                          objectPosition: item.thumbnailPosition || "50% 50%",
+                          "--thumb-scale": item.thumbnailScale || 1,
+                        }}
+                      />
+                    ) : item.thumbnail ? (
                       <img
                         src={item.thumbnail}
                         alt={`${item.title} thumbnail`}
@@ -960,7 +978,21 @@ function App() {
                 <div className="work-visual">
                   <div className="work-card-inner">
                     <div className="work-card-face work-front">
-                      {project.thumbnail ? (
+                      {project.thumbnail && project.thumbnailType === "video" ? (
+                        <video
+                          className="work-thumbnail work-thumbnail-video"
+                          src={project.thumbnail}
+                          aria-label={`${project.title} thumbnail`}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          style={{
+                            objectPosition: project.thumbnailPosition || "50% 50%",
+                            "--thumb-scale": project.thumbnailScale || 1,
+                          }}
+                        />
+                      ) : project.thumbnail ? (
                         <img
                           className="work-thumbnail"
                           src={project.thumbnail}
