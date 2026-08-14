@@ -60,14 +60,17 @@ const givSections = [
           {
             src: "/assets/giv-challenge-descoped-screens.png",
             alt: "Descoped audit log screens",
+            caption: "Designed an audit log for tracking who managed a request. It got descoped.",
           },
           {
             src: "/assets/giv-challenge-recurring-shifts-spec.png",
             alt: "Recurring shift specification document",
+            caption: "Breaking down recurring shift logic for the devs. This got detailed very quickly.",
           },
           {
             src: "/assets/giv-challenge-youtube-demo.png",
             alt: "YouTube demo research reference",
+            caption: "Learning a competitor feature from a YouTube demo because the actual product was behind a paywall. 🙂",
           },
         ],
       },
@@ -793,11 +796,13 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
                       <div className="case-horizontal-scroll" aria-label="Challenge research artifacts" key={`${section.title}-${imageIndex}`}>
                         <div className="case-horizontal-track">
                           {[...media.items, ...media.items].map((item, itemIndex) => (
-                            <img
-                              src={item.src}
-                              alt={item.alt}
-                              key={`${item.src}-${itemIndex}`}
-                            />
+                            <figure className="case-horizontal-item" key={`${item.src}-${itemIndex}`}>
+                              <img
+                                src={item.src}
+                                alt={item.alt}
+                              />
+                              <figcaption>{item.caption}</figcaption>
+                            </figure>
                           ))}
                         </div>
                       </div>
