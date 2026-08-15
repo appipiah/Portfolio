@@ -2279,6 +2279,21 @@ nav a:hover,
   margin: 8px 0 0;
 }
 
+.platform-module .ai-guide-media {
+  background: #111111;
+}
+
+.platform-module .ai-guide-media video {
+  width: auto;
+  height: min(92%, 620px);
+  min-height: 0;
+  max-width: min(88%, 420px);
+  object-fit: contain;
+  border-radius: 34px;
+  overflow: hidden;
+  background: transparent;
+}
+
 .case-floating-nav {
   position: fixed;
   right: 22px;
