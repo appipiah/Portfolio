@@ -72,7 +72,7 @@ const givSections = [
   },
   {
     title: "The cracks started to show.",
-    label: "The problem",
+    label: "Problem",
     body: [
       "As Giv onboarded agencies, Scheduling became a recurring source of questions.",
       "The legacy experience was buggy and difficult to understand. Customer Support was doing a lot of the work the product should have been doing — recording walkthroughs and spending longer onboarding sessions explaining how to use it.",
@@ -84,7 +84,7 @@ const givSections = [
   },
   {
     title: "Four things made this harder than it looks",
-    label: "Constraints",
+    label: "How I worked",
     body: [
       "## **01 - Everything was connected**",
       "A shift wasn't just a calendar entry. It connected caregiver availability, client budgets, certifications, overtime, documentation and payroll. A change in one place could affect several other workflows.",
@@ -104,7 +104,7 @@ const givSections = [
   },
   {
     title: "First, I rebuilt the calendar interface.",
-    label: "Calendar",
+    label: "Solutions",
     body: [
       "I started by collapsing shift details to keep the calendar clean, then reversed course when feedback showed me the flaw: schedulers were managing both staff and clients across busy agencies, and hiding information made the calendar harder to scan.",
       "I brought the important information forward, added richer hover cards and filters, and designed parallel staff and client views schedulers could move between without losing their place. I also created a visual language for every shift across desktop and mobile: **colour showed status, border showed whether it was regular, open or staff-only.** The rule scaled across agency sizes and became a reusable design-system pattern.",
@@ -113,7 +113,6 @@ const givSections = [
   },
   {
     title: "Next, I tackled the hardest part: creating a shift",
-    label: "Shift creation",
     body: [
       "This was where the entire scheduling model collided. I brought recurrence, availability, work-hour limits, budget conflicts, overlaps and agency settings into one modal. It inferred shift type from who was added, supported drag-and-drop and manual assignment, blocked invalid shifts early, and surfaced conflicts while schedulers were adding people.",
       "**Where I traded precision for performance**",
@@ -123,7 +122,6 @@ const givSections = [
   },
   {
     title: "Then I designed for the shift itself, not just the schedule",
-    label: "Caregiver app",
     body: [
       "I designed the caregiver's mobile shift experience around shift types and statuses, giving each its own layout. Caregivers use the same screen to clock in, provide services, chart, take breaks and complete their shifts, so I let the interface change with the work — bringing forward what mattered at each stage and prioritising the caregiver's assigned hours over the wider shift window.",
       "**Noteworthy:** I went looking through App Store reviews and found caregivers couldn't tell how many hours they'd worked or when they were heading into overtime. I fixed the display and added a flag warning them when claiming an open shift would push them over.",
@@ -132,7 +130,6 @@ const givSections = [
   },
   {
     title: "And finally, for the moments when plans changed",
-    label: "Requests",
     body: [
       "Caregiving rarely follows the schedule perfectly. People take time off, drop shifts and record the wrong hours. I designed each request across the caregiver app and admin platform so the change didn't end at submission — it returned to Scheduling, where its effect could be resolved.",
       "## **When caregivers dropped shifts, I designed for coverage.**",
@@ -163,7 +160,7 @@ const givSections = [
   },
   {
     title: "I left with a different way of thinking about design.",
-    label: "Reflection",
+    label: "Reflections",
     body: [
       "Pushing back is part of the job, but only when you lead with a smaller and more coherent version — not simply reasons why the request is wrong.",
       "Working closely with Engineering reinforced that design decisions have a cost somewhere else in the system, and knowing where that cost lands makes work sharper, not smaller.",
@@ -823,6 +820,17 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
     return () => observers.forEach(observer => observer?.disconnect())
   }, [project])
 
+  const activeGroup = (() => {
+    let current = null
+
+    for (const section of pageSections) {
+      if (section.label) current = section.title
+      if (section.title === activeSection) return current
+    }
+
+    return current
+  })()
+
   return (
     <main className="case-page">
       <PortfolioNav onNavigateHome={onBack} />
@@ -1036,8 +1044,8 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
       </div>
 
       <aside className="case-floating-nav" aria-label="Case study sections">
-        {pageSections.map(section => (
-          <a className={activeSection === section.title ? "active" : ""} href={`#${sectionId(section)}`} key={section.title}>{section.label || section.title}</a>
+        {pageSections.filter(section => section.label).map(section => (
+          <a className={activeGroup === section.title ? "active" : ""} href={`#${sectionId(section)}`} key={section.title}>{section.label || section.title}</a>
         ))}
       </aside>
     </main>

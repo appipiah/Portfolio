@@ -2044,9 +2044,17 @@ nav a:hover,
 }
 
 .case-glance dl {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px clamp(20px, 3vw, 52px);
+}
+
+.case-glance dl > div {
+  flex: 0 0 auto;
+}
+
+.case-glance dd {
+  white-space: nowrap;
 }
 
 .case-glance div {
@@ -2112,11 +2120,11 @@ nav a:hover,
 }
 
 .case-section-label {
-  color: rgba(7, 7, 7, 0.42);
+  color: rgba(7, 7, 7, 0.46);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: clamp(14px, 1.15vw, 17px);
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
