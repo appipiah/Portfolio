@@ -1981,11 +1981,15 @@ nav a:hover,
 
 .case-hero-inner {
   display: grid;
+  /* one centred column matching the body copy measure, so the hero text
+     shares a left edge with the case study prose below it */
+  grid-template-columns: 70%;
+  justify-content: center;
   gap: 18px;
 }
 
 .case-hero h1 {
-  max-width: 760px;
+  max-width: none;
   margin: 0;
   font-family: var(--font-sans);
   font-size: clamp(26px, 2.7vw, 38px);
@@ -2018,7 +2022,7 @@ nav a:hover,
 }
 
 .case-hero p {
-  max-width: 650px;
+  max-width: none;
   font-size: 18px;
   line-height: 1.5;
 }
@@ -2770,6 +2774,10 @@ footer .fine {
   .platform-module p,
   .platform-group {
     width: 100%;
+  }
+
+  .case-hero-inner {
+    grid-template-columns: 100%;
   }
 
   .case-glance dl {
