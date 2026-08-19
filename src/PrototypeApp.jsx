@@ -23,8 +23,8 @@ const savedAboutNote = {
 const givMeta = [
   ["Industry", "Healthcare"],
   ["Product", "B2B SaaS"],
-  ["Last worked on", "July, 2026"],
-  ["Tools", "Figma (Design and Make), GPT, Claude, Confluence"],
+  ["Platform", "Desktop web & Mobile"],
+  ["Year", "2026"],
 ]
 
 const givHoverMeta = [
@@ -34,149 +34,13 @@ const givHoverMeta = [
   ["Tools", "Figma (Design and Make), GPT, Claude, Confluence"],
 ]
 
-const givSections = [
-  {
-    title: "Overview",
-    body: [
-      "Giv is a B2B SaaS platform for agencies that support people with intellectual and developmental disabilities (IDD) across the United States. It brings scheduling, caregiver documentation, client care planning, compliance and payroll into a single system.",
-      "The platform is unusually interconnected. A shift is never just a calendar entry. It carries service authorisations and budgets, caregiver certifications and work-hour limits, client care plans, charting requirements, reimbursement, and the payroll record to name a few. A decision made in one module resolves somewhere else entirely, often several screens away and on a different device. Designing here meant designing the system, not the screen.",
-      "Designing at Giv meant constantly thinking beyond the immediate feature and considering what else would change because of it.",
-    ],
-    images: [{ type: "image", src: "/assets/giv-overview-image.png", alt: "Giv mobile dashboard overview" }],
-  },
-  {
-    title: "The Challenge",
-    body: [
-      "I joined Giv while the company was actively onboarding agencies and responding quickly to customer feedback. That created a real tension: customers needed improvements quickly, but continuously adding features without considering the larger product could make an already robust platform harder to use.",
-      "Priorities also changed often. I could be deep into one scheduling problem and suddenly need to switch to a customer-reported issue elsewhere in the product. Because documentation around older workflows was limited, changing context often meant first reconstructing why something had been designed or built a certain way, usually through conversations with whoever still held that knowledge.",
-      "There were also limits on how directly I could participate in usability testing, because of HIPAA restrictions. Customer-facing teams handled much of that interaction on site, so part of my job was interpreting the feedback they brought back and identifying the actual product problem behind the request.",
-      "A further constraint was that platforms in this space are paid and closed, so there were no reference implementations to study. Established patterns had to be reasoned toward rather than looked up.",
-      "All of this made judgement a major part of the work: knowing when to ship quickly, when to push back, when a customer request exposed a wider UX issue, and when solving exactly what had been asked for would only create another problem somewhere else.",
-    ],
-    images: [
-      {
-        type: "horizontal-scroll",
-        items: [
-          {
-            src: "/assets/giv-challenge-descoped-screens.png",
-            alt: "Descoped audit log screens",
-            caption: "Designed an audit log for tracking who managed a request. It got descoped.",
-          },
-          {
-            src: "/assets/giv-challenge-recurring-shifts-spec.png",
-            alt: "Recurring shift specification document",
-            caption: "Breaking down recurring shift logic for the devs. This got detailed very quickly.",
-          },
-          {
-            src: "/assets/giv-challenge-youtube-demo.png",
-            alt: "YouTube demo research reference",
-            caption: "Learning a competitor feature from a YouTube demo because the actual product was behind a paywall. 🙂",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    title: "My Role",
-    body: [
-      "I primarily owned design for Scheduling, one of the platform's core operational areas. Scheduling covered how administrators planned and managed services for clients and caregivers, while the mobile experience supported caregivers through the shifts themselves.",
-      "Over time, my team also took ownership of product improvements and customer-raised issues across different areas of the platform. That expanded my work beyond Scheduling and meant regularly navigating unfamiliar workflows, reconstructing missing context and collaborating with different Product and Engineering teams.",
-      "Across Giv, I worked on:",
-      "Shift Creation, Mobile Shift Experience, Calendar Enhancements, Overtime, Drop Shift Requests, Time Change Requests, Create Past Shift, Paid Time Off — Schedule Impact, Transportation, Goal Frequency, Group Management, AI Product Guide",
-    ],
-    images: [{ type: "image", src: "/assets/giv-role-image.png", alt: "Giv scheduling desktop and mobile product screens" }],
-  },
-  {
-    title: "My Process",
-    body: [
-      "Reading feedback as a symptom, not a specification",
-      "Customer feedback arrives as a solution. Someone tells you what they want built; underneath it is a need they have already tried to solve on your behalf. My method was to trace each request back to the underlying need, then examine the entire journey rather than only the screen where the complaint surfaced.",
-      "For example, a customer reported not receiving a notification about a task. The obvious fix was to add the notification. Instead, I walked the entire journey and asked whether the information they needed should already have been available somewhere earlier in the workflow. It had been overlooked. Solving that upstream removed the need for another notification altogether, rather than adding another alert to a product that already had plenty.",
-      "My questions almost always started in the same place: Why is this needed? What happens today? What is the user actually trying to accomplish? What already depends on this experience? What would change if we introduced it?",
-      "That approach consistently produced fewer, better-placed changes—which mattered a great deal in a team where every customer comment was a candidate feature.",
-      "Systems Thinking",
-      "Before opening Figma, I mapped what a feature actually touched: which entities it depended on, which rules it inherited, and what would break downstream.",
-      "Shift creation is the clearest example — a single modal has to respect service budgets, client availability, caregiver availability, caregiver work-hour limits, certification and eligibility requirements, agency-level settings, and recurrence, while remaining a form a scheduler can complete in under a minute. Treating that as a domain model rather than a set of form fields is what kept the interface from collapsing into a wall of validation errors.",
-      "It also meant I could tell, early, when a requested feature would put two rules in direct conflict — which is a much cheaper conversation to have before implementation than after.",
-      "The interface could be simple. The thinking behind it rarely was.",
-      "Speed didn't mean accepting every scope",
-      "Because Giv was onboarding customers quickly, there was natural pressure to respond to feedback just as quickly. Part of my role became finding the balance between shipping what customers needed and protecting the product from unnecessary complexity.",
-      "I pushed back when requests felt too broad, questioned scope when a smaller change could solve the same problem, and worked with the team to distinguish between experiences that needed to ship fast and experiences that deserved more investment upfront. This mattered most in Scheduling, where adding one more rule or control could easily make an already sophisticated workflow harder to understand.",
-      "Extending the design system",
-      "Scheduling exposed interactions that the published design system couldn't fully support. I contributed new interaction patterns for areas like modal layouts, drag-and-drop, and input behaviour, helping modernise legacy experiences while keeping new work consistent.",
-      "Because Scheduling touched so many parts of the platform, it became a proving ground for these decisions. When an existing pattern worked, I reused it. When it didn't, I focused on defining patterns that could scale across future features rather than solving only the problem in front of me. As I encountered recurring inconsistencies between designs and implementation, I also raised them during product discussions, advocating for clearer design-system rules and a more consistent product experience.",
-      "AI became part of how we collaborated",
-      "AI wasn't simply a personal productivity tool at Giv. It became a central part of collaboration between Design and Engineering.",
-      "Once we had aligned on a direction, I used Figma Make to explore the experience more deeply and turn ideas into working prototypes that made interactions, states and behaviours easier to discuss. Instead of conversations staying abstract, we could explore a solution, see how it behaved, and discuss technical feasibility with something tangible in front of us. That shortened the distance from idea to exploration to alignment to implementation.",
-      "I also used Claude independently to think through unfamiliar workflows, break features down into their constituent flows and screens, and explore alternatives faster than I could have on my own.",
-      "The goal was never to let AI decide what to build. It was to help us explore agreed ideas faster and make better decisions before development began.",
-      "Documentation as a design deliverable",
-      "Frequent context switching exposed another problem: product knowledge often lived with individual team members. PRDs explained what needed to be built, but they didn't explain the history of an existing experience, the logic behind earlier decisions, or the relationships between different parts of the product.",
-      "When I moved between product areas, I sometimes had to reconstruct that context through conversations with several teams before I could confidently change anything.",
-      "So I started producing structured handoff documentation for the work I designed — capturing flows, validation logic, display rules for each state, edge cases, open questions and known limitations.",
-      "It began as self-defence against losing context and became something the wider team relied on — a place engineers could check behaviour without having to find the person who designed it.",
-    ],
-    images: [],
-  },
-  {
-    title: "Product Highlights",
-    body: [
-      "Note: Some product areas and screens have been omitted or simplified to respect client confidentiality. The examples below represent selected work across the platform.",
-    ],
-    modules: [
-      ["AI Product Guide", "An in-product AI assistant that answers questions about how the platform works, available to customers from the moment they register.\n\nThe challenge. Onboarding new agencies was a company-wide priority, and one of the biggest friction points was simply figuring out how the platform worked. The existing solution was customers contacting the support team, who would record and send videos explaining the relevant flow. It worked, but it did not scale, and it put a human in the loop for questions the product should have been able to answer itself.\n\nMy approach. I proposed and piloted an in-product chat guide. Rather than pitch it as a concept, I built a working version: I took a feature prototype I had already produced and used the prototype code as context for the assistant, so it could answer questions about that feature accurately and return the correct steps, including the video walkthroughs for flows that already had them. Scoping it to one feature let me validate the idea end to end before asking anyone to commit engineering time to the full version.", { type: "video", src: "/assets/giv-ai-product-guide.mov", label: "AI Product Guide demo", className: "ai-guide-media" }],
-      ["Scheduling"],
-      ["Shift Creation", "The core flow of the platform, and the one the company had struggled with longest.\n\nThe challenge. Creating a shift touches almost every rule in the system. The modal had to handle scheduling conflicts, budget conflicts, shift overlap by client and by caregiver, caregiver work-hour limits, recurring shifts, and two special shift types — all without becoming unusable. Earlier attempts had stalled on the intricacy of it.\n\nMy approach. I modelled the flow around what the system actually needed to know, then used conditional rendering and progressive disclosure so that complexity only appeared when it was relevant. Shift type is inferred from who is added rather than asked as a question: add only clients and the modal tells you staff are required; add only staff and it guides you toward the staff-only path. Conflicts are surfaced at the point of decision rather than collected into an error state at submission. An optional rich-text description was added later as a collapsed inline field, so an already-dense modal gained capability without gaining visual weight.", "{image}"],
-      ["Staff-Only Shifts", "A dedicated shift type for work that involves staff without a client present, such as training and administrative time.\n\nThe challenge. The system had no designated workflow for these shifts, which produced scheduling errors and confusion about which staff were even eligible for them. The designation also had to be recognisable at a glance across the desktop calendar and the mobile app, on top of four existing shift statuses.\n\nMy approach. I designed the creation path as a validation chain — agency setting first, then staff eligibility — with an eligibility modal that lists affected staff, links to their profiles, and offers both enabling and removing them inline, so the scheduler can resolve the problem without leaving the flow. Feedback was tuned to avoid redundancy: a toast confirms individual changes, but when the last row is resolved the confirmation modal itself is the feedback. On the calendar, the designation is carried by a dotted border layered over the existing status colour, so a new shift type was introduced without disturbing the status system already in place, and the same convention carries onto mobile.", "{image}"],
-      ["Open Shifts and Overtime", "Unassigned shifts that caregivers can claim, and the overtime consequences of claiming them.\n\nThe challenge. Open shifts let agencies fill gaps quickly, but a caregiver claiming one has no visibility into whether it pushes them into overtime — a cost the agency absorbs and a compliance risk. This surfaced directly as a customer review on the App Store.\n\nMy approach. I designed the claim flow to surface looming overtime at the moment of decision rather than after the fact, so the caregiver understands the consequence of the shift they are about to take and the agency is not discovering it in payroll. Open shifts also needed their own treatment on the calendar, distinct from assigned shifts but consistent with the wider shift-type language.", "{image}"],
-      ["Calendar and Visual Scheduler — Desktop", "The primary working surface for agency administrators and schedulers.\n\nThe challenge. The calendar had to carry a lot of data at once — multiple shift types, four statuses, staff and client assignments — for agencies whose density varies enormously. Too much on screen and it becomes unreadable; too little and schedulers lose the overview they came for.\n\nMy approach. I introduced overflow cards, filtering and a rearranged information hierarchy so density scales with the agency rather than against it. The organising principle was that the calendar should answer the scheduler's first question at a glance and make the second question one click away, without ever hiding the fact that more exists.", "{image}"],
-      ["Shift Type Tiles and Statuses", "A consistent visual language for every kind of shift on the calendar.\n\nThe challenge. The platform had regular shifts, open shifts and staff-only shifts, and each carried its own set of statuses — scheduled, ongoing, on break, completed and missed. Encoding both dimensions in a single small tile, legibly, is a harder problem than it looks.\n\nMy approach. I separated the two dimensions: status is carried by colour, shift type by border treatment. That gave every combination a distinct, learnable appearance without multiplying the number of styles anyone had to memorise, and the same system extended to the mobile calendar and the homepage upcoming-shift cards.", "{image}"],
-      ["Caregiver Experience"],
-      ["Mobile Shift Details and In-Shift Activities", "The caregiver's working surface for the duration of a shift.\n\nThe challenge. A single screen had to support everything a caregiver does during a shift — clocking in and out, starting and ending services, taking breaks, charting, working goals, logging transportation — while looking meaningfully different depending on whether the shift was scheduled, ongoing, on break, completed or missed.\n\nMy approach. I designed distinct layouts per status so the screen always leads with the action that matters right now, rather than presenting a static list of everything the caregiver could theoretically do. I also designed the assigned-time view, which shows a caregiver their own committed hours as primary information with the full shift window as secondary context — so someone working two hours of a twelve-hour shift is not presented with a twelve-hour commitment.", "{image}"],
-      ["Transportation and Mileage Reimbursement", "Setup on the agency side, submission on the caregiver side.\n\nThe challenge. Caregivers transport clients as part of their work and are reimbursed for it, but the reimbursement models differ — some agencies pay by mileage, others by trip. The workflow spans two devices and two very different users, and mistakes in it are financial.\n\nMy approach. On desktop I designed the form setup and reimbursement request flow that lets agencies configure their own model. On mobile I designed submission against either mileage or trips, editing of submitted forms, and a clear status system so caregivers always know whether a claim is pending, approved or rejected without contacting an administrator.", "{image}"],
-      ["Service-Aware Goals, Frequency and Required Charting", "Tying client goals to funded services, and enforcing documentation before clock-out.\n\nThe challenge. Goals are the substance of a care plan, but they were disconnected from the services that fund them and had no notion of how often they should be worked. Agencies also needed a way to ensure documentation actually happened, without blocking caregivers arbitrarily.\n\nMy approach. I designed goals to optionally tie to a client service with available budget, with an optional custom frequency — daily, weekly or monthly, with a count. Frequency and progress are always visible in the caregiver app, never behind a hover, and goals group under their service. The hardest decision was historical integrity: when an admin changes a frequency, the new value applies only to future tracker periods, and past data stays tied to the frequency in force at the time — otherwise a reporting surface used for compliance quietly rewrites its own history. Required charting extends this into clock-out enforcement, showing caregivers exactly what is outstanding rather than simply refusing to let them leave.", "{image}"],
-      ["Administrative Workflows"],
-      ["Drop Shift Requests", "Caregivers returning a shift they can no longer work, and administrators resolving it.\n\nThe challenge. A dropped shift is not a cancellation — it is a gap in a client's care that someone has to fill, quickly. The request needed to carry enough context for an administrator to act, and the resolution needed to handle the conflicts that reassignment creates.\n\nMy approach. Caregivers submit a drop request with a reason, so administrators are triaging with context rather than chasing it. On the desktop side, administrators can approve, reject or reassign, with conflicts surfaced during reassignment so a resolved gap does not silently create a new one.", "{image}"],
-      ["Time Change Requests", "Correcting the record on a completed shift, with an audit trail.\n\nThe challenge. Caregivers make honest mistakes clocking in and out, and the resulting record feeds payroll and billing. Corrections therefore have to be possible, reviewable, and traceable — this is a domain where changing a time without a trail is a compliance problem.\n\nMy approach. Caregivers can submit a time change against a completed shift, track its status, and edit it after submission. Administrators can approve, reject or edit the request, with conflict handling for edits and audit logs showing who changed or accessed an accepted request. The design treats the audit trail as a first-class part of the feature rather than a background technicality.", "{image}"],
-      ["Paid Time Off — Schedule Impact", "The scheduling half of a feature the payroll team owned.\n\nThe challenge. The payroll team built time-off requests around the duration a caregiver wanted off. That is the right model for payroll and the wrong one for scheduling: to protect client care, an administrator needs to know exactly which shifts a time-off request affects, not just how many days it spans.\n\nMy approach. I designed the affected-shifts view on the administrator side, so approving time off means seeing precisely what it puts at risk. Administrators can then resolve each affected shift directly — reassign it, convert it to an open shift, or remove the caregiver from it — turning an approval decision into a complete piece of work rather than the start of a manual clean-up.", "{image}"],
-      ["Backdated and Past Shift Creation", "Recording shifts and shift activity that were worked but never logged.\n\nThe challenge. Caregivers work in people's homes and in the community, and sometimes a shift is completed without being logged in the moment. Without a way to record it afterwards, the platform's record diverges from reality — with consequences for both pay and billing.\n\nMy approach. I designed backdated shift creation into the existing new-shift entry point rather than as a separate feature, with shift type chosen up front, then dates, clients and the services delivered for each client. Because a retroactive record needs oversight, submissions route to an administrator for approval, and that is communicated to the caregiver before they submit rather than after.", "{image}"],
-      ["Groups Management and Feature Settings", "Agency-level configuration that determines how the platform behaves.\n\nThe challenge. No two agencies operate identically, and much of the platform's per-feature behaviour depends on settings that administrators control. Those settings had to be discoverable and intelligible, since their effects surface far from where they are configured.\n\nMy approach. I designed the groups management and feature settings experience so that configuration reads as a set of decisions about how the agency works, rather than a list of toggles — with the downstream effect of each setting made explicit at the point of choosing it.", "{image}"],
-    ],
-  },
-  {
-    title: "Outcomes",
-    body: [
-      "A shift creation flow that handled the platform's full rule set — conflicts, budgets, overlap, work-hour limits, recurrence and multiple shift types — after being a long-standing challenge for the company.",
-      "A consistent visual language for shifts, where type and status are encoded independently and read the same way across the desktop calendar, the mobile calendar and the mobile homepage.",
-      "Complete request workflows — drop shift, time change, past shift and time-off impact — each with its approval path, conflict handling and audit trail.",
-      "A validated concept and working pilot for an in-product AI guide, addressing a known onboarding bottleneck absorbed by the support team.",
-      "Design handoff documentation adopted as a shared reference, reducing the product's dependence on undocumented, individually held context.",
-      "A faster design-to-engineering loop, through prototypes built in Figma Make that let the team evaluate agreed directions concretely before committing to implementation.",
-    ],
-  },
-  {
-    title: "Reflection",
-    body: [
-      "Giv pushed me in ways that went beyond the product itself. Working asynchronously across time zones reinforced the importance of clear communication, thoughtful documentation, and creating enough context for work to move forward without constant handoffs.",
-      "It also refined my approach to product decisions. User feedback is essential, but good product design requires judgement—the ability to distinguish between what users ask for and what actually moves the product forward.",
-      "Working with AI throughout the project strengthened another belief: AI-assisted design is the future. As these tools become commonplace, the real differentiator won't be AI itself, but the quality of the thinking behind it.",
-      "Finally, designing for the IDD healthcare space gave the work a different meaning. Knowing that the product supported agencies caring for people with intellectual and developmental disabilities made every design decision feel more consequential, and reinforced my interest in building products that improve people's lives in tangible ways.",
-    ],
-  },
-]
-
 const givProcessHeadings = new Set([
-  "Reading feedback as a symptom, not a specification",
-  "Systems Thinking",
-  "Speed didn't mean accepting every scope",
-  "Extending the design system",
-  "AI became part of how we collaborated",
-  "Documentation as a design deliverable",
+  "Treating feedback as a symptom, not a specification",
+  "Starting from how caregivers think, not how the system stores it",
 ])
 
 const excelMindMeta = [
-  ["Role", "Product Designer"],
-  ["Market", "EdTech"],
+  ["Industry", "EdTech"],
   ["Product", "B2B SaaS"],
   ["Last worked on", "Feb 2025"],
   ["Tools", "Figma"],
@@ -194,6 +58,118 @@ const placeholderHoverMeta = [
   ["Product", "Coming soon"],
   ["Last worked on", "Coming soon"],
   ["Tools", "Coming soon"],
+]
+
+const givSections = [
+  {
+    title: "There is no Giv without shifts",
+    label: "Overview",
+    body: [
+      "Giv helps US agencies supporting people with intellectual and developmental disabilities manage their day-to-day operations.",
+      "Scheduling sits at the centre of it. A shift connects caregivers, clients, charting, geofencing, compliance, billing and payroll. There was no Giv without it.",
+      "I was the designer responsible for improving that experience across the agency platform and caregiver app, working with a PM and a team of engineers.",
+    ],
+  },
+  {
+    title: "The cracks started to show.",
+    label: "The problem",
+    body: [
+      "As Giv onboarded agencies, Scheduling became a recurring source of questions.",
+      "The legacy experience was buggy and difficult to understand. Customer Support was doing a lot of the work the product should have been doing — recording walkthroughs and spending longer onboarding sessions explaining how to use it.",
+      "And even that wasn't always enough.",
+      "## ***If scheduling didn’t work, we didn’t get customers.***",
+      "It needed an overhaul.",
+      "{images}",
+    ],
+  },
+  {
+    title: "Four things made this harder than it looks",
+    label: "Constraints",
+    body: [
+      "## **01 - Everything was connected**",
+      "A shift wasn't just a calendar entry. It connected caregiver availability, client budgets, certifications, overtime, documentation and payroll. A change in one place could affect several other workflows.",
+      "**So I thought in systems before screens.** Before changing anything, I mapped its dependencies and downstream effects — catching conflicts while they were still cheap to fix, rather than after implementation.",
+      "## **02 - I couldn’t watch users use it**",
+      "HIPAA restrictions limited my access to customer meetings and usability sessions. Feedback reached me through customer-facing teams, often already framed as a requested solution.",
+      "**So I treated feedback as a symptom, not a specification.** I traced the workflow around each reported pain point to find the actual problem before deciding what to design.",
+      "## **03 - The same product had to work for very different agencies**",
+      "Agencies varied in size, staffing model and tech confidence. I couldn't design exclusively for power users or beginners.",
+      "**So I kept the complexity underneath.** I kept the core flows clear and used conditional logic and timely feedback to surface information when it became relevant, instead of making users hold the entire system in their heads.",
+      "## **04 - Competitor products were hidden behind paywalls**",
+      "Most comparable products were paid or closed, so I couldn’t freely explore how other platforms handled similar scheduling problems.",
+      "**So I got scrappy with what I could access.** I used product demos, and YouTube walkthroughs to understand unfamiliar workflows, then used AI to explore possible solutions quickly.",
+      "Once I had a direction, I built it in Figma Make with Engineering so we could discuss behaviour and feasibility against something working.",
+      "{images}",
+    ],
+  },
+  {
+    title: "First, I rebuilt the calendar interface.",
+    label: "Calendar",
+    body: [
+      "I started by collapsing shift details to keep the calendar clean, then reversed course when feedback showed me the flaw: schedulers were managing both staff and clients across busy agencies, and hiding information made the calendar harder to scan.",
+      "I brought the important information forward, added richer hover cards and filters, and designed parallel staff and client views schedulers could move between without losing their place. I also created a visual language for every shift across desktop and mobile: **colour showed status, border showed whether it was regular, open or staff-only.** The rule scaled across agency sizes and became a reusable design-system pattern.",
+      "{images}",
+    ],
+  },
+  {
+    title: "Next, I tackled the hardest part: creating a shift",
+    label: "Shift creation",
+    body: [
+      "This was where the entire scheduling model collided. I brought recurrence, availability, work-hour limits, budget conflicts, overlaps and agency settings into one modal. It inferred shift type from who was added, supported drag-and-drop and manual assignment, blocked invalid shifts early, and surfaced conflicts while schedulers were adding people.",
+      "**Where I traded precision for performance**",
+      "I wanted the conflict type visible inside the people selector. It would have cost an API call for every person listed, so I worked with the engineers to move the explanation to the point of assignment instead.",
+      "{images}",
+    ],
+  },
+  {
+    title: "Then I designed for the shift itself, not just the schedule",
+    label: "Caregiver app",
+    body: [
+      "I designed the caregiver's mobile shift experience around shift types and statuses, giving each its own layout. Caregivers use the same screen to clock in, provide services, chart, take breaks and complete their shifts, so I let the interface change with the work — bringing forward what mattered at each stage and prioritising the caregiver's assigned hours over the wider shift window.",
+      "**Noteworthy:** I went looking through App Store reviews and found caregivers couldn't tell how many hours they'd worked or when they were heading into overtime. I fixed the display and added a flag warning them when claiming an open shift would push them over.",
+      "{images}",
+    ],
+  },
+  {
+    title: "And finally, for the moments when plans changed",
+    label: "Requests",
+    body: [
+      "Caregiving rarely follows the schedule perfectly. People take time off, drop shifts and record the wrong hours. I designed each request across the caregiver app and admin platform so the change didn't end at submission — it returned to Scheduling, where its effect could be resolved.",
+      "## **When caregivers dropped shifts, I designed for coverage.**",
+      "I required caregivers to explain why they were dropping a shift, giving admins the context to approve, reject or reassign it instead of treating it like a cancellation.",
+      "Reassignment reused the conflict handling from Shift Creation, so closing one coverage gap didn't quietly open another.",
+      "{images}",
+      "## **Time corrections became reviewable**",
+      "I let caregivers correct completed shifts, edit submitted requests and track their status. Admins could review, edit, approve or reject each correction before it affected Payroll and billing.",
+      "I also explored an audit trail to keep accepted corrections traceable and avoid compliance risk, but it was later descoped following technical review.",
+      "{images}",
+      "## **Time off exposed a gap between Payroll and Scheduling**",
+      "The payroll team had built time off around duration, which couldn't reliably tell a scheduler which shifts would be affected. I added a time input to the caregiver request, then showed admins either the affected or potentially affected shifts, depending on how the request was submitted.",
+      "Admins could reassign the caregiver, open the shift or remove them directly from the request, using the familiar shift-editing workflow.",
+      "**Catching that a neighbouring team's model was right for them and wrong for us — and designing the missing half rather than escalating it — is the part of this project I'm most pleased with.**",
+      "{images}",
+    ],
+  },
+  {
+    title: "Where it landed",
+    label: "Outcomes",
+    body: [
+      "## ***Scheduling-related support tickets dropped by 90%.***",
+      "They had effectively disappeared by the time I left. Scheduling was no longer a support problem.",
+      "User testing and sales conversations also showed strong demand before launch, with agencies already in the pipeline.",
+      "The foundation held as Scheduling grew: new features fit without disrupting the experience or reinventing its patterns.",
+      "My teammates also commended my proactiveness and ability to catch edge cases missing from the PRD — recognition that felt especially meaningful to me.",
+    ],
+  },
+  {
+    title: "I left with a different way of thinking about design.",
+    label: "Reflection",
+    body: [
+      "Pushing back is part of the job, but only when you lead with a smaller and more coherent version — not simply reasons why the request is wrong.",
+      "Working closely with Engineering reinforced that design decisions have a cost somewhere else in the system, and knowing where that cost lands makes work sharper, not smaller.",
+      "The more interconnected the system, the greater the responsibility to make it feel simple. The complexity isn't the user's job to carry.",
+    ],
+  },
 ]
 
 const apexHoverMeta = [
@@ -276,9 +252,11 @@ const projects = [
   {
     id: "01",
     slug: "giv",
-    title: "Giv",
+    title: "Giv Healthcare",
+    siteUrl: "https://givhealthcare.com/",
     year: "[Add dates]",
-    description: "Designing scheduling and care operations for agencies supporting people with intellectual and developmental disabilities.",
+    description: "Rebuilding scheduling for healthcare agencies that care for people with IDD",
+    exactDoc: true,
     thumbnail: "/assets/giv-overview.mp4",
     thumbnailType: "video",
     thumbnailPosition: "50% 42%",
@@ -691,6 +669,116 @@ function PortfolioNav({ onNavigateHome }) {
   )
 }
 
+// Real media for the doc-exact case study, keyed by section title and ordered to
+// match that section's {images} markers. A section with media but no marker gets
+// it appended after the copy.
+const givSectionMedia = {
+  "There is no Giv without shifts": [
+    { type: "image", src: "/assets/giv-overview-image.png", alt: "Giv mobile dashboard overview" },
+  ],
+  "The cracks started to show.": [
+    { type: "image", src: "/assets/giv-role-image.png", alt: "Giv scheduling calendar on desktop and mobile" },
+  ],
+  "Four things made this harder than it looks": [
+    {
+      type: "horizontal-scroll",
+      items: [
+        {
+          src: "/assets/giv-challenge-recurring-shifts-spec.png",
+          alt: "Recurring shift specification document",
+          caption: "Breaking down recurring shift logic for the devs. This got detailed very quickly.",
+        },
+        {
+          src: "/assets/giv-challenge-youtube-demo.png",
+          alt: "YouTube demo research reference",
+          caption: "Learning a competitor feature from a YouTube demo because the actual product was behind a paywall. \u{1F642}",
+        },
+        {
+          src: "/assets/giv-challenge-descoped-screens.png",
+          alt: "Descoped audit log screens",
+          caption: "Designed an audit log for tracking who managed a request. It got descoped.",
+        },
+      ],
+    },
+  ],
+}
+
+function renderInlineEmphasis(text, { inHeading = false } = {}) {
+  return text.split(/(\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*)/g).map((part, index) => {
+    // Headings already carry weight from their own style, so one layer of the
+    // doc's bold is dropped there: ***x*** becomes italic, **x** becomes plain.
+    if (part.startsWith("***") && part.endsWith("***")) {
+      const inner = part.slice(3, -3)
+      return inHeading ? <em key={index}>{inner}</em> : <strong key={index}><em>{inner}</em></strong>
+    }
+
+    if (part.startsWith("**") && part.endsWith("**")) {
+      const inner = part.slice(2, -2)
+      return inHeading ? inner : <strong key={index}>{inner}</strong>
+    }
+
+    return part
+  })
+}
+
+// Splits a section body into alternating copy and media blocks so an {images}
+// marker breaks out of the narrow copy column at the position the doc puts it.
+function splitSectionChunks(body = [], media = []) {
+  const chunks = []
+  let slot = 0
+
+  body.forEach(item => {
+    if (item === "{images}") {
+      chunks.push({ type: "images", items: [], media: media[slot] })
+      slot += 1
+      return
+    }
+
+    const last = chunks[chunks.length - 1]
+
+    if (last && last.type === "copy") {
+      last.items.push(item)
+    } else {
+      chunks.push({ type: "copy", items: [item] })
+    }
+  })
+
+  // media supplied for a section the doc gives no {images} marker for
+  while (slot < media.length) {
+    chunks.push({ type: "images", items: [], media: media[slot] })
+    slot += 1
+  }
+
+  return chunks
+}
+
+function renderCaseMedia(media, keyBase) {
+  if (!media) {
+    return <div className="case-image">{"{images}"}</div>
+  }
+
+  if (media.type === "horizontal-scroll") {
+    return (
+      <div className="case-horizontal-scroll" aria-label="Research artifacts">
+        <div className="case-horizontal-track">
+          {[...media.items, ...media.items].map((item, itemIndex) => (
+            <figure className="case-horizontal-item" key={`${keyBase}-${item.src}-${itemIndex}`}>
+              <img src={item.src} alt={item.alt} />
+              <figcaption>{item.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="case-image">
+      <img src={media.src} alt={media.alt} />
+    </div>
+  )
+}
+
 function CaseStudyPage({ project, onBack, onSelectProject }) {
   const pageSections = project.sections || caseStudySections.map(section => ({
     title: section,
@@ -742,8 +830,22 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
       <header className="case-hero">
         <div className="wrap case-hero-inner">
           <span className="eyebrow">Case study</span>
-          <h1>{project.title}.</h1>
-          <p>{project.description || "Placeholder case study intro. Add the company, role, scope, timeline, team, and product context here."}</p>
+          {project.exactDoc ? (
+            <>
+              <p className="case-hero-org">
+                {project.title}
+                {project.siteUrl && (
+                  <a href={project.siteUrl} target="_blank" rel="noreferrer">Visit site ↗</a>
+                )}
+              </p>
+              <h1>{project.description}</h1>
+            </>
+          ) : (
+            <>
+              <h1>{`${project.title}.`}</h1>
+              <p>{project.description || "Placeholder case study intro. Add the company, role, scope, timeline, team, and product context here."}</p>
+            </>
+          )}
           {project.meta && (
             <section className="case-glance case-hero-glance" aria-label={`${project.title} metadata`}>
               <dl>
@@ -763,13 +865,40 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
         <div className="case-layout wrap">
           {pageSections.map((section, index) => (
             <section className="case-section" id={sectionId(section)} key={section.title}>
+              {project.exactDoc ? (
+                splitSectionChunks(section.body, givSectionMedia[section.title]).map((chunk, chunkIndex) => (
+                  chunk.type === "images" ? (
+                    <div className="case-image-stack" key={`${section.title}-media-${chunkIndex}`}>
+                      {renderCaseMedia(chunk.media, `${section.title}-${chunkIndex}`)}
+                    </div>
+                  ) : (
+                    <div className="case-section-copy" key={`${section.title}-copy-${chunkIndex}`}>
+                      {chunkIndex === 0 && (
+                        <div className="case-section-heading">
+                          {section.label && <span className="case-section-label">{section.label}</span>}
+                          <div className="case-section-title">
+                            <h4>{section.title}</h4>
+                          </div>
+                        </div>
+                      )}
+                      {chunk.items.map(item => (
+                        item.startsWith("## ") ? (
+                          <h5 className="case-body-subheading" key={item}>{renderInlineEmphasis(item.slice(3), { inHeading: true })}</h5>
+                        ) : (
+                          <p key={item}>{renderInlineEmphasis(item)}</p>
+                        )
+                      ))}
+                    </div>
+                  )
+                ))
+              ) : (
               <div className="case-section-copy">
                 <div className="case-section-title">
-                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  {/^\d/.test(section.title) ? null : <span>{String(index + 1).padStart(2, "0")}</span>}
                   <h4>{section.title}.</h4>
                 </div>
                 {section.body?.map(paragraph => (
-                  section.title === "My Process" && givProcessHeadings.has(paragraph) ? (
+                  givProcessHeadings.has(paragraph) ? (
                     <h5 className="case-body-subheading" key={paragraph}>{paragraph}</h5>
                   ) : paragraph.startsWith("Note:") ? (
                     <p className="case-note" key={paragraph}>{paragraph}</p>
@@ -778,6 +907,7 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
                   )
                 ))}
               </div>
+              )}
               {section.modules ? (
                 <div className="platform-modules">
                   {section.modules.map(([title, copy, placeholder]) => (
@@ -819,7 +949,7 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
                     )
                   ))}
                 </div>
-              ) : (
+              ) : project.exactDoc ? null : (
                 <div className="case-image-stack">
                   {(section.images || ["image placeholder"]).map((media, imageIndex) => (
                     typeof media === "object" && media.type === "horizontal-scroll" ? (
@@ -907,7 +1037,7 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
 
       <aside className="case-floating-nav" aria-label="Case study sections">
         {pageSections.map(section => (
-          <a className={activeSection === section.title ? "active" : ""} href={`#${sectionId(section)}`} key={section.title}>{section.title}</a>
+          <a className={activeSection === section.title ? "active" : ""} href={`#${sectionId(section)}`} key={section.title}>{section.label || section.title}</a>
         ))}
       </aside>
     </main>
