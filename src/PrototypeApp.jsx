@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { Lock } from "lucide-react"
+import ProductGuideDemo from "./ProductGuideDemo"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -13,22 +14,26 @@ const tickerWords = [
   "CAFFEINATED",
 ]
 
-const heroAboutCopy = "Over the past three years, I've helped startups design and ship products in fast-moving environments where clarity, speed, and ownership matter. I enjoy simplifying complex workflows, building scalable systems, and making sense of unfamiliar domains to create products that have a meaningful impact on the people using them. The more ambitious the problem, the more excited I get."
+const heroAboutCopy = [
+  "Three years of B2B and consumer product design, rooted in deep experience in healthcare operations alongside edtech and fintech.",
+  "I thrive where the rules are the hard part—tackling dense workflows, compliance, and complex edge cases. I think in systems before screens, leveraging AI to build a shared language with engineering.",
+  "The more ambitious the problem, the more excited I get.",
+]
 
 const savedAboutNote = {
   heading: "A Little About Me",
-  body: heroAboutCopy,
+  body: heroAboutCopy.join(" "),
 }
 
 const givMeta = [
   ["Industry", "Healthcare"],
   ["Product", "B2B SaaS"],
-  ["Platform", "Desktop web & Mobile"],
+  ["Platform", "Web (desktop) & Mobile"],
   ["Year", "2026"],
 ]
 
 const givHoverMeta = [
-  ["Industry", "Healthcare"],
+  ["Industry", "Healthtech"],
   ["Product", "B2B SaaS"],
   ["Last worked on", "July, 2026"],
   ["Tools", "Figma (Design and Make), GPT, Claude, Confluence"],
@@ -83,8 +88,8 @@ const givSections = [
     ],
   },
   {
-    title: "Four things made this harder than it looks",
-    label: "How I worked",
+    title: "Four things that shaped how I worked",
+    label: "Approach",
     body: [
       "## **01 - Everything was connected**",
       "A shift wasn't just a calendar entry. It connected caregiver availability, client budgets, certifications, overtime, documentation and payroll. A change in one place could affect several other workflows.",
@@ -107,7 +112,7 @@ const givSections = [
     label: "Solutions",
     body: [
       "I started by collapsing shift details to keep the calendar clean, then reversed course when feedback showed me the flaw: schedulers were managing both staff and clients across busy agencies, and hiding information made the calendar harder to scan.",
-      "I brought the important information forward, added richer hover cards and filters, and designed parallel staff and client views schedulers could move between without losing their place. I also created a visual language for every shift across desktop and mobile: **colour showed status, border showed whether it was regular, open or staff-only.** The rule scaled across agency sizes and became a reusable design-system pattern.",
+      "I brought the important information forward, added richer hover cards and filters, and designed parallel staff and client views schedulers could move between without losing their place. I also created a visual language for every shift across desktop and mobile. **Colour carried status, border carried type — regular, open or staff-only; markers said what needed attention — recurrence, conflicts, pending requests.** The rule scaled across agency sizes and became a reusable design-system pattern.",
       "{images}",
     ],
   },
@@ -245,6 +250,83 @@ const excelMindSections = [
   },
 ]
 
+const guideMeta = [
+  ["Industry", "Healthtech"],
+  ["Product", "AI Product Guide"],
+  ["Platform", "Mobile"],
+  ["Year", "2026"],
+]
+
+const guideHoverMeta = [
+  ["Industry", "Healthtech"],
+  ["Product", "AI Product Guide"],
+  ["Last worked on", "July, 2026"],
+  ["Tools", "Claude"],
+]
+
+const guideSections = [
+  {
+    title: "Every question about the product routed through a person.",
+    label: "The challenge",
+    body: [
+      "Onboarding new agencies was a company-wide priority, and one of the biggest friction points was simply figuring out how the platform worked. The existing solution was customers contacting the support team, who would record and send videos explaining the relevant flow.",
+      "It worked, but it did not scale, and it put a human in the loop for questions the product should have been able to answer itself.",
+    ],
+  },
+  {
+    title: "Rather than pitch a concept, I built a working version.",
+    label: "My approach",
+    visuals: ["supportLoops"],
+    body: [
+      "I proposed and piloted an in-product chat guide. I took a feature prototype I had already produced and used the prototype code as context for the assistant, so it could answer questions about that feature accurately and return the correct steps — including the video walkthroughs for flows that already had them.",
+      "Scoping it to one feature let me validate the idea end to end before asking anyone to commit engineering time to the full version.",
+    ],
+  },
+  {
+    title: "",
+    label: "Building the solution",
+    body: [
+      "## Why I fed it code instead of product docs.",
+      "The obvious route was to assemble PRDs, specs and help-centre articles and use those as the assistant's context. We had plenty of them. I went the other way and used the prototype's source.",
+      "Documents describe what a feature is *meant* to do. Code contains the rules actually in place — the screens that exist, the order the steps run in, the conditions that gate them, the exact words on the buttons. Grounding the assistant there meant it could not confidently describe a flow that had been cut, renamed or reordered, because the thing it was reading was the thing that ran.",
+      "{visual:solutionComparison}",
+      "## The first version matched keywords. It only answered questions I had already imagined.",
+      "V1 had no model in it. Each feature carried a hand-written list of *intents* — phrasings I predicted a caregiver might type — and a scoring function compared the message against them.",
+      "It demoed well, because I was writing both the questions and the answer keys. The moment someone phrased a question in a way I had not anticipated, it returned nothing. *\"I need to take a few days off next month\"* shares no scoring words with *\"request time off\"*. The guide was only as good as my ability to guess vocabulary in advance, which does not scale past a demo.",
+      "So I connected the Claude API and moved the matching job to the model. Understanding language became the model's job. Deciding what the product is allowed to say stayed mine.",
+      "{visual:keywordCode}",
+      "## Only the matching layer changed. The registry stayed exactly as it was.",
+      "The guide does not free-associate about the platform. Every capability it can talk about is a typed entry describing what the feature is, the exact steps to complete it, and the walkthrough video that already exists for it. That registry is compiled into the assistant's context, and the reply comes back as structured data the interface renders itself.",
+      "The model handles the part it is genuinely good at — reading a messy, real-world question and matching it to intent. Everything it is asked to say is content the product already vouches for.",
+      "{visual:registryPipeline}",
+      "{visual:registryCode}",
+    ],
+  },
+  {
+    title: "See it work.",
+    label: "The result",
+    body: [],
+    visuals: ["interactiveDemo"],
+  },
+  {
+    title: "Adding a model meant deciding what it was not allowed to be.",
+    label: "The guardrails",
+    body: [
+      "V1 could not go off-script, because it could not do anything it had not been told to do. Once Claude was in the loop, the constraints had to become explicit design decisions rather than a side effect of the implementation.",
+    ],
+    visuals: ["guardrails"],
+  },
+  {
+    title: "It won the room, and joined the queue.",
+    label: "Where it landed",
+    body: [
+      "I presented the working pilot rather than a proposal — reviewers could type their own questions into it instead of reading about what it might do. The response was strong, and the guide was added to the company's considerations for AI integration, to be picked up when engineering capacity allows.",
+      "That is a real outcome for a piece of self-directed work: an idea that arrived as a demo, was validated on one feature, and left the room as something the organisation intends to build rather than something it is still debating. It has not shipped, and the honest measure of it is a decision changed, not a metric moved.",
+    ],
+    visuals: ["whereLanded"],
+  },
+]
+
 const projects = [
   {
     id: "01",
@@ -252,7 +334,7 @@ const projects = [
     title: "Giv Healthcare",
     siteUrl: "https://givhealthcare.com/",
     year: "[Add dates]",
-    description: "Rebuilding scheduling for healthcare agencies that care for people with IDD",
+    description: "Rebuilding scheduling for healthcare agencies",
     exactDoc: true,
     thumbnail: "/assets/giv-overview.mp4",
     thumbnailType: "video",
@@ -282,10 +364,27 @@ const projects = [
     title: "Apex Velociti",
     year: "2026",
     description: "Designing the digital platform behind a professional karting circuit.",
+    thumbnail: "/assets/apex-reveal.mp4",
+    thumbnailType: "video",
     hoverMeta: apexHoverMeta,
     locked: true,
   },
-  { id: "04", slug: "project-four", title: "heading", year: "2026", description: "coming soon", hoverMeta: placeholderHoverMeta },
+  {
+    id: "04",
+    slug: "giv-product-guide",
+    title: "Giv Healthcare",
+    year: "2026",
+    description: "Building an AI product guide to scale onboarding",
+    exactDoc: true,
+    siteUrl: "https://givhealthcare.com/",
+    thumbnail: "/assets/giv-ai-product-guide.mov",
+    thumbnailType: "video",
+    thumbnailMockup: "/assets/ai-product-guide-mockup-overlay.png",
+    eyebrow: "PRODUCT DESIGN · AI · B2B SAAS",
+    meta: guideMeta,
+    hoverMeta: guideHoverMeta,
+    sections: guideSections,
+  },
 ]
 
 const caseStudySections = [
@@ -335,10 +434,10 @@ function findProjectFromHash() {
 
   if (hash.startsWith(CASE_HASH_PREFIX)) {
     const slug = hash.slice(CASE_HASH_PREFIX.length)
-    return projects.find(project => project.slug === slug) || null
+    return projects.find(project => project.slug === slug && !project.locked) || null
   }
 
-  return projects.find(project => hash.startsWith(`#${project.slug}-`)) || null
+  return projects.find(project => !project.locked && hash.startsWith(`#${project.slug}-`)) || null
 }
 
 function jumpToPortfolioTarget(target = "") {
@@ -676,7 +775,7 @@ const givSectionMedia = {
   "The cracks started to show.": [
     { type: "image", src: "/assets/giv-role-image.png", alt: "Giv scheduling calendar on desktop and mobile" },
   ],
-  "Four things made this harder than it looks": [
+  "Four things that shaped how I worked": [
     {
       type: "horizontal-scroll",
       items: [
@@ -698,10 +797,24 @@ const givSectionMedia = {
       ],
     },
   ],
+  "First, I rebuilt the calendar interface.": [
+    { type: "video", src: "/assets/giv-calendar-walkthrough.mp4", label: "Giv calendar walkthrough", className: "rocky-media" },
+  ],
+  "Next, I tackled the hardest part: creating a shift": [
+    { type: "video", src: "/assets/giv-shift-creation-walkthrough.mp4", label: "Giv shift creation walkthrough", className: "rocky-media" },
+  ],
+  "Then I designed for the shift itself, not just the schedule": [
+    { type: "video", src: "/assets/giv-mobile-shift-lifecycle.mp4", label: "Giv mobile shift lifecycle walkthrough", className: "rocky-media" },
+  ],
+  "And finally, for the moments when plans changed": [
+    { type: "video", src: "/assets/giv-drop-shift-walkthrough.mp4", label: "Giv drop shift walkthrough", className: "rocky-media" },
+    { type: "video", src: "/assets/giv-time-change-requests-walkthrough.mp4", label: "Giv time change requests walkthrough", className: "rocky-media" },
+    { type: "video", src: "/assets/giv-time-off-requests-walkthrough.mp4", label: "Giv time off requests walkthrough", className: "rocky-media" },
+  ],
 }
 
 function renderInlineEmphasis(text, { inHeading = false } = {}) {
-  return text.split(/(\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*)/g).map((part, index) => {
+  return text.split(/(\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*)/g).map((part, index) => {
     // Headings already carry weight from their own style, so one layer of the
     // doc's bold is dropped there: ***x*** becomes italic, **x** becomes plain.
     if (part.startsWith("***") && part.endsWith("***")) {
@@ -714,6 +827,11 @@ function renderInlineEmphasis(text, { inHeading = false } = {}) {
       return inHeading ? inner : <strong key={index}>{inner}</strong>
     }
 
+    if (part.startsWith("*") && part.endsWith("*")) {
+      const inner = part.slice(1, -1)
+      return <em key={index}>{inner}</em>
+    }
+
     return part
   })
 }
@@ -721,10 +839,19 @@ function renderInlineEmphasis(text, { inHeading = false } = {}) {
 // Splits a section body into alternating copy and media blocks so an {images}
 // marker breaks out of the narrow copy column at the position the doc puts it.
 function splitSectionChunks(body = [], media = []) {
+  if (!body.length) return [{ type: "copy", items: [] }]
+
   const chunks = []
   let slot = 0
 
   body.forEach(item => {
+    const visualMatch = item.match(/^\{visual:([^}]+)\}$/)
+
+    if (visualMatch) {
+      chunks.push({ type: "visual", visual: visualMatch[1] })
+      return
+    }
+
     if (item === "{images}") {
       chunks.push({ type: "images", items: [], media: media[slot] })
       slot += 1
@@ -769,11 +896,487 @@ function renderCaseMedia(media, keyBase) {
     )
   }
 
-  return (
-    <div className="case-image">
-      <img src={media.src} alt={media.alt} />
+  const image = (
+    <div className={`case-image ${media.className || ""}`}>
+      {media.type === "video" ? (
+        <video
+          src={media.src}
+          aria-label={media.label}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+      ) : (
+        <img src={media.src} alt={media.alt} />
+      )}
     </div>
   )
+
+  return media.caption ? (
+    <figure className="case-media-figure">
+      {image}
+      <figcaption>{media.caption}</figcaption>
+    </figure>
+  ) : image
+}
+
+function WorkThumbnail({ project }) {
+  if (project.thumbnailMockup && project.thumbnail && project.thumbnailType === "video") {
+    return (
+      <div className="work-thumbnail-mockup">
+        <video
+          className="work-thumbnail-mockup-video"
+          src={project.thumbnail}
+          aria-label={`${project.title} thumbnail`}
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{ objectPosition: project.thumbnailPosition || "50% 50%" }}
+        />
+        <img
+          className="work-thumbnail-mockup-frame"
+          src={project.thumbnailMockup}
+          alt=""
+          aria-hidden="true"
+        />
+      </div>
+    )
+  }
+
+  if (project.thumbnail && project.thumbnailType === "video") {
+    return (
+      <video
+        className="work-thumbnail work-thumbnail-video"
+        src={project.thumbnail}
+        aria-label={`${project.title} thumbnail`}
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{
+          objectPosition: project.thumbnailPosition || "50% 50%",
+          "--thumb-scale": project.thumbnailScale || 1,
+        }}
+      />
+    )
+  }
+
+  if (project.thumbnail) {
+    return (
+      <img
+        className="work-thumbnail"
+        src={project.thumbnail}
+        alt={`${project.title} thumbnail`}
+        style={{ objectPosition: project.thumbnailPosition || "50% 50%" }}
+      />
+    )
+  }
+
+  return <span className="visual-label">image preview</span>
+}
+
+const aiGuideLoopCards = [
+  {
+    title: "The support loop",
+    tag: "Before",
+    old: true,
+    steps: [
+      "A caregiver gets stuck mid-task",
+      "They message support and wait",
+      "Someone records a screen walkthrough",
+      "The video lands, out of context, later",
+    ],
+    cost: "Cost scales with every new agency.\nThe answer exists — just not where the question is asked.",
+  },
+  {
+    title: "The in-product loop",
+    tag: "After",
+    steps: [
+      "A caregiver gets stuck mid-task",
+      "They ask the guide, in the app, in their words",
+      "Steps come back — plus the existing video",
+      "Support is only involved by exception",
+    ],
+    cost: "Cost is flat.\nThe same walkthroughs, delivered at the moment of the question.",
+  },
+]
+
+const aiGuideLayers = [
+  ["Layer 1", "Feature registry", "Typed entries derived from the prototype: intents, answer text, ordered steps, matching video, target screen.", "Unchanged", "keep"],
+  ["Layer 2", "Matching", "Was: string scoring against predicted phrasings. Now: Claude reads the question with the registry as context.", "Replaced", "swap"],
+  ["Layer 3", "Rendering", "Structured JSON — answer, steps, navigate, featureId, noMatch — drawn as native components, never raw markdown.", "Unchanged", "keep"],
+]
+
+const aiGuideCode = `// Each feature describes a product capability. The guide matches user
+// intent against \`intents\`, then serves the answer and steps from metadata.
+{
+  id:      "request_time_off",
+  intents: ["request time off", "apply for leave", "pto request",
+            "sick leave", "need time off", "vacation request", …],
+  answer:  "Easy! Head over to the Shifts screen and tap the + button…",
+  steps:   ["Tap '+' on the Shifts screen",
+            "Choose 'Time off'",
+            "Pick your leave type (PTO, Sick, etc.)", …],
+  video:   { title: "How to Request Time Off", duration: "1:24" },
+}`
+
+const aiGuideScenes = [
+  ["01", "Asked in their own words", "No menu to hunt through. The guide is one tap from wherever they are stuck."],
+  ["02", "Answered as steps, not prose", "The reply renders as numbered tasks a caregiver can follow one-handed, mid-shift."],
+  ["03", "The existing video, attached", "The same walkthrough support used to record by hand — surfaced automatically."],
+  ["04", "Or it just takes them there", "Navigation requests skip the explanation and move the user to the right screen."],
+]
+
+const aiGuideSteps = [
+  "Tap '+' on the Shifts screen",
+  "Choose 'Time off'",
+  "Pick your leave type (PTO, Sick, etc.)",
+  "Set your start & end dates",
+  "Add a note if you'd like (optional)",
+  "Hit 'Submit request' — that's it!",
+]
+
+const aiGuideDecisions = [
+  [
+    "It says what it can't do, before you ask",
+    "A persistent line at the top of the panel: \"I explain features and walk you through tasks, but I can't take actions for you.\" Dismissible, but present by default on every session.",
+    "Setting the ceiling early is cheaper than disappointing someone who assumed the assistant would file their request for them.",
+  ],
+  [
+    "Answers render as tasks, not paragraphs",
+    "The reply is split: a short conversational line in a neutral bubble, then the steps as numbered rows in product blue. Each step is under ten words.",
+    "The reader is standing in a client's kitchen holding a phone in one hand. Prose is unusable there; a checklist is not.",
+  ],
+  [
+    "The video library gets reused, not replaced",
+    "Where support had already recorded a walkthrough, the guide attaches it to the answer as a card — tagged, timed, and tied to the feature.",
+    "The team's existing work becomes an asset the product serves automatically, instead of something a person has to remember to send.",
+  ],
+  [
+    "Two modes, one input",
+    "\"How do I request time off?\" returns steps. \"Take me to my requests\" closes the panel and moves the user to that screen. The model decides which, and returns either steps or a destination — never both.",
+    "People ask for a destination as often as an explanation. Forcing both into a how-to answer would make the guide feel deaf.",
+  ],
+  [
+    "Not knowing is a designed state",
+    "An out-of-scope question gets a short redirect plus tappable picks from the registry, so the conversation has somewhere to go instead of dead-ending.",
+    "A confident wrong answer about payroll would do more damage to trust than admitting the guide only covers the app.",
+  ],
+  [
+    "One feature, taken all the way",
+    "The pilot covers time off — requesting it, finding requests, understanding approval, and navigating the shifts screen. Nothing else.",
+    "A narrow build that genuinely works is a stronger argument for funding than a broad one that half-works everywhere.",
+  ],
+]
+
+const aiGuideFindings = [
+  ["Accuracy is a content problem, not a model problem", "Grounding the assistant in the prototype's own code meant it returned the real steps in the real order. The debate stopped being \"will it hallucinate\" and became \"who owns the registry\" — a question the team already knew how to answer."],
+  ["The support videos were already the product's documentation", "They just had no distribution. Attaching them to the matching answer turned a manual, per-customer send into something the platform does at the moment of the question."],
+  ["A working pilot changed the conversation", "Reviewers could ask it their own questions instead of reading a proposal. Scoping to one feature made that possible without engineering commitment."],
+]
+
+const aiGuideMetrics = [
+  ["01", "Self-serve rate", "Share of onboarding questions resolved in the panel without a support contact."],
+  ["02", "Time to first successful task", "Registration → first completed time-off request, with and without the guide."],
+  ["03", "Video requests per new agency", "The manual recording load, measured before and after rollout."],
+  ["04", "The no-match log", "Every question the registry couldn't answer, ranked. The highest-signal roadmap the team could get for free."],
+]
+
+const aiGuideComparisonCards = [
+  {
+    title: "PRDs and product docs",
+    badge: "Considered",
+    copy: "Assemble the written record — specs, requirements, help-centre articles — and use it as the knowledge base.",
+    points: [
+      "Describes intent, including intent that never shipped",
+      "Goes stale silently; nothing fails when a doc is wrong",
+      "Written for internal readers, not for a caregiver mid-shift",
+      "Prose has to be re-derived into steps before it's usable",
+    ],
+  },
+  {
+    title: "The prototype's code",
+    badge: "Chosen",
+    picked: true,
+    copy: "Point the assistant at the source of the feature I had already built, and let the logic rules be the knowledge base.",
+    points: [
+      "Encodes rules that actually run, not rules that were proposed",
+      "Carries real screen names, step order and button labels",
+      "Already structured — the interface can render it directly",
+      "Made the answers correct by construction, not by review",
+    ],
+  },
+]
+
+const aiGuideKeywordCode = `// Resolve user message to a feature by intent matching
+for (const intent of feature.intents) {
+  if (normalized.includes(intent)) {
+    // Exact contiguous match — highest confidence
+    score += intentWords.length * 2
+  } else {
+    // All significant words (>3 chars) of the intent appear anywhere.
+    // Require at least 2 to avoid single-word false positives.
+    const significant = intentWords.filter(w => w.length > 3)
+    if (significant.length >= 2 && significant.every(w => inputWords.has(w)))
+      score += significant.length
+  }
+}`
+
+const aiGuideGuardrails = [
+  [
+    "It states its ceiling before you ask",
+    "A line sits at the top of the panel on every session: \"I explain features and walk you through tasks, but I can't take actions for you.\"",
+    "Cheaper than disappointing someone who assumed it would file their request for them.",
+  ],
+  [
+    "It answers in tasks, not paragraphs",
+    "A short conversational line, then numbered step rows in product blue. Each step under ten words.",
+    "The reader is standing in a client's kitchen holding a phone one-handed. Prose is unusable there.",
+  ],
+  [
+    "It reuses the support videos",
+    "Where a walkthrough already existed, the guide attaches it to the matching answer — tagged, timed, tied to the feature.",
+    "The support team's existing work becomes something the product serves automatically.",
+  ],
+  [
+    "Two modes, one input",
+    "\"How do I request time off?\" returns steps. \"Take me to my requests\" closes the panel and moves the user to that screen. The model decides which, and returns either steps or a destination — never both.",
+    "People ask for a destination as often as an explanation. Forcing both into a how-to answer would make the guide feel deaf.",
+  ],
+]
+
+const aiGuideOutcomeSummary = [
+  ["Presented", "Working pilot, one feature"],
+  ["Response", "Approved in review"],
+  ["Status", "Queued for AI integration"],
+  ["Blocker", "Engineering capacity, not conviction"],
+]
+
+function AIGuideDemo() {
+  const [demoKey, setDemoKey] = useState(0)
+
+  return (
+    <div className="ai-guide-demo" key={demoKey}>
+      <div className="ai-guide-device" role="img" aria-label="Animated recreation of the Giv Product Guide answering a time-off question">
+        <div className="ai-guide-screen">
+          <div className="ai-guide-app">
+            <div className="ai-status"><span>9:41</span><span>◒</span></div>
+            <div className="ai-app-head"><h5>Shifts</h5><span>•••</span></div>
+            <div className="ai-weekstrip">
+              {["Sun 8", "Mon 9", "Tue 10", "Wed 11", "Thu 12", "Fri 13", "Sat 14"].map(day => (
+                <span className={day.startsWith("Tue") ? "active" : ""} key={day}>{day}</span>
+              ))}
+            </div>
+            <div className="ai-shift-cards">
+              {["10:00 am – 12:00 pm", "2:00 pm – 5:00 pm", "6:00 pm – 9:00 pm"].map((time, index) => (
+                <div className="ai-shift-card" key={time}>
+                  <b>{time}</b>
+                  <small>{["Kimberly Ramirez", "Patricia Rivera", "Paul Green"][index]}<br />1234 Maple, Columbia</small>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <button className="ai-guide-fab" type="button" aria-label="Open Giv Product Guide">✦</button>
+          <div className="ai-guide-scrim" />
+          <div className="ai-guide-sheet">
+            <i className="ai-guide-handle" />
+            <div className="ai-guide-sheet-head"><span>Giv.</span><b>Giv Product Guide</b><em>×</em></div>
+            <p className="ai-guide-notice">I explain features and walk you through tasks, but I can't take actions for you.</p>
+            <div className="ai-guide-messages">
+              <div className="ai-bubble intro">Hi there! I'm the Giv Product Guide — here to help you understand features and complete tasks in the app.</div>
+              <div className="ai-bubble user">How do I request time off?</div>
+              <div className="ai-bubble answer">Easy! Head over to the Shifts screen and tap the + button.</div>
+              <div className="ai-guide-steps">
+                {aiGuideSteps.map((step, index) => (
+                  <div key={step} style={{ "--step-index": index }}>
+                    <span>{index + 1}</span>
+                    <p>{step}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="ai-guide-video-card">
+                <span>1:24</span>
+                <b>Walkthrough</b>
+                <small>Time Off · Video Guide<br />How to Request Time Off</small>
+              </div>
+            </div>
+            <div className="ai-guide-input">What can I help you with?<span>↗</span></div>
+          </div>
+        </div>
+      </div>
+      <div className="ai-guide-scene-list">
+        {aiGuideScenes.map(([number, title, copy], index) => (
+          <article className={`ai-guide-scene ai-guide-scene-${index + 1}`} key={title}>
+            <span>{number}</span>
+            <div>
+              <h5>{title}</h5>
+              <p>{copy}</p>
+            </div>
+          </article>
+        ))}
+        <button className="ai-guide-replay" type="button" onClick={() => setDemoKey(key => key + 1)}>Replay</button>
+      </div>
+    </div>
+  )
+}
+
+function AIGuideVisual({ type }) {
+  if (type === "supportLoops") {
+    return (
+      <div className="ai-guide-loops">
+        {aiGuideLoopCards.map(card => (
+          <article className={`ai-guide-loop ${card.old ? "is-old" : ""}`} key={card.title}>
+            <div className="ai-guide-loop-head">
+              <h5>{card.title}</h5>
+              <span>{card.tag}</span>
+            </div>
+            <ul>
+              {card.steps.map((step, index) => (
+                <li key={step}><span className={index === card.steps.length - 1 && !card.old ? "hollow" : ""} />{step}</li>
+              ))}
+            </ul>
+            <p>{card.cost.split("\n").map((line, index) => <span key={line}>{line}{index === 0 && <br />}</span>)}</p>
+          </article>
+        ))}
+      </div>
+    )
+  }
+
+  if (type === "prototypeCallout") {
+    return (
+      <aside className="ai-guide-callout">
+        <span>Why the prototype was the context</span>
+        <p>The prototype already encoded the truth about the feature — the screens, the order of the steps, the copy on the buttons. Pointing the assistant at that instead of writing documentation for it meant the answers were correct by construction, and it made the demo arguable: this is not what the guide <em>could</em> say, it is what it <em>does</em> say.</p>
+      </aside>
+    )
+  }
+
+  if (type === "solutionComparison") {
+    return (
+      <div className="ai-guide-comparison">
+        {aiGuideComparisonCards.map(card => (
+          <article className={`ai-guide-option ${card.picked ? "picked" : ""}`} key={card.title}>
+            <div className="ai-guide-option-top">
+              <h5>{card.title}</h5>
+              <span>{card.badge}</span>
+            </div>
+            <p>{card.copy}</p>
+            <ul>
+              {card.points.map(point => <li key={point}>{point}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    )
+  }
+
+  if (type === "keywordCode") {
+    return (
+      <div className="ai-guide-code">
+        <span>V1 — the scoring function that decided every answer</span>
+        <pre><code>{aiGuideKeywordCode}</code></pre>
+      </div>
+    )
+  }
+
+  if (type === "interactiveDemo") return <ProductGuideDemo />
+
+  if (type === "registryPipeline") {
+    return (
+      <div className="ai-guide-layers">
+        {aiGuideLayers.map(([tag, title, copy, badge, tone]) => (
+          <article className="ai-guide-layer" key={tag}>
+            <span className="ai-guide-layer-tag">{tag}</span>
+            <b>{title}</b>
+            <p>{copy}</p>
+            <span className={`ai-guide-layer-badge is-${tone}`}>{badge}</span>
+          </article>
+        ))}
+      </div>
+    )
+  }
+
+  if (type === "registryCode") {
+    return (
+      <div className="ai-guide-code">
+        <span>One entry from the feature registry</span>
+        <pre><code>{aiGuideCode}</code></pre>
+      </div>
+    )
+  }
+
+  if (type === "designDecisions" || type === "guardrails") {
+    const decisions = type === "guardrails" ? aiGuideGuardrails : aiGuideDecisions
+
+    return (
+      <div className="ai-guide-decisions">
+        {decisions.map(([title, copy, why]) => (
+          <article className="ai-guide-decision" key={title}>
+            <h5>{title}</h5>
+            <p>{copy}</p>
+            <p className="ai-guide-why">{why}</p>
+          </article>
+        ))}
+      </div>
+    )
+  }
+
+  if (type === "whereLanded") {
+    return (
+      <dl className="ai-guide-outcomes" aria-label="Outcome summary">
+        {aiGuideOutcomeSummary.map(([label, value]) => (
+          <div key={label}>
+            <dt>{label}</dt>
+            <dd>{value}</dd>
+          </div>
+        ))}
+      </dl>
+    )
+  }
+
+  if (type === "pilotFindings") {
+    return (
+      <div className="ai-guide-findings">
+        {aiGuideFindings.map(([title, copy]) => (
+          <article className="ai-guide-finding" key={title}>
+            <h5>{title}</h5>
+            <p>{copy}</p>
+          </article>
+        ))}
+      </div>
+    )
+  }
+
+  if (type === "pilotMetrics") {
+    return (
+      <div className="ai-guide-metrics">
+        <h5>What I'd instrument next</h5>
+        {aiGuideMetrics.map(([number, title, copy]) => (
+          <article className="ai-guide-metric" key={title}>
+            <span>{number}</span>
+            <div>
+              <b>{title}</b>
+              <p>{copy}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    )
+  }
+
+  if (type === "pilotLimits") {
+    return (
+      <aside className="ai-guide-callout">
+        <span>Known limits</span>
+        <p>Grounding in prototype code works for one feature and will not survive a whole platform. Production needs the registry generated from a real source of truth with a named owner. And the guide explains rather than acts — a deliberate boundary for the pilot, and the first thing worth revisiting once trust is established.</p>
+      </aside>
+    )
+  }
+
+  return null
 }
 
 function CaseStudyPage({ project, onBack, onSelectProject }) {
@@ -874,36 +1477,47 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
           {pageSections.map((section, index) => (
             <section className="case-section" id={sectionId(section)} key={section.title}>
               {project.exactDoc ? (
-                splitSectionChunks(section.body, givSectionMedia[section.title]).map((chunk, chunkIndex) => (
-                  chunk.type === "images" ? (
-                    <div className="case-image-stack" key={`${section.title}-media-${chunkIndex}`}>
-                      {renderCaseMedia(chunk.media, `${section.title}-${chunkIndex}`)}
-                    </div>
-                  ) : (
-                    <div className="case-section-copy" key={`${section.title}-copy-${chunkIndex}`}>
-                      {chunkIndex === 0 && (
-                        <div className="case-section-heading">
-                          {section.label && <span className="case-section-label">{section.label}</span>}
-                          <div className="case-section-title">
-                            <h4>{section.title}</h4>
+                <>
+                  {splitSectionChunks(section.body, givSectionMedia[section.title]).map((chunk, chunkIndex) => (
+                    chunk.type === "images" ? (
+                      <div className="case-image-stack" key={`${section.title}-media-${chunkIndex}`}>
+                        {renderCaseMedia(chunk.media, `${section.title}-${chunkIndex}`)}
+                      </div>
+                    ) : chunk.type === "visual" ? (
+                      <div className={`case-image-stack ai-guide-visual-wrap ${chunk.visual === "interactiveDemo" ? "ai-guide-wide" : "ai-guide-narrow"}`} key={`${section.title}-visual-${chunkIndex}`}>
+                        <AIGuideVisual type={chunk.visual} />
+                      </div>
+                    ) : (
+                      <div className="case-section-copy" key={`${section.title}-copy-${chunkIndex}`}>
+                        {chunkIndex === 0 && (
+                          <div className="case-section-heading">
+                            {section.label && <span className="case-section-label">{section.label}</span>}
+                            <div className="case-section-title">
+                              <h4>{section.title}</h4>
+                            </div>
                           </div>
-                        </div>
-                      )}
-                      {chunk.items.map(item => (
-                        item.startsWith("## ") ? (
-                          <h5 className="case-body-subheading" key={item}>{renderInlineEmphasis(item.slice(3), { inHeading: true })}</h5>
-                        ) : (
-                          <p key={item}>{renderInlineEmphasis(item)}</p>
-                        )
-                      ))}
+                        )}
+                        {chunk.items.map(item => (
+                          item.startsWith("## ") ? (
+                            <h5 className="case-body-subheading" key={item}>{renderInlineEmphasis(item.slice(3), { inHeading: true })}</h5>
+                          ) : item ? (
+                            <p key={item}>{renderInlineEmphasis(item)}</p>
+                          ) : null
+                        ))}
+                      </div>
+                    )
+                  ))}
+                  {section.visuals?.map(visual => (
+                    <div className={`case-image-stack ai-guide-visual-wrap ${visual === "interactiveDemo" ? "ai-guide-wide" : "ai-guide-narrow"}`} key={`${section.title}-${visual}`}>
+                      <AIGuideVisual type={visual} />
                     </div>
-                  )
-                ))
+                  ))}
+                </>
               ) : (
               <div className="case-section-copy">
                 <div className="case-section-title">
                   {/^\d/.test(section.title) ? null : <span>{String(index + 1).padStart(2, "0")}</span>}
-                  <h4>{section.title}.</h4>
+                  <h4>{/[.!?]$/.test(section.title) ? section.title : `${section.title}.`}</h4>
                 </div>
                 {section.body?.map(paragraph => (
                   givProcessHeadings.has(paragraph) ? (
@@ -1000,45 +1614,62 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
 
           <section className="more-works" aria-labelledby="more-works-heading">
             <div className="more-works-head">
-              <span className="eyebrow">More works</span>
-              <h2 className="display" id="more-works-heading">More works.</h2>
-              <span className="more-count">{String(projects.length - 1).padStart(2, "0")}</span>
+              <span className="eyebrow">Keep reading</span>
+              <h2 className="display" id="more-works-heading">Other case studies.</h2>
             </div>
             <div className="more-work-list">
               {projects.filter(item => item.id !== project.id).map(item => (
-                <button className="more-work-card" key={item.id} type="button" onClick={() => onSelectProject(item)}>
-                  <div className="more-work-thumb">
-                    {item.thumbnail && item.thumbnailType === "video" ? (
-                      <video
-                        src={item.thumbnail}
-                        aria-label={`${item.title} thumbnail`}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        style={{
-                          objectPosition: item.thumbnailPosition || "50% 50%",
-                          "--thumb-scale": item.thumbnailScale || 1,
-                        }}
-                      />
-                    ) : item.thumbnail ? (
-                      <img
-                        src={item.thumbnail}
-                        alt={`${item.title} thumbnail`}
-                        style={{ objectPosition: item.thumbnailPosition || "50% 50%" }}
-                      />
-                    ) : (
-                      <span>{item.id}</span>
-                    )}
+                <button
+                  className={`more-work-card work-item ${item.locked ? "is-locked" : ""}`}
+                  key={item.id}
+                  type="button"
+                  onClick={() => {
+                    if (!item.locked) onSelectProject(item)
+                  }}
+                  aria-disabled={item.locked ? "true" : "false"}
+                  aria-label={`${item.title} project preview`}
+                >
+                  <div className="work-visual">
+                    <div className="work-card-inner">
+                      <div className="work-card-face work-front">
+                        <WorkThumbnail project={item} />
+                      </div>
+                      <div className="work-card-face work-back">
+                        {item.hoverMeta ? (
+                          <div className="work-glance">
+                            <span>AT A GLANCE</span>
+                            <dl>
+                              {item.hoverMeta.map(([label, value]) => (
+                                <div key={label}>
+                                  <dt>{label}</dt>
+                                  <dd>{value}</dd>
+                                </div>
+                              ))}
+                            </dl>
+                          </div>
+                        ) : (
+                          <>
+                            <span>metadata</span>
+                            <b>Role / timeline / tools</b>
+                            <small>Format coming later.</small>
+                          </>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="more-work-meta">
-                    <strong>{item.title}</strong>
-                    <small>{item.description}</small>
+                  <div className="work-meta">
+                    <h5>{item.description}</h5>
+                    <div className="work-desc">
+                      <p>{item.title}</p>
+                    </div>
+                    <span className="work-cta">
+                      {item.locked && <Lock aria-hidden="true" />}
+                      {item.locked ? "Coming soon" : "View case study"}
+                    </span>
                   </div>
                 </button>
               ))}
             </div>
-            <button className="case-view-all" type="button" onClick={onBack}>View all works</button>
           </section>
         </div>
       </div>
@@ -1098,6 +1729,7 @@ function App() {
   }, [])
 
   const openProject = project => {
+    if (project.locked) return
     setLoaded(true)
     setActiveProject(project)
     window.history.pushState(null, "", `#case-${project.slug}`)
@@ -1146,9 +1778,12 @@ function App() {
         <div className="wrap hero-grid">
           <div className="hero-copy">
             <h3 className="display hero-title">
-              <span className="line"><span>I don't just design products. I help teams figure them out.</span></span>
+              <span className="hero-quote-sticker" aria-hidden="true">&ldquo;</span>
+              <span className="line"><span>Behind every seamless product is a complex, messy system. That’s exactly what I design for.</span></span>
             </h3>
-            <p className="hero-body">{heroAboutCopy}</p>
+            {heroAboutCopy.map(paragraph => (
+              <p className="hero-body" key={paragraph}>{paragraph}</p>
+            ))}
           </div>
           <div className="hero-portrait-wrap" data-cursor-depth="10" aria-label={savedAboutNote.heading}>
             <span className="eyebrow hero-eyebrow">
@@ -1185,30 +1820,7 @@ function App() {
                 <div className="work-visual">
                   <div className="work-card-inner">
                     <div className="work-card-face work-front">
-                      {project.thumbnail && project.thumbnailType === "video" ? (
-                        <video
-                          className="work-thumbnail work-thumbnail-video"
-                          src={project.thumbnail}
-                          aria-label={`${project.title} thumbnail`}
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          style={{
-                            objectPosition: project.thumbnailPosition || "50% 50%",
-                            "--thumb-scale": project.thumbnailScale || 1,
-                          }}
-                        />
-                      ) : project.thumbnail ? (
-                        <img
-                          className="work-thumbnail"
-                          src={project.thumbnail}
-                          alt={`${project.title} thumbnail`}
-                          style={{ objectPosition: project.thumbnailPosition || "50% 50%" }}
-                        />
-                      ) : (
-                        <span className="visual-label">image preview</span>
-                      )}
+                      <WorkThumbnail project={project} />
                     </div>
                     <div className="work-card-face work-back">
                       {project.hoverMeta ? (
@@ -1234,9 +1846,9 @@ function App() {
                   </div>
                 </div>
                 <div className="work-meta">
-                  <h3>{project.title}</h3>
+                  <h5>{project.description}</h5>
                   <div className="work-desc">
-                    <p>{project.description}</p>
+                    <p>{project.title}</p>
                   </div>
                   <span className="work-cta">
                     {project.locked && <Lock aria-hidden="true" />}
