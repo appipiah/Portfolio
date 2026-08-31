@@ -183,72 +183,66 @@ const apexHoverMeta = [
 
 const excelMindSections = [
   {
-    title: "Vision",
+    title: "ExcelMind stopped selling to students and started selling to schools.",
+    label: "Overview",
     body: [
-      "ExcelMind began as an AI-powered exam preparation platform that helped secondary school students prepare for WAEC, UTME, GCE, and NECO through past questions and AI-generated practice materials.",
-      "As the business evolved, the company expanded beyond student subscriptions to build a complete digital platform for schools, bringing together school administration, teaching, examinations, and learning into one connected experience.",
+      "ExcelMind began as an AI-powered exam preparation platform — past questions and AI-generated practice for WAEC, UTME, GCE and NECO.",
+      "The consumer subscription model was hard to scale financially, so the business pivoted to B2B. That meant building a complete digital platform for schools: administration, teaching, learning and examinations in one system.",
+      "I designed the Administrative Dashboard, the Learning Management System, and the internal examination upload portal — and set up the shared design foundations the team built on.",
     ],
     images: ["{image}"],
   },
   {
-    title: "The Challenge",
+    title: "A school isn't a set of features. It's one system.",
+    label: "Challenges",
     body: [
-      "The original consumer subscription model proved difficult to scale financially, prompting the business to pivot toward a B2B strategy centered on schools. This meant designing an entirely new suite of products within a short period, while the direction of the product continued to evolve.",
-      "Schools are complex environments. Admissions, academics, examinations, finance, communication, and learning all depend on one another, so every new feature had to fit naturally into the bigger picture instead of solving a single problem in isolation.",
-      "At the same time, engineering had already begun building parts of the platform, leaving little room for major redesigns. Every decision had to be practical, well thought out, and ready for implementation.",
+      "**Almost nothing stood on its own.** Attendance didn't just record who showed up — it fed report cards and promotion decisions. Timetables determined what teachers and students saw in the LMS each day. Grading systems and class structures shaped how almost every other module behaved.",
+      "**Engineering was already building.** Parts of the platform were in development before design caught up, so there was little room for major redesigns.",
+      "**No room for iteration.** I couldn't rely on implementation to expose gaps, so I worked through every workflow, state, permission level, empty state, error state and alternate path before handing over. More work upfront — but it reduced ambiguity, surfaced edge cases early, and let engineering move with confidence.",
     ],
   },
   {
-    title: "My Role",
+    title: "Three rules I designed by.",
+    label: "Approach",
     body: [
-      "I was responsible for designing several of the platform's core products, including the Administrative Dashboard, Learning Management System (LMS), and the internal examination upload portal that powers ExcelMind's AI-assisted exam preparation platform. Together, these products formed the foundation of the experience schools use to set up, manage, and run their daily operations.",
-      "Across these products, I designed features that enabled schools to configure class structures, grading systems, assessments, fee schedules, promotion requirements, domains, and user management for students, staff, and parents. Since many of these features depended on one another, I carefully considered their relationships, constraints, and edge cases to ensure the platform remained flexible enough to support different school structures without creating conflicts elsewhere.",
-      "Alongside product design, I established and maintained shared design foundations—including reusable styles and design assets—to keep the experience consistent and support faster design as the platform evolved.",
+      "**01 — Follow the data, not the screen.** Before opening Figma I broke each feature into workflows and traced what it touched. Linking teachers to their subjects and assigned classes meant timetable creation could surface only valid options instead of asking someone to remember the rules.",
+      "**02 — Configure, don't prescribe.** Wherever schools differed, I designed for setup rather than assumption — academic structures, grading systems, fee schedules and promotion requirements are things a school defines, not things the product decides.",
+      "**03 — Make it lighter than the work.** School administration is long hours of repetitive tasks. I used colour and spacing deliberately so the platform felt lighter than the job it supported.",
+      "Underneath all three: use what's proven, improve what can be better, and create something new only when the problem genuinely requires it. I studied Gradely and Google Classroom rather than inventing patterns schools would have to learn.",
     ],
   },
   {
-    title: "Process",
+    title: "The Administrative Dashboard",
+    label: "Solutions",
     body: [
-      "Designing ExcelMind meant thinking beyond individual screens. Every feature had to fit into a much larger system where decisions in one area could directly affect another.",
-      "Before opening Figma, I spent time understanding the problem. I broke every feature into smaller workflows and asked a lot of questions: Why does this exist? How do schools handle this today? What outcome are we trying to achieve? What other parts of the platform will this affect? Those conversations helped me understand the problem before I started designing solutions.",
-      "As I worked through the platform, I realized very few features stood on their own. Attendance didn't just record who was present, it influenced report cards and promotion decisions. Timetables weren't simply schedules; they determined what teachers and students saw in the LMS each day. School configurations, such as grading systems and class structures, shaped how almost every other module behaved",
-      "That changed how I approached the project. Instead of solving one feature at a time, I focused on how information flowed across the platform and how decisions in one area would ripple through another. My goal wasn't just to design good screens, but to make sure the entire system behaved consistently.",
-      "Since development was moving quickly, there was very little room for iteration. I couldn't rely on implementation to expose gaps in the design-I had to uncover them beforehand. That meant thinking through every workflow, state, permission level, empty state, error state, and alternate path before handing designs to engineering. It was more work upfront, but it reduced ambiguity, surfaced edge cases early, and allowed development to move with confidence.",
-      "Flexibility was another principle that guided my work. No two schools operate exactly the same way, so I avoided building rigid workflows wherever possible. Instead, I designed configurable frameworks that could adapt to different class structures, grading methods, assessment models, fee systems, and naming conventions. Open fields and customizable settings allowed schools to shape the platform around their existing processes rather than forcing them into a predefined way of working.",
-      "My understanding of relational data also influenced many design decisions. Linking teachers to subjects and assigned classes meant timetable creation only surfaced relevant options. Parent profiles could support multiple children across different classes or departments without introducing unnecessary complexity. Rather than treating data relationships as an engineering concern, I used them to simplify the experience for users.",
-      "Because ExcelMind was built primarily for Nigerian schools, validating workflows and terminology was relatively straightforward. I studied products like Gradely and Google Classroom for established interaction patterns, then adapted those ideas to fit local school operations and the platform's requirements.",
-      "Finally, I wanted the platform to feel lighter than the work it supported. School administration involves long hours of repetitive tasks, so I intentionally used colour, spacing, and visual hierarchy to create an experience that felt approachable and engaging without sacrificing clarity.",
-      "Throughout the project, I followed a simple framework: use what is proven, improve what can be better, and create something new only when the problem genuinely requires it.",
+      "*I designed the Learning Management System and the internal examination upload portal as well. This section covers the Administrative Dashboard only.*",
+      "## **01 — A school defines itself before anything else works.**",
+      "Onboarding walks a school through its own structure: classes, grading systems, fee schedules, promotion requirements. User management holds the people and the links between them — a teacher to the subjects and classes they take, a parent to several children across different years.",
+      "## **02 — The term runs on what was set up.**",
+      "Timetabling turns those assignments into the schedule, offering only teachers eligible for the slot. Attendance records against it. Results read the grading system defined at setup and feed report cards and promotion. Each one depends on the last.",
+      "## **03 — The parts that keep a school running.**",
+      "Fees tracked against the schedule each school set for itself — revenue, payment activity, outstanding balances in one view. Announcements, events and calendars reaching administrators, teachers, students and parents.",
     ],
     images: ["{image}"],
   },
   {
-    title: "Inside the Platform",
-    modules: [
-      ["School Onboarding & Setup", "Designed the onboarding experience that allows schools to configure their academic structure, grading systems, assessments, fees, domains, and other operational settings before using the platform.", "{images}"],
-      ["Administrative Dashboard", "The central workspace that gives school administrators a complete overview of operations, key metrics, and quick access to the platform's core modules.", "{images}"],
-      ["User Management", "Built administrative workflows for managing students, staff, parents, and the relationships between them across the platform.", "{images}"],
-      ["Attendance Management", "Designed attendance tracking for students and staff, providing a clear record of presence, lateness, and absences across the school.", "{images}"],
-      ["Timetable Management", "Built flexible scheduling tools for classes, teachers, and subjects that integrate seamlessly with the learning platform.", "{images}"],
-      ["Learning Management System (LMS)", "Designed teacher-facing tools for assessments, grading, coursework, and managing day-to-day classroom activities.", "{images}"],
-      ["Results Management", "Designed workflows for grading, report cards, promotion requirements, and student performance across different school structures.", "{images}"],
-      ["Payment Management", "A centralized view of school finances, allowing administrators to monitor revenue, payment activity, outstanding balances, and students with unpaid fees.", "{images}"],
-      ["School Communication", "Designed announcement, event, and calendar experiences that keep administrators, teachers, students, and parents informed.", "{images}"],
-      ["Examination Upload Portal", "Designed an internal tool used by the content team to upload, organize, and manage examination questions for ExcelMind's AI-assisted exam preparation platform.", "{images}"],
+    title: "The foundations outlived me.",
+    label: "Outcome",
+    body: [
+      "I established and maintained the shared design foundations — reusable styles and assets — that kept the experience consistent as the platform grew.",
+      "**After I left, my manager reached out to thank me again for the contribution, and the designers who came after were still working from what I'd set up.**",
     ],
   },
   {
-    title: "Reflection",
+    title: "ExcelMind is where I found what I actually like doing.",
+    label: "Reflection",
     body: [
-      "ExcelMind pushed me further than any project I had worked on at the time.",
-      "It was the project that sparked my love for designing complex systems. I discovered that I'm happiest working on robust platforms with lots of moving parts-products where every decision has consequences somewhere else. Even today, I get excited by the thought of staying up at 2 a.m., sketching different flows, refining logic, and figuring out the cleanest way to solve a complicated problem. That's where I do some of my best thinking.",
-      "It also made me realize that I do my best work when I'm trusted with ownership. Being responsible for large parts of the platform meant making difficult decisions, defending them, and thinking beyond the immediate task in front of me. That level of ownership shaped my confidence as a designer and continues to influence how I approach products today.",
-      "The project stretched me in ways I hadn't experienced before. The deadlines were relentless, the platform kept expanding, and there was very little room for iteration. Looking back, I honestly don't know what I was running on during those months-I don't think that version of my brain still exists anymore. 😄 But I'm incredibly grateful for the experience. It pushed me beyond what I thought I was capable of and raised my own standard for the quality of work I expect from myself.",
-      "One of the most rewarding moments came after I had left the company. My manager reached out to personally thank me again for my contribution to ExcelMind, and the designer I had onboarded remarked on the breadth of the platform and the amount of work that had gone into it. Knowing that the work continued to support the team-and could be confidently maintained and built upon long after I had moved on-was incredibly fulfilling.",
-      "ExcelMind reinforced a belief I still carry into every project: the more complex the system, the greater my responsibility to make it feel simple. My job isn't to expose complexity-it's to absorb it, organize it, and turn it into something people can use with confidence.",
+      "Robust platforms, lots of moving parts, decisions that resolve somewhere else entirely.",
+      "It also showed me I do my best work when I'm trusted with ownership — making the calls, defending them, living with them.",
     ],
   },
 ]
+
 
 const guideMeta = [
   ["Industry", "Healthtech"],
@@ -334,7 +328,7 @@ const projects = [
     title: "Giv Healthcare",
     siteUrl: "https://givhealthcare.com/",
     year: "[Add dates]",
-    description: "Rebuilding scheduling for healthcare agencies",
+    description: "Rebuilding scheduling workflow for Giv Healthcare",
     exactDoc: true,
     thumbnail: "/assets/giv-overview.mp4",
     thumbnailType: "video",
@@ -349,8 +343,10 @@ const projects = [
     id: "02",
     slug: "excelmind",
     title: "ExcelMind",
+    siteUrl: "https://excelmind.org/",
     year: "2025-2026",
-    description: "Designing a unified B2B platform for school administration and learning.",
+    description: "Designing a unified B2B platform for school administration and learning",
+    exactDoc: true,
     thumbnail: "/assets/excelmind-thumbnail.mp4",
     thumbnailType: "video",
     eyebrow: "PRODUCT DESIGN · EDTECH · B2B SAAS",
@@ -363,7 +359,7 @@ const projects = [
     slug: "apex-velociti",
     title: "Apex Velociti",
     year: "2026",
-    description: "Designing the digital platform behind a professional karting circuit.",
+    description: "Building the digital infrastructure for a professional karting circuit",
     thumbnail: "/assets/apex-reveal.mp4",
     thumbnailType: "video",
     hoverMeta: apexHoverMeta,
@@ -374,7 +370,7 @@ const projects = [
     slug: "giv-product-guide",
     title: "Giv Healthcare",
     year: "2026",
-    description: "Building an AI product guide to scale onboarding",
+    description: "Deploying an AI product guide to resolve onboarding bottlenecks",
     exactDoc: true,
     siteUrl: "https://givhealthcare.com/",
     thumbnail: "/assets/giv-ai-product-guide.mov",
@@ -814,7 +810,12 @@ const givSectionMedia = {
 }
 
 function renderInlineEmphasis(text, { inHeading = false } = {}) {
-  return text.split(/(\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*)/g).map((part, index) => {
+  return text.split(/(\[[^\]]+\]\([^)]+\)|\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*)/g).map((part, index) => {
+    const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
+    if (link) {
+      return <a href={link[2]} target="_blank" rel="noreferrer" key={index}>{link[1]}</a>
+    }
+
     // Headings already carry weight from their own style, so one layer of the
     // doc's bold is dropped there: ***x*** becomes italic, **x** becomes plain.
     if (part.startsWith("***") && part.endsWith("***")) {
