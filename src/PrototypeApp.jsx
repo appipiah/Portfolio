@@ -416,8 +416,7 @@ const toolLogos = {
   Jira: "jira",
 }
 
-const resumePreviewUrl = "https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/edit?usp=sharing"
-const resumeDownloadUrl = "https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/export?format=pdf"
+const resumeUrl = "https://drive.google.com/file/d/1dUKp4U1SzFkEVg3tUGvbvq_vnJmURani/view"
 
 const CASE_HASH_PREFIX = "#case-"
 
@@ -737,7 +736,7 @@ function PortfolioNav({ onNavigateHome }) {
         <ul id="nav-menu">
           <li><button className="nav-link" type="button" onClick={() => navigateHome()}>Home</button></li>
           <li><button className="nav-link" type="button" onClick={() => navigateHome("#work")}>Work</button></li>
-          <li><a href="https://docs.google.com/document/d/1pVbIt1Cxmym9DcsxW6L6BseUvCa4z8zyPJtKUNf4ZuM/edit?usp=sharing" target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>Resume</a></li>
+          <li><a href={resumeUrl} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>Resume</a></li>
           <li><span className="nav-disabled" aria-disabled="true">Playground (coming soon)</span></li>
         </ul>
         <div className="nav-actions">
@@ -1906,12 +1905,11 @@ function App() {
               </svg>
             </div>
             <aside className="resume-preview" aria-label="Resume preview">
-              <a className="resume-page-preview" href={resumePreviewUrl} target="_blank" rel="noreferrer" aria-label="Open full resume">
+              <a className="resume-page-preview" href={resumeUrl} target="_blank" rel="noopener noreferrer" aria-label="Open full resume">
                 <img src="/assets/resume-preview-page-1.png" alt="First page preview of Bodede Dolapo's resume" />
               </a>
               <div className="resume-actions">
-                <a className="resume-open" href={resumePreviewUrl} target="_blank" rel="noreferrer">Open Resume →</a>
-                <a className="resume-download" href={resumeDownloadUrl} target="_blank" rel="noreferrer">Download PDF</a>
+                <a className="resume-open" href={resumeUrl} target="_blank" rel="noopener noreferrer">Open Resume →</a>
               </div>
             </aside>
           </div>

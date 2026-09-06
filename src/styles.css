@@ -1260,6 +1260,9 @@ nav a:hover,
   display: grid;
   place-items: center;
   overflow: hidden;
+  /* The 3D flip context means ancestor overflow is ignored, so a scaled
+     thumbnail escapes the card. contain:paint clips it regardless. */
+  contain: paint;
   border: 3px solid var(--ink);
   background: transparent;
   backface-visibility: hidden;
