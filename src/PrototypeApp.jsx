@@ -218,12 +218,14 @@ const excelMindSections = [
       "*I designed the Learning Management System and the internal examination upload portal as well. This section covers the Administrative Dashboard only.*",
       "## **A school defines itself before anything else works.**",
       "Onboarding walks a school through its own structure: classes, grading systems, fee schedules, promotion requirements. User management holds the people and the links between them — a teacher to the subjects and classes they take, a parent to several children across different years.",
+      "{images}",
       "## **The term runs on what was set up.**",
       "Timetabling turns those assignments into the schedule, offering only teachers eligible for the slot. Attendance records against it. Results read the grading system defined at setup and feed report cards and promotion. Each one depends on the last.",
+      "{images}",
       "## **The parts that keep a school running.**",
       "Fees tracked against the schedule each school set for itself — revenue, payment activity, outstanding balances in one view. Announcements, events and calendars reaching administrators, teachers, students and parents.",
+      "{images}",
     ],
-    images: ["{image}"],
   },
   {
     title: "The foundations outlived me.",
@@ -805,6 +807,11 @@ const givSectionMedia = {
     { type: "video", src: "/assets/giv-drop-shift-walkthrough.mp4", label: "Giv drop shift walkthrough", className: "rocky-media" },
     { type: "video", src: "/assets/giv-time-change-requests-walkthrough.mp4", label: "Giv time change requests walkthrough", className: "rocky-media" },
     { type: "video", src: "/assets/giv-time-off-requests-walkthrough.mp4", label: "Giv time off requests walkthrough", className: "rocky-media" },
+  ],
+  "The Administrative Dashboard": [
+    { type: "video", src: "/assets/excelmind-onboarding-walkthrough.mp4", label: "ExcelMind onboarding walkthrough" },
+    { type: "video", src: "/assets/excelmind-results-walkthrough.mp4", label: "ExcelMind results walkthrough" },
+    { type: "video", src: "/assets/excelmind-communication-walkthrough.mp4", label: "ExcelMind communication walkthrough" },
   ],
 }
 
