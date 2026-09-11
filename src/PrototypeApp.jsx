@@ -15,7 +15,7 @@ const tickerWords = [
 ]
 
 const heroAboutCopy = [
-  "Three years of B2B and consumer product design, rooted in deep experience in healthcare operations alongside edtech and fintech.",
+  "Over three years of B2B and consumer product design, rooted in deep experience in healthcare operations alongside edtech and fintech.",
   "I thrive where the rules are the hard part—tackling dense workflows, compliance, and complex edge cases. I think in systems before screens, leveraging AI to build a shared language with engineering.",
   "The more ambitious the problem, the more excited I get.",
 ]
