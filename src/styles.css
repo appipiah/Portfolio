@@ -81,6 +81,20 @@ html {
 
 .section,
 .cta,
+/* Grid items default to min-width:auto and refuse to shrink below their widest
+   child, which pushed case study sections past the viewport on small screens. */
+.case-section,
+.case-section-copy,
+.case-image-stack,
+.ai-guide-loops,
+.ai-guide-comparison,
+.ai-guide-layers,
+.ai-guide-decisions,
+.ai-guide-findings,
+.platform-modules {
+  min-width: 0;
+}
+
 .case-section {
   scroll-margin-top: calc(var(--navbar-height) + 24px);
 }
@@ -1230,8 +1244,10 @@ nav a:hover,
 .work-visual {
   position: relative;
   overflow: visible;
+  /* No min-height: with aspect-ratio set, a min-height that exceeds what the
+     column allows makes the ratio derive width from height, blowing the card
+     past its grid track. Width governs, height follows. */
   aspect-ratio: 16 / 9;
-  min-height: clamp(260px, 21.5vw, 310px);
   border: 0;
   background: transparent;
   box-shadow: none;
@@ -2859,6 +2875,7 @@ nav a:hover,
 
 .ai-guide-code {
   display: grid;
+  min-width: 0;
   gap: 0;
   overflow: hidden;
   border: 1px solid var(--guide-line);
@@ -2872,6 +2889,9 @@ nav a:hover,
 
 .ai-guide-code pre {
   margin: 0;
+  /* Grid items default to min-width:auto, so the pre could not shrink below
+     its longest line and stretched the page instead of scrolling. */
+  min-width: 0;
   overflow: auto;
   padding: 18px;
   color: #6f7580;
@@ -3799,7 +3819,11 @@ footer .fine {
   }
 
   .work-visual {
-    min-height: clamp(270px, 68vw, 330px);
+    /* aspect-ratio derives width from height once min-height wins, which blew
+       the card past the viewport on phones. Let width govern here instead. */
+    width: 100%;
+    aspect-ratio: auto;
+    min-height: clamp(230px, 62vw, 300px);
   }
 
   .work-back {

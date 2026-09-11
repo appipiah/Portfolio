@@ -598,6 +598,11 @@ const CSS = `
 @keyframes pgdBlink{0%,100%{opacity:1} 50%{opacity:.2}}
 @keyframes pgdCaret{50%{opacity:0}}
 
+@media(max-width:400px){
+  .pgd-stage{padding:24px 12px 28px; gap:24px}
+  .pgd-device{width:244px; height:508px; padding:8px; border-radius:38px}
+  .pgd-screen{border-radius:30px}
+}
 @media(prefers-reduced-motion:reduce){
   .pgd *, .pgd *::before, .pgd *::after{
     animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;
