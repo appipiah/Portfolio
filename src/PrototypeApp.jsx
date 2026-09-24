@@ -574,6 +574,44 @@ function useCursorInteractions(active) {
   }, [active])
 }
 
+function ResumeSkeleton() {
+  // Abstract stand-in for the resume's first page. The real preview image is
+  // not used here because it renders contact details legibly on a public URL.
+  const bullets = widths => widths.map((w, i) => (
+    <span className="rsk-row" key={i}>
+      <i className="rsk-dot" />
+      <i className="rsk-line" style={{ width: `${w}%` }} />
+    </span>
+  ))
+
+  const section = (key, body) => (
+    <div className="rsk-section" key={key}>
+      <i className="rsk-head" />
+      <i className="rsk-rule" />
+      {body}
+    </div>
+  )
+
+  return (
+    <div className="rsk" aria-hidden="true">
+      <i className="rsk-name" />
+      <i className="rsk-contact" />
+      {section("summary", [100, 100, 100, 68].map((w, i) => (
+        <i className="rsk-line" style={{ width: `${w}%` }} key={i} />
+      )))}
+      {section("skills", bullets([96, 88, 94, 72, 90]))}
+      {section("experience", [[2, 3], [1, 2], [0, 2]].map(([n, count], i) => (
+        <div className="rsk-block" key={i}>
+          <i className="rsk-org" />
+          <i className="rsk-role" />
+          {bullets(count === 3 ? [95, 86, 78] : [93, 74])}
+        </div>
+      )))}
+      {section("education", bullets([91, 83, 70]))}
+    </div>
+  )
+}
+
 function ContactForm() {
   const [form, setForm] = useState({
     name: "",
@@ -1913,7 +1951,7 @@ function App() {
             </div>
             <aside className="resume-preview" aria-label="Resume preview">
               <a className="resume-page-preview" href={resumeUrl} target="_blank" rel="noopener noreferrer" aria-label="Open full resume">
-                <img src="/assets/resume-preview-page-1.png" alt="First page preview of Bodede Dolapo's resume" />
+                <ResumeSkeleton />
               </a>
               <div className="resume-actions">
                 <a className="resume-open" href={resumeUrl} target="_blank" rel="noopener noreferrer">Open Resume →</a>
