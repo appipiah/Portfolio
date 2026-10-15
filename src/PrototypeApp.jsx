@@ -418,7 +418,7 @@ const toolLogos = {
   Jira: "jira",
 }
 
-const resumeUrl = "https://drive.google.com/file/d/1dUKp4U1SzFkEVg3tUGvbvq_vnJmURani/view"
+const resumeUrl = "/assets/oludolapo-bodede-product-designer-resume.pdf"
 
 const CASE_HASH_PREFIX = "#case-"
 

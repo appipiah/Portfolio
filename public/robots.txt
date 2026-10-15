@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# The resume carries a personal phone number and email. It is linked from the
+# site for people, but should not be indexed as a standalone search result.
+Disallow: /assets/oludolapo-bodede-product-designer-resume.pdf
