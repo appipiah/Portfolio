@@ -422,6 +422,20 @@ const resumeUrl = "/assets/oludolapo-bodede-product-designer-resume.pdf"
 
 const CASE_HASH_PREFIX = "#case-"
 
+const PLAYGROUND_HASH = "#playground"
+
+const playgroundPieces = [
+  {
+    id: "ercas-tickets",
+    href: "/playground/ercas-tickets/index.html",
+    thumbnail: "/assets/playground-ercas-thumb.jpg",
+    alt: "The opening of the Ercas Events note, reading Two tickets. One name., above the two tickets it is about.",
+    title: "Two tickets. One name.",
+    note: "I bought two tickets to an event and both came back in my name. A note to the team that built it, about what their flow decides to store.",
+    cta: "View",
+  },
+]
+
 // The hash carries two different things: the case study route ("#case-giv") and
 // in-page section anchors within a case study ("#giv-my-role"). Both have to
 // resolve to the same project, otherwise following a section link reads as
@@ -727,6 +741,17 @@ function PortfolioNav({ onNavigateHome }) {
   const navRef = useRef(null)
   const toggleRef = useRef(null)
 
+  const openPlayground = () => {
+    setMenuOpen(false)
+
+    if (window.location.hash === PLAYGROUND_HASH) {
+      window.scrollTo({ top: 0, behavior: "smooth" })
+      return
+    }
+
+    window.location.hash = PLAYGROUND_HASH
+  }
+
   const navigateHome = (target = "") => {
     setMenuOpen(false)
 
@@ -777,7 +802,7 @@ function PortfolioNav({ onNavigateHome }) {
           <li><button className="nav-link" type="button" onClick={() => navigateHome()}>Home</button></li>
           <li><button className="nav-link" type="button" onClick={() => navigateHome("#work")}>Work</button></li>
           <li><a href={resumeUrl} target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>Resume</a></li>
-          <li><span className="nav-disabled" aria-disabled="true">Playground (coming soon)</span></li>
+          <li><button className="nav-link" type="button" onClick={() => openPlayground()}>Playground</button></li>
         </ul>
         <div className="nav-actions">
           <a className="icon-btn linkedin-btn" href="https://www.linkedin.com/in/bodededolapo/" aria-label="LinkedIn">
@@ -1424,6 +1449,51 @@ function AIGuideVisual({ type }) {
   return null
 }
 
+function PlaygroundPage({ onBack }) {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  return (
+    <main className="playground-page">
+      <PortfolioNav onNavigateHome={onBack} />
+
+      <section className="section playground-section">
+        <div className="wrap">
+          <div className="play-head">
+            <span className="play-sticker">
+              <i aria-hidden="true">&#10022;</i>
+              Playground
+              <i aria-hidden="true">&#10022;</i>
+            </span>
+            <p>Where I dabble. Personal projects, loose ideas, and things I build just to see them exist.</p>
+          </div>
+          <div className="play-list">
+            {playgroundPieces.map(piece => (
+              <a
+                className="play-item"
+                key={piece.id}
+                href={piece.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="play-visual">
+                  <img src={piece.thumbnail} alt={piece.alt} loading="lazy" />
+                </div>
+                <div className="play-meta">
+                  <h5>{piece.title}</h5>
+                  <p>{piece.note}</p>
+                  <span className="play-cta">{piece.cta}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  )
+}
+
 function CaseStudyPage({ project, onBack, onSelectProject }) {
   const pageSections = project.sections || caseStudySections.map(section => ({
     title: section,
@@ -1729,14 +1799,19 @@ function CaseStudyPage({ project, onBack, onSelectProject }) {
 }
 
 function App() {
-  const [loaded, setLoaded] = useState(false)
+  // A direct load of a routed page has no loader to wait out, and leaving this
+  // false would keep body.is-loading (and its overflow lock) on for 1.9s.
+  const [loaded, setLoaded] = useState(
+    () => window.location.hash === PLAYGROUND_HASH || Boolean(findProjectFromHash()),
+  )
   const [activeProject, setActiveProject] = useState(() => findProjectFromHash())
+  const [atPlayground, setAtPlayground] = useState(() => window.location.hash === PLAYGROUND_HASH)
   const ticker = useMemo(() => [...tickerWords, ...tickerWords], [])
 
   // Leaving a case study remounts the whole home page, so these have to re-run
   // against the new nodes. Keyed on `loaded` alone they would keep observing the
   // discarded elements and the returning home page would stay blank.
-  const showingHome = loaded && !activeProject
+  const showingHome = loaded && !activeProject && !atPlayground
 
   useScrollReveal(showingHome)
   useGsapScrollTransitions(showingHome)
@@ -1763,7 +1838,11 @@ function App() {
   }, [loaded])
 
   useEffect(() => {
-    const syncProjectFromUrl = () => setActiveProject(findProjectFromHash())
+    const syncProjectFromUrl = () => {
+      setActiveProject(findProjectFromHash())
+      setAtPlayground(window.location.hash === PLAYGROUND_HASH)
+      setLoaded(true)
+    }
 
     window.addEventListener("hashchange", syncProjectFromUrl)
     window.addEventListener("popstate", syncProjectFromUrl)
@@ -1776,6 +1855,7 @@ function App() {
   const openProject = project => {
     if (project.locked) return
     setLoaded(true)
+    setAtPlayground(false)
     setActiveProject(project)
     window.history.pushState(null, "", `#case-${project.slug}`)
   }
@@ -1783,6 +1863,7 @@ function App() {
   const goHome = (target = "") => {
     setLoaded(true)
     jumpToPortfolioTarget()
+    setAtPlayground(false)
     setActiveProject(null)
     window.history.pushState(null, "", target || "/")
     requestAnimationFrame(() => {
@@ -1793,6 +1874,10 @@ function App() {
         ScrollTrigger.refresh()
       })
     })
+  }
+
+  if (atPlayground) {
+    return <PlaygroundPage onBack={goHome} />
   }
 
   if (activeProject) {

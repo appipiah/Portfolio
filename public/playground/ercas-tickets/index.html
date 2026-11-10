@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A note to Ercas Events: two tickets, one name. What a ticketing flow decides to store, and where I would fix it.">
+<style>
+  :root{
+    color-scheme:light;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>Two Tickets, One Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* Layout: full-bleed cinematic bands, one beat of the story per screen, paced
+   by a recurring perforation line borrowed from the ticket stub itself. */
+:root{
+  --paper:#FFFFFF;
+  --ink:#121317;
+  --ink-soft:#5B5F67;
+  --rule:#E3E4E7;
+  --stub:#FFFFFF;
+  --bubble:#F1F2F4;
+  --signal:#2B2E34;
+  --signal-ink:#3A3E45;
+  --cut:#D6B15C;
+  --cut-ink:#3D2C0C;
+  --cut-shade:rgba(84,60,14,.28);
+  --display:"Schibsted Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:light;
+}
+
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--display);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.5;
+}
+*,*::before,*::after{box-sizing:border-box}
+h1,h2,h3,p,ul,ol,figure,figcaption{margin:0}
+ul,ol{padding:0;list-style:none}
+
+.band{width:100%}
+.wrap{
+  max-width:62rem; margin-inline:auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:clamp(4.5rem,11vw,9rem);
+}
+.wrap.tight{padding-block:clamp(3rem,7vw,5.5rem)}
+.narrow{max-width:38rem}
+.center{text-align:center;margin-inline:auto}
+.mid{margin-inline:auto}
+.sig.center{align-items:center}
+
+/* eyebrows are scraps of ochre paper, hand-cut and laid on the page */
+.eyebrow{
+  font-family:var(--mono); font-size:.72rem; font-weight:500;
+  letter-spacing:.14em; text-transform:uppercase; line-height:1;
+}
+.eyebrow span{
+  display:inline-block; max-width:100%;
+  background:var(--cut); color:var(--cut-ink);
+  padding:.55rem .95rem .6rem;
+  transform:rotate(-1.4deg);
+  clip-path:polygon(
+    0.5% 7%, 11% 0%, 33% 5%, 57% 0%, 80% 6%, 99.5% 1%,
+    100% 91%, 85% 98%, 61% 92%, 37% 100%, 14% 93%, 0% 98%
+  );
+  filter:drop-shadow(1px 2px 0 var(--cut-shade)) drop-shadow(2px 4px 5px rgba(84,60,14,.16));
+}
+
+.display{
+  font-weight:900; letter-spacing:-.035em; line-height:.98;
+  font-size:clamp(2.9rem,9.5vw,6.5rem); text-wrap:balance;
+}
+.h2{
+  font-weight:700; letter-spacing:-.028em; line-height:1.06;
+  font-size:clamp(1.8rem,4.8vw,3.1rem); text-wrap:balance;
+}
+.lede{font-size:clamp(1.08rem,2.1vw,1.35rem); color:var(--ink-soft); line-height:1.55; text-wrap:pretty}
+.body{font-size:1.0625rem; color:var(--ink-soft); line-height:1.68; text-wrap:pretty}
+.body strong{color:var(--ink); font-weight:500}
+.stack{display:flex; flex-direction:column; gap:1.5rem}
+.stack.s{gap:.9rem}
+.stack.l{gap:2.75rem}
+
+.perf{height:1px; background:repeating-linear-gradient(90deg,var(--rule) 0 7px,transparent 7px 14px)}
+
+/* the evidence */
+.fig{display:flex; flex-direction:column; gap:.9rem; min-width:0}
+.fig img{width:100%; max-width:100%; height:auto; display:block; border:1px solid var(--rule); border-radius:4px}
+.cap{font-family:var(--mono); font-size:.72rem; color:var(--ink-soft); line-height:1.6}
+
+/* the flow, as a swipeable run of three frames */
+.carousel{display:flex; flex-direction:column; gap:1.3rem; min-width:0}
+.track{
+  display:flex; gap:1.3rem; min-width:0;
+  overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+  scrollbar-width:none; -webkit-overflow-scrolling:touch;
+}
+.track::-webkit-scrollbar{display:none}
+.track:focus-visible{outline:2px solid var(--signal); outline-offset:6px; border-radius:8px}
+/* narrower than the track, so the next frame peeks in and reads as a gallery */
+.slide{flex:0 0 min(78%,36rem); scroll-snap-align:start; min-width:0}
+@media (prefers-reduced-motion:reduce){.track{scroll-behavior:auto}}
+
+.cbar{display:flex; align-items:center; justify-content:space-between; gap:1rem; min-width:0}
+.dots{display:flex; gap:.55rem; align-items:center}
+.dot-btn{
+  width:8px; height:8px; border-radius:50%; border:0; padding:0;
+  background:var(--rule); cursor:pointer; transition:background .2s,transform .2s;
+}
+.dot-btn[aria-current="true"]{background:var(--cut); transform:scale(1.4)}
+.arrows{display:flex; gap:.55rem; flex:none}
+.arrow{
+  width:42px; height:42px; border-radius:50%; flex:none;
+  border:1px solid var(--rule); background:var(--stub); color:var(--ink);
+  cursor:pointer; display:grid; place-items:center; font-size:1.05rem; line-height:1;
+  font-family:var(--display); transition:border-color .2s,opacity .2s;
+}
+.arrow:hover:not([disabled]){border-color:var(--ink)}
+.arrow[disabled]{opacity:.3; cursor:default}
+
+.frame{display:flex; flex-direction:column; gap:.85rem; min-width:0}
+.frame-head{display:flex; align-items:baseline; gap:.85rem; min-width:0}
+.frame-n{font-family:var(--mono); font-size:.72rem; letter-spacing:.12em; color:var(--signal-ink); flex:none}
+.frame-t{font-weight:700; letter-spacing:-.018em; line-height:1.15; font-size:clamp(1.15rem,2.8vw,1.55rem)}
+.frame img{width:100%; max-width:100%; height:auto; display:block; border:1px solid var(--rule); border-radius:6px}
+
+/* media placeholders */
+.media{
+  border:1px dashed var(--rule); border-radius:4px; background:var(--stub);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:.55rem; text-align:center; padding:2rem 1.25rem; max-width:100%;
+}
+.media .mk{font-family:var(--mono); font-size:.68rem; letter-spacing:.13em; text-transform:uppercase; color:var(--signal-ink)}
+.media .mt{font-weight:700; letter-spacing:-.01em; font-size:1.05rem}
+.media .md{font-family:var(--mono); font-size:.76rem; color:var(--ink-soft)}
+.media.wide{aspect-ratio:16/9}
+
+/* the homepage, answered */
+.thread{
+  border:1px solid var(--rule); border-radius:12px; background:var(--stub);
+  padding:clamp(1.1rem,3vw,1.75rem);
+  display:flex; flex-direction:column; gap:1.9rem; min-width:0;
+}
+.thread-head{
+  display:flex; align-items:center; gap:.6rem;
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-soft);
+  padding-bottom:1.1rem; border-bottom:1px solid var(--rule);
+}
+.dot{width:7px; height:7px; border-radius:50%; background:var(--cut); flex:none}
+.turn{display:flex; flex-direction:column; gap:.8rem; min-width:0}
+.said{
+  align-self:flex-start; max-width:min(100%,33rem); min-width:0;
+  background:var(--bubble); color:var(--ink);
+  border-radius:16px 16px 16px 4px; padding:.95rem 1.2rem;
+  font-weight:700; letter-spacing:-.014em; line-height:1.3;
+  font-size:clamp(1.02rem,2.3vw,1.25rem);
+}
+.reply{
+  align-self:flex-end; max-width:min(100%,33rem); min-width:0;
+  background:var(--ink); color:#F4F4F5;
+  border-radius:16px 16px 4px 16px; padding:.95rem 1.2rem;
+  font-size:1rem; line-height:1.62;
+}
+
+/* a real sequence, so numbered */
+.steps{display:flex; flex-direction:column; gap:0; counter-reset:s}
+.step{
+  display:grid; grid-template-columns:2.6rem 1fr; gap:1.1rem; align-items:start;
+  padding-block:1.6rem; border-top:1px solid var(--rule); min-width:0;
+}
+.step:last-child{border-bottom:1px solid var(--rule)}
+.step::before{
+  counter-increment:s; content:counter(s,decimal-leading-zero);
+  font-family:var(--mono); font-size:.8rem; color:var(--signal-ink); padding-top:.2rem;
+}
+.step .st{font-weight:700; letter-spacing:-.012em; font-size:1.05rem; margin-bottom:.3rem; color:var(--ink)}
+
+.checks{display:flex; flex-direction:column; gap:0}
+.check{
+  display:flex; gap:.85rem; align-items:flex-start; min-width:0;
+  padding-block:1.15rem; border-top:1px solid var(--rule);
+  color:var(--ink-soft); font-size:1.0625rem; line-height:1.6;
+}
+.check::before{
+  content:""; flex:none; width:6px; height:6px; border-radius:50%;
+  background:var(--cut); margin-top:.62em;
+}
+.check:first-child{border-top:0}
+
+.notes{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr)); gap:1.6rem}
+.note{min-width:0; display:flex; flex-direction:column; gap:.45rem}
+.note .nt{font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--signal-ink)}
+.note p{font-size:.95rem; color:var(--ink-soft); line-height:1.6}
+.note code{font-family:var(--mono); font-size:.86em; color:var(--ink)}
+
+.sig{display:flex; flex-direction:column; gap:.4rem}
+.sig-name{
+  font-weight:900; letter-spacing:-.03em; line-height:1.02; color:var(--ink);
+  font-size:clamp(1.7rem,4.4vw,2.6rem);
+}
+.sig-meta{font-family:var(--mono); font-size:.85rem; color:var(--ink-soft); letter-spacing:.01em}
+.sig-meta a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--cut)}
+.sig-meta a:hover{border-bottom-width:2px}
+a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--signal); outline-offset:3px}
+
+.reveal{opacity:0; transform:translateY(14px)}
+.reveal.in{opacity:1; transform:none; transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+@media (prefers-reduced-motion:reduce){.reveal,.reveal.in{opacity:1;transform:none;transition:none}}
+</style>
+
+</head>
+<body>
+<main>
+
+  <!-- HERO -->
+  <section class="band">
+    <div class="wrap stack l">
+      <div class="stack s center narrow">
+        <p class="eyebrow"><span>A note to Ercas Events</span></p>
+        <h1 class="display">Two tickets.<br>One name.</h1>
+      </div>
+      <p class="lede center narrow">A friend and I were going to CapitalSage Holdings @ 10, at the new house on Kenneth Dike. I got two tickets, one for each of us. They both came back with my name on them.</p>
+
+      <figure class="fig">
+        <img src="tickets.png" alt="Two Ercas Events tickets for CapitalSage Holdings @ 10, side by side. The ticket numbers and QR codes differ, but both read Attendee: Oludolapo.">
+        <figcaption class="cap">Two tickets, two QR codes, one attendee. The only thing telling them apart is the ticket number.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- THE FLOW -->
+  <section class="band">
+    <div class="wrap stack l">
+      <div class="stack s narrow reveal">
+        <h2 class="h2">This is the flow.</h2>
+      </div>
+
+      <div class="carousel reveal">
+        <div class="track" id="flowTrack" tabindex="0" role="group" aria-roledescription="carousel" aria-label="The booking, in three screens">
+          <figure class="slide frame" role="group" aria-roledescription="slide" aria-label="1 of 3">
+            <div class="frame-head"><span class="frame-n">01</span><span class="frame-t">I chose two tickets.</span></div>
+            <img src="step1.png" alt="The Ercas Events page for CapitalSage Holdings @ 10, with the General Invite quantity stepper set to 2 and a button reading Purchase Tickets (2).">
+            <figcaption class="cap">Two General Invites. The button counts them.</figcaption>
+          </figure>
+
+          <figure class="slide frame" role="group" aria-roledescription="slide" aria-label="2 of 3">
+            <div class="frame-head"><span class="frame-n">02</span><span class="frame-t">It asked for my details as the purchaser.</span></div>
+            <img src="step2.png" alt="The Ercas Events Checkout Details dialog, asking for a single First Name, Last Name, Email Address and Phone Number, then Proceed to Payment.">
+            <figcaption class="cap">One first name, one last name, one email, one phone.</figcaption>
+          </figure>
+
+          <figure class="slide frame" role="group" aria-roledescription="slide" aria-label="3 of 3">
+            <div class="frame-head"><span class="frame-n">03</span><span class="frame-t">It issued two tickets in that name.</span></div>
+            <img src="step3.png" alt="The Ercas Events confirmation screen reading You're all set, with a ticket summary showing General Invite, Qty 2, and tickets sent to one email address.">
+            <figcaption class="cap">Qty 2, sent to one inbox.</figcaption>
+          </figure>
+        </div>
+
+        <div class="cbar">
+          <div class="dots">
+            <button class="dot-btn" type="button" data-go="0" aria-current="true" aria-label="Screen 1"></button>
+            <button class="dot-btn" type="button" data-go="1" aria-current="false" aria-label="Screen 2"></button>
+            <button class="dot-btn" type="button" data-go="2" aria-current="false" aria-label="Screen 3"></button>
+          </div>
+          <div class="arrows">
+            <button class="arrow" type="button" id="flowPrev" aria-label="Previous screen">&larr;</button>
+            <button class="arrow" type="button" id="flowNext" aria-label="Next screen">&rarr;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE RETRY -->
+  <section class="band">
+    <div class="wrap stack l">
+      <div class="stack s narrow center reveal">
+        <h2 class="h2">At first I thought I had made a mistake.</h2>
+      </div>
+      <div class="stack narrow mid reveal">
+      <p class="body">I assumed somewhere in there was a field for my friend's name and I had clicked straight past it. So I went back and did the whole thing again, slowly this time, watching for it.</p>
+      <p class="body">There is no such field. The flow asks how many, takes the buyer's details at checkout, and prints that name on every ticket it issues.</p>
+      <p class="body">That is when it stopped being my mistake and started being an interesting one. <strong>There is only one person in the whole booking, and it is the one paying.</strong> A ticket is not a quantity. It is a claim on a seat by a named person. The moment I asked for two, the product had two seats and still only one name to put on them.</p>
+      <p class="body">My friend would have turned up at Kenneth Dike holding a ticket with my name on it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE HOMEPAGE, ANSWERED -->
+  <section class="band">
+    <div class="wrap stack l">
+      <div class="stack s narrow reveal">
+        <h2 class="h2">Then I wondered whether it mattered to anyone but me.</h2>
+        <p class="body">It does. I went back and read what your homepage promises, and three of the things you sell there are quietly undone by this.</p>
+      </div>
+
+      <div class="thread reveal">
+        <div class="thread-head"><span class="dot"></span><span>ercasevents.com</span></div>
+
+        <div class="turn">
+          <p class="said">Export attendee lists on demand.</p>
+          <p class="reply">You are exporting a buyer list and calling it an attendee list. That is literally what the product stores: my checkout details, copied onto every ticket. My booking of two produced one name. An organiser planning catering, seating, badges or follow-up is working from numbers that are wrong before they open the file.</p>
+        </div>
+
+        <div class="turn">
+          <p class="said">Track sales, revenue, and check-ins in real time.</p>
+          <p class="reply">Unique attendees cannot be counted when several tickets collapse onto one identity. Sales and revenue stay accurate. Everything about who turned up does not.</p>
+        </div>
+
+        <div class="turn">
+          <p class="said">Keep lines moving with seamless QR code scans at the gate.</p>
+          <p class="reply">At the door my name scans twice. Either the second person walks in unverified, or they get stopped, and the queue your mobile scanner exists to prevent forms anyway.</p>
+        </div>
+      </div>
+
+      <p class="lede narrow reveal">Two friends at an anniversary is the small version of this. A company booking twelve seats for its staff is the version that costs an organiser something, and you with it.</p>
+    </div>
+  </section>
+
+  <!-- FIX -->
+  <section class="band">
+    <div class="wrap stack l">
+      <div class="stack s narrow center reveal">
+        <h2 class="h2">I would not fix this at checkout.</h2>
+      </div>
+      <div class="stack narrow mid reveal">
+        <p class="body">That is the obvious answer, and I think it is the wrong one. Checkout is where someone is already deciding whether this is worth the trouble. Putting more fields in front of them there buys you a cleaner attendee list and costs you bookings, which is a bad trade for an events business.</p>
+        <p class="body">The question I would ask first is one the product never asks at all: <strong>how do people actually get into this event?</strong></p>
+        <p class="body">Some events check names at the door, and for those the name on the ticket is the entire point. Others scan a QR code and never look at a name, and for those I am not convinced the name belongs on the ticket at all. There is a better place for it.</p>
+        <p class="body">Once you know which kind of event you are selling for, it stops being a question of adding a field and becomes a question of where in the flow the product should be asking. That place is earlier than checkout, and it is already on screen.</p>
+        <p class="body"><strong>I have a specific view on where, and on what each mode of entry should do differently. That is a conversation rather than a document.</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEASURE -->
+  <section class="band">
+    <div class="wrap stack l">
+      <div class="stack s narrow reveal">
+        <h2 class="h2">Three numbers I would want before changing anything.</h2>
+      </div>
+      <ul class="checks narrow reveal">
+        <li class="check">What share of bookings are for more than one ticket, and the size distribution.</li>
+        <li class="check">Current checkout completion, so any added field can be held against it.</li>
+        <li class="check">How often anyone asks support to change a name after booking. That volume is the clearest measure of what this costs you today.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CLOSE -->
+  <section class="band">
+    <div class="wrap stack l">
+      <div class="stack s narrow center reveal">
+        <h2 class="h2">If this is something you are building, I would like to help build it.</h2>
+      </div>
+      <div class="stack narrow mid reveal">
+        <p class="body">I could have sorted mine out at the gate, and most people would have. But I design products for a living and ticketing is familiar ground for me, so rather than be annoyed by it I went looking for where the model had gone wrong.</p>
+        <p class="body">The part I care about is what a product decides to store, not only what it shows. <strong>If Ercas Events is a product you are actively investing in, I would love to be part of building it.</strong> If not, I hope these notes are useful anyway.</p>
+      </div>
+      <div class="perf"></div>
+      <div class="sig center reveal">
+        <p class="sig-name">Oludolapo Bodede</p>
+        <p class="sig-meta"><a href="mailto:piahdesigns@gmail.com">piahdesigns@gmail.com</a></p>
+        <p class="sig-meta">Product Designer, Ibadan</p>
+        <p class="sig-meta"><a href="https://www.appipiah.com/">appipiah.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPENDIX -->
+  <section class="band">
+    <div class="wrap stack l">
+      <div class="stack s narrow reveal">
+        <p class="eyebrow"><span>Also noticed</span></p>
+        <h2 class="h2">Two other things I ran into on the way.</h2>
+      </div>
+      <div class="notes reveal">
+        <div class="note"><span class="nt">Dead link</span><p>The Ercas Events link in the ErcasPay footer points to <code>ercas-events.com</code>, which has no DNS record. Anyone arriving from the parent product lands on nothing.</p></div>
+        <div class="note"><span class="nt">Empty catalogue</span><p><code>ercasevents.com</code> never finishes loading its events. The page sits on "Loading events" and nothing ever appears. The same listing works fine on <code>events.ercaspay.com</code>, so one of your two addresses shows an empty catalogue to whoever finds it.</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  var items = document.querySelectorAll('.reveal');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(function(el){ el.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  items.forEach(function(el){ io.observe(el); });
+  requestAnimationFrame(function(){
+    items.forEach(function(el){
+      var r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight) el.classList.add('in');
+    });
+  });
+})();
+
+(function(){
+  var track = document.getElementById('flowTrack');
+  if (!track) return;
+  var slides = track.querySelectorAll('.slide');
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.dot-btn'));
+  var prev = document.getElementById('flowPrev');
+  var next = document.getElementById('flowNext');
+
+  // slide offsets, measured rather than assumed, so the gap between slides is accounted for
+  function pos(j){ return slides[j].offsetLeft - slides[0].offsetLeft; }
+  function index(){
+    var x = track.scrollLeft, best = 0, bd = Infinity;
+    for (var j = 0; j < slides.length; j++){
+      var d = Math.abs(pos(j) - x);
+      if (d < bd){ bd = d; best = j; }
+    }
+    return best;
+  }
+  function go(i, instant){
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    if (instant){
+      var prevBehavior = track.style.scrollBehavior;
+      track.style.scrollBehavior = 'auto';
+      track.scrollLeft = pos(i);
+      track.style.scrollBehavior = prevBehavior;
+    } else {
+      track.scrollTo({ left: pos(i), behavior: 'smooth' });
+    }
+  }
+  function sync(){
+    var i = index();
+    dots.forEach(function(d, j){ d.setAttribute('aria-current', j === i ? 'true' : 'false'); });
+    prev.disabled = i <= 0;
+    next.disabled = i >= slides.length - 1;
+  }
+
+  prev.addEventListener('click', function(){ go(index() - 1); });
+  next.addEventListener('click', function(){ go(index() + 1); });
+  dots.forEach(function(d){
+    d.addEventListener('click', function(){ go(parseInt(d.getAttribute('data-go'), 10)); });
+  });
+  track.addEventListener('scroll', function(){ window.requestAnimationFrame(sync); }, { passive: true });
+  window.addEventListener('resize', sync);
+  track.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight'){ e.preventDefault(); go(index() + 1); }
+    if (e.key === 'ArrowLeft'){ e.preventDefault(); go(index() - 1); }
+  });
+
+  sync();
+  window.addEventListener('load', sync);
+})();
+</script>
+
+</body>
+</html>
